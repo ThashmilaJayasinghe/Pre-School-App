@@ -1,6 +1,7 @@
-import {View, Text, ScrollView, TextInput, ImageBackground} from 'react-native';
+import {View, Text, TextInput, ScrollView} from 'react-native';
 import React, {useState} from 'react';
-import StudentCard from './StudentCard';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import FeedbackCard from '../../components/feedback/FeedbackCard';
 
 const studentList = [
   {id: '01', name: 'Kamal', class: 'Class A'},
@@ -11,7 +12,7 @@ const studentList = [
   {id: '06', name: 'Mark', class: 'Class D'},
 ];
 
-const StudentList = () => {
+const FeedbackList = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
@@ -20,11 +21,10 @@ const StudentList = () => {
         backgroundColor: '#FBF8EB',
       }}>
       {/* search bar */}
-      <Text>StudentList</Text>
-
       <View
         style={{
           alignItems: 'center',
+          marginVertical: 10,
         }}>
         <TextInput
           onChangeText={setSearchQuery}
@@ -41,22 +41,36 @@ const StudentList = () => {
             // height: 10,
             shadowRadius: 6,
             borderRadius: 6,
-            elevation: 6,
+            elevation: 0,
             shadowOpacity: 1,
-            height: 50,
+            height: 40,
             width: '90%',
-            paddingVertical: 10,
-            paddingHorizontal: 20,
+            paddingLeft: 10,
+            paddingRight: 40,
+            paddingHorizontal: 10,
+            color: '#626262',
           }}
+          placeholder="Search ..."
+        />
+        <FeatherIcon
+          name="search"
+          size={20}
+          style={{
+            top: 10,
+            right: 30,
+            position: 'absolute',
+          }}
+          color="#F47B0B"
         />
       </View>
-      <ScrollView>
+
+      <ScrollView style={{marginBottom: 50}}>
         {studentList.map((student, idx) => (
-          <StudentCard key={student.id} student={student} />
+          <FeedbackCard key={student.id} student={student} />
         ))}
       </ScrollView>
     </View>
   );
 };
 
-export default StudentList;
+export default FeedbackList;

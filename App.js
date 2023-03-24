@@ -3,8 +3,8 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import ComponentOne from './components/ComponentOne';
-import StudentCardTwo from './src/components/feedback/StudentCardTwo';
+// import ComponentOne from './components/ComponentOne';
+// import StudentCardTwo from './src/components/feedback/StudentCardTwo';
 // import StudentCardThree from './src/components/feedback/StudentCard';
 import StudentList from './src/components/feedback/StudentList';
 

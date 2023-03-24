@@ -9,6 +9,7 @@ import StudentCardTwo from './src/components/feedback/StudentCardTwo';
 import StudentList from './src/components/feedback/StudentList';
 import NoticeList from './src/components/notices/NoticeList';
 import ViewNotice from './src/components/notices/ViewNotice';
+import NoticeListTeacher from './src/components/notices/NoticeListTeacher';
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         {/* <Stack.Screen name="StudentCardThree" component={StudentCardThree} /> */}
         {/* <Stack.Screen name="StudentList" component={StudentList} /> */}
         {/* <Stack.Screen name="Home" component={ComponentOne} /> */}
+        <Stack.Screen name="NoticeListTeacher" component={NoticeListTeacher} />
         <Stack.Screen name="NoticeList" component={NoticeList} />
         <Stack.Screen name="ViewNotice" component={ViewNotice} />
       </Stack.Navigator>

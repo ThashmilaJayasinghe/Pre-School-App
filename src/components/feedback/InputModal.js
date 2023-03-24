@@ -11,6 +11,9 @@ import Modal from 'react-native-modal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {FontFamily} from '../../GlobalStyles';
 import Textarea from 'react-native-textarea';
+import {setDoc} from 'firebase/firestore';
+import {db} from '../../services/firebase';
+import {v4 as uuidv4} from 'uuid';
 
 const InputModal = ({
   isModalVisible,
@@ -21,9 +24,33 @@ const InputModal = ({
 }) => {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0.0);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+
+  const onSubmit = async () => {
+    if (comment.length > 5) {
+      const feedbackId = uuidv4();
+      await setDoc(doc(db, 'feedbacks', feedbackId), {
+        name: studentName,
+        studentId: studentId,
+        class: studentClass,
+        feedbackId: feedbackId,
+        comment: comment,
+        rating: rating,
+      })
+        .then(() => console.log('Successfully data added'))
+        .catch(err => {
+          console.log(err);
+        });
+
+      setErrorMessage('');
+      setModalVisible(false);
+    } else {
+      setErrorMessage('Your comment is too short');
+    }
   };
 
   return (
@@ -102,6 +129,26 @@ const InputModal = ({
                 placeholderTextColor={'#a7a7a8'}
                 underlineColorAndroid={'transparent'}
               />
+
+              {errorMessage.length > 0 && (
+                <View
+                  style={{
+                    marginTop: 8,
+                    backgroundColor: '#facfcf',
+                    borderRadius: 7,
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    paddingHorizontal: 10,
+                    height: 27,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#e61212',
+                    }}>
+                    {errorMessage}
+                  </Text>
+                </View>
+              )}
             </View>
 
             <View style={{alignItems: 'center', marginBottom: 20}}>
@@ -114,7 +161,8 @@ const InputModal = ({
                   height: 35,
                   justifyContent: 'center',
                   alignItems: 'center',
-                }}>
+                }}
+                onPress={onSubmit}>
                 <Text
                   style={{
                     color: '#F7FF9C',

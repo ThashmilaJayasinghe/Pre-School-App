@@ -12,8 +12,13 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {FontFamily} from '../../GlobalStyles';
 import Textarea from 'react-native-textarea';
 
-const InputModalThree = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
+const InputModal = ({
+  isModalVisible,
+  setModalVisible,
+  studentName,
+  studentClass,
+  studentId,
+}) => {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0.0);
 
@@ -23,8 +28,6 @@ const InputModalThree = () => {
 
   return (
     <View style={{flex: 1}}>
-      <Button title="Show modal" onPress={toggleModal} />
-
       <Modal
         isVisible={isModalVisible}
         onBackdropPress={() => setModalVisible(false)}
@@ -41,7 +44,7 @@ const InputModalThree = () => {
           <ScrollView>
             <TouchableOpacity
               style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}
-              onPress={toggleModal}>
+              onPress={() => setModalVisible(!isModalVisible)}>
               <AntDesign name="closesquare" size={27} color="#F47B0B" />
             </TouchableOpacity>
 
@@ -63,15 +66,15 @@ const InputModalThree = () => {
                   }}>
                   Student Name
                 </Text>
-                <Text style={{color: '#545FC3'}}> : Lahiru</Text>
+                <Text style={{color: '#545FC3'}}> : {studentName}</Text>
               </View>
               <View style={{flexDirection: 'row', paddingTop: 5}}>
                 <Text style={{color: '#0E1979'}}>Student ID</Text>
-                <Text style={{color: '#545FC3'}}> : L00342</Text>
+                <Text style={{color: '#545FC3'}}> : {studentId}</Text>
               </View>
               <View style={{flexDirection: 'row', paddingTop: 5}}>
                 <Text style={{color: '#0E1979'}}>Student Class</Text>
-                <Text style={{color: '#545FC3'}}> : Class A</Text>
+                <Text style={{color: '#545FC3'}}> : {studentClass}</Text>
               </View>
             </View>
             <View style={{margin: 20, maxHeight: 300}}>
@@ -129,4 +132,4 @@ const InputModalThree = () => {
   );
 };
 
-export default InputModalThree;
+export default InputModal;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useState} from 'react';
-import { View, StyleSheet, Text, Image, Pressable } from "react-native";
+import { View, StyleSheet, Text, Image, Pressable, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontFamily, FontSize } from "../../GlobalStyles";
 
@@ -18,25 +18,26 @@ const NoticeCardParent = ({notice}) => {
           styles.backgroundLayout,
           styles.backgroundPosition,
         ]}
-      />
-      <View style={[styles.background1, styles.backgroundLayout]} />
-      <Text style={[styles.notice1, styles.notice1Position]} numberOfLines={2}>
-        {noticeTitle}
-      </Text>
-      <Text style={[styles.january, styles.notice1Position]} numberOfLines={1}>
-        {noticeDate}
-      </Text>
-      <Pressable
-        style={[styles.viewButton, styles.viewLayout]}
-        // onPress={() => navigation.navigate("ViewNotice")}
       >
-        <Image
-          style={[styles.viewLayout, styles.backgroundPosition]}
-          resizeMode="cover"
-          source={require("../../assets/ellipse-2.png")}
-        />
-        <Text style={styles.view}>View</Text>
-      </Pressable>
+        <View style={[styles.background1, styles.backgroundLayout]} />
+        <Text style={[styles.notice1, styles.notice1Position]} numberOfLines={2}>
+          {noticeTitle}
+        </Text>
+        <Text style={[styles.january, styles.notice1Position]} numberOfLines={1}>
+          {noticeDate}
+        </Text>
+        <Pressable
+          style={[styles.viewButton, styles.viewLayout]}
+          onPress={() => navigation.navigate("ViewNotice")}
+        >
+          <Image
+            style={[styles.viewLayout, styles.backgroundPositionButton]}
+            resizeMode="cover"
+            source={require("../../assets/ellipse-2.png")}
+          />
+          <Text style={styles.view}>View</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -47,8 +48,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   backgroundPosition: {
-    left: 0,
-    top: 0,
+    // left: 0,
+    flex: 1,
+    top: 20, 
   },
   notice1Position: {
     textAlign: "left",
@@ -111,6 +113,11 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: 112,
+    alignItems: "center",
+  },
+  backgroundPositionButton: {
+    left: 0,
+    top: 0,
   },
 });
 

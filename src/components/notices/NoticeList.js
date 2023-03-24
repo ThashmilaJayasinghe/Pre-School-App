@@ -20,7 +20,6 @@ const NoticeList = () => {
         backgroundColor: '#FBF8EB',
       }}>
       {/* search bar */}
-      <Text>NoticeList</Text>
 
       <View
         style={{

@@ -6,13 +6,13 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 const DeleteKid = ({bottomSheetRef, kid, onDelete}) => {
   return (
     <>
-      <BottomSheet ref={bottomSheetRef}>
+      <BottomSheet ref={bottomSheetRef} height={200}>
         <TouchableOpacity
           style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}>
           <AntDesign name="closesquare" size={27} color="#F47B0B" />
         </TouchableOpacity>
 
-        <View style={{padding: 16, top: 15}}>
+        <View style={{padding: 16, top: 10}}>
           <Text
             style={{
               fontWeight: 400,
@@ -26,7 +26,7 @@ const DeleteKid = ({bottomSheetRef, kid, onDelete}) => {
 
         <View
           style={{
-            height: '50%',
+            height: '35%',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-end',

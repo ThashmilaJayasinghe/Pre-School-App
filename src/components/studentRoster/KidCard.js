@@ -1,15 +1,22 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
 import {Color, Border, FontFamily, FontSize} from '../../GlobalStyles';
+import DeleteKid from './Deleltekid';
 // import {FaPen} from 'react-icons';
 
-const KidCard = ({student}) => {
+const KidCard = ({student, onDelete}) => {
   const [studentId, setStudentId] = useState(student.id);
   const [studentName, setStudentName] = useState(student.name);
   const [studentClass, setStudentClass] = useState(student.class);
 
   //   console.log(studentName);
+
+  const bottomSheetRef = useRef();
+
+  const openBottomSheet = () => {
+    bottomSheetRef.current.open();
+  };
 
   return (
     <View style={[styles.feedbackItem]}>
@@ -37,7 +44,7 @@ const KidCard = ({student}) => {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => alert('Delete kid')}>
+              <TouchableOpacity onPress={openBottomSheet}>
                 <View
                   style={{
                     marginLeft: 50,
@@ -66,6 +73,11 @@ const KidCard = ({student}) => {
         </View>
         <View style={styles.background1} />
       </View>
+      <DeleteKid
+        bottomSheetRef={bottomSheetRef}
+        kid={student}
+        onDelete={onDelete}
+      />
     </View>
   );
 };

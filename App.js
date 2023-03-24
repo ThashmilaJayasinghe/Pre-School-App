@@ -7,6 +7,7 @@ import ComponentOne from './components/ComponentOne';
 import StudentCardTwo from './src/components/feedback/StudentCardTwo';
 // import StudentCardThree from './src/components/feedback/StudentCard';
 import StudentList from './src/components/feedback/StudentList';
+import InquiryForm from './src/components/inquiry/InquiryForm';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -19,6 +20,8 @@ const App = () => {
         {/* <Stack.Screen name="StudentCardThree" component={StudentCardThree} /> */}
         <Stack.Screen name="StudentList" component={StudentList} />
         {/* <Stack.Screen name="Home" component={ComponentOne} /> */}
+
+        <Stack.Screen name="InquiryForm" component={InquiryForm} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Picker} from '@react-native-picker/picker';
 import {
   View,
   Text,
@@ -12,6 +13,7 @@ const InquiryForm = () => {
   const [studentId, setStudentId] = useState('');
   const [title, setTitle] = useState('');
   const [feedback, setFeedback] = useState('');
+  const [selectedClass, setSelectedClass] = useState('');
 
   const handleSubmit = () => {
     console.log('Student Name:', studentName);
@@ -35,6 +37,23 @@ const InquiryForm = () => {
         </View>
 
         <View style={styles.inputWrapper}>
+          <Text style={styles.labelTxt}>Class:</Text>
+          <Picker
+            selectedValue={selectedClass}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedClass(itemValue)
+            }
+            style={styles.inputStyle}
+            itemStyle={styles.pickerItem}
+            value={selectedClass}>
+            <Picker.Item label="Class A" value="Class A" />
+            <Picker.Item label="Class B" value="Class B" />
+            <Picker.Item label="Class C" value="Class C" />
+            <Picker.Item label="Class D" value="Class D" />
+          </Picker>
+        </View>
+
+        <View style={styles.inputWrapper}>
           <Text style={styles.labelTxt}>Eamil Address:</Text>
           <TextInput
             style={styles.inputStyle}
@@ -46,16 +65,23 @@ const InquiryForm = () => {
 
         <View style={styles.inputWrapper}>
           <Text style={styles.labelTxt}>Title:</Text>
-          <TextInput
+          <Picker
+            selectedValue={title}
+            onValueChange={(itemValue, itemIndex) => setTitle(itemValue)}
             style={styles.inputStyle}
-            placeholder="Enter title"
-            value={title}
-            onChangeText={text => setTitle(text)}
-          />
+            itemStyle={styles.pickerItem}
+            value={title}>
+            <Picker.Item label="Home Work" value="Home Work" />
+            <Picker.Item label="Sports" value="Sports" />
+            <Picker.Item label="Music" value="Music" />
+            <Picker.Item label="Dancing" value="Dancing" />
+            <Picker.Item label="Health" value="Health" />
+            <Picker.Item label="Others" value="Others" />
+          </Picker>
         </View>
 
         <View style={styles.inputWrapper}>
-          <Text style={styles.labelTxt}>Feedback:</Text>
+          <Text style={styles.labelTxt}>Inquiry:</Text>
           <TextInput
             multiline={true}
             numberOfLines={5}
@@ -107,6 +133,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
+  },
+  pickerItem: {
+    color: '#333',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   labelTxt: {
     fontSize: 18,

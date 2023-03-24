@@ -1,5 +1,5 @@
 import {View, Text, TextInput, ScrollView} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import FeedbackCard from '../../components/feedback/FeedbackCard';
 
@@ -12,8 +12,54 @@ const studentList = [
   {id: '06', name: 'Mark', class: 'Class D'},
 ];
 
+const feedbackListArray = [
+  {
+    id: '01',
+    name: 'Kamal',
+    class: 'Class A',
+    comment: 'Kamal is a good student',
+  },
+  {
+    id: '02',
+    name: 'Nimal',
+    class: 'Class B',
+    comment: 'Nimal is a good student',
+  },
+  {
+    id: '03',
+    name: 'Sunimal',
+    class: 'Class D',
+    comment: 'Sunimal is a good student',
+  },
+  {
+    id: '04',
+    name: 'Bimal',
+    class: 'Class A',
+    comment: 'Bimal is a good student',
+  },
+  {id: '05', name: 'John', class: 'Class E', comment: 'John is a good student'},
+  {id: '06', name: 'Mark', class: 'Class D', comment: 'Mark is a good student'},
+];
+
 const FeedbackList = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [feedbackList, setFeedbackList] = useState(feedbackListArray)
+
+  useEffect(() => {
+    filterFeedbacks();
+  }, [searchQuery]);
+
+  const filterFeedbacks = () => {
+    if (searchQuery.trim()) {
+      let filteredFeedbackList = feedbackList.filter(item => {
+        item.name.toLowerCase().includes(searchQuery.toLowerCase());
+      });
+
+      setFeedbackList(filteredFeedbackList);
+    } else {
+      setFeedbackList(feedbackListArray);
+    }
+  };
 
   return (
     <View
@@ -65,8 +111,8 @@ const FeedbackList = () => {
       </View>
 
       <ScrollView style={{marginBottom: 50}}>
-        {studentList.map((student, idx) => (
-          <FeedbackCard key={student.id} student={student} />
+        {feedbackList.map((feedback, idx) => (
+          <FeedbackCard key={feedback.id} feedback={feedback} />
         ))}
       </ScrollView>
     </View>

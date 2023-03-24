@@ -7,7 +7,7 @@ import ComponentOne from './components/ComponentOne';
 
 import StudentCardTwo from './src/components/feedback/StudentCardTwo';
 // import StudentCardThree from './src/components/feedback/StudentCard';
-import StudentList from './src/components/feedback/StudentList';
+// import StudentList from './src/components/feedback/StudentList';
 import InquiryForm from './src/pages/inquiry/InquiryForm';
 
 import StudentList from './src/pages/feedback/StudentList';

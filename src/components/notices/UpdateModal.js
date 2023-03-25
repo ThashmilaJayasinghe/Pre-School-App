@@ -20,25 +20,26 @@ const data = [
   {key:'4', value:'OTHER'},
 ]
 
-const UpdateModal = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
+const UpdateModal = ({isModalVisible, setModalVisible}) => {
+  // const [isModalVisible, setModalVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [selected, setSelected] = React.useState("");
 
   const handleUpdate = () => {
-    console.log('Title:', title);
-    console.log('Body:', body);
     // Do something with the data (e.g. submit to server)
+    setModalVisible(false);
   };
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
+  // const toggleModal = () => {
+  //   setModalVisible(!isModalVisible);
+  //   // setModalVisible(false);
+  //   // toggleModal();
+  // };
 
   return (
-    <View style={{flex: 1}}>
-      <Button title="Show modal" onPress={toggleModal} />
+    <View style={{flex: 0}}>
+      {/* <Button title="Show modal" onPress={toggleModal} /> */}
 
       <Modal
         isVisible={isModalVisible}
@@ -56,7 +57,7 @@ const UpdateModal = () => {
           <ScrollView>
             <TouchableOpacity
               style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}
-              onPress={toggleModal}>
+              onPress={() => setModalVisible(!isModalVisible)}>
               <AntDesign name="closesquare" size={27} color="#F47B0B" />
             </TouchableOpacity>
 

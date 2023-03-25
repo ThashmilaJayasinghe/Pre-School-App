@@ -3,27 +3,35 @@ import {View, Button, Text, TouchableOpacity} from 'react-native';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const DeleteModal = ({bottomSheetRef, kid, onDelete}) => {
-    const refRBSheet = useRef();
+const DeleteModal = ({bottomSheetRef, notice}) => {
+
+  const onDelete = () => {
+
+    // delete notice
+
+    bottomSheetRef.current.close();
+  };
+    
   return (
+    <BottomSheet ref={bottomSheetRef} height={200}>
     <View
       style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#000"
+        // flex: 1,
+        // justifyContent: "center",
+        alignItems: "flex-end",
+        marginTop: 13,
+        marginRight: 13
+        // backgroundColor: "#000"
       }}
     >
-      <Button title="OPEN BOTTOM SHEET" onPress={() => refRBSheet.current.open()} />
-      {/* <BottomSheet ref={bottomSheetRef}> */}
-      <BottomSheet ref={refRBSheet}>
+            
         <TouchableOpacity
-          onPress={() => refRBSheet.current.close()}
+          onPress={() => bottomSheetRef.current.close()}
           style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}>
           <AntDesign name="closesquare" size={27} color="#F47B0B" />
         </TouchableOpacity>
 
-        <View style={{padding: 16, top: 15}}>
+        <View style={{padding: 16, top: 10}}>
           <Text
             style={{
               fontWeight: 400,
@@ -37,7 +45,7 @@ const DeleteModal = ({bottomSheetRef, kid, onDelete}) => {
 
         <View
           style={{
-            height: '50%',
+            height: '35%',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-end',
@@ -54,6 +62,7 @@ const DeleteModal = ({bottomSheetRef, kid, onDelete}) => {
               height: 35,
               justifyContent: 'center',
               alignItems: 'center',
+          
             }}>
             <Text
               style={{
@@ -65,8 +74,9 @@ const DeleteModal = ({bottomSheetRef, kid, onDelete}) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </BottomSheet>
+      
     </View>  
+    </BottomSheet>
   );
 };
 

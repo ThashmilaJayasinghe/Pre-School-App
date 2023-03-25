@@ -1,15 +1,24 @@
 import * as React from "react";
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import { View, StyleSheet, Text, Pressable, Image } from "react-native";
 import { Border, Color, FontSize, FontFamily } from "../../GlobalStyles";
 import { useNavigation } from "@react-navigation/native";
+import UpdateModal from '../../components/notices/UpdateModal';
+import DeleteModal from '../../components/notices/DeleteModal';
 
 const NoticeCardTeacher = ({notice}) => {
   const [noticetId, setNoticeId] = useState(notice.id);
   const [noticeTitle, setNoticeTitle] = useState(notice.title);
   const [noticeDate, setNoticeDate] = useState(notice.date);  
+  const [isModalVisible, setModalVisible] = useState(false);
+  const bottomSheetRef = useRef();
   const navigation = useNavigation();
- 
+
+  const openBottomSheet = () => {
+    bottomSheetRef.current.open();
+  };
+
+  
   return (
     <View style={styles.noticeCardTeacher}>
       <View style={[styles.groupParent, styles.backgroundLayout1]}>
@@ -37,7 +46,8 @@ const NoticeCardTeacher = ({notice}) => {
           </View>  
           <View style={styles.buttons}>
             <Pressable
-              onPress={() => navigation.navigate("ViewNotice")}
+              // onPress={() => navigation.navigate("ViewNotice")}
+              onPress = {openBottomSheet}
             >
               <Image
                 style={[styles.deleteIcon, styles.iconLayout]}
@@ -46,17 +56,24 @@ const NoticeCardTeacher = ({notice}) => {
               />
             </Pressable>   
             <Pressable
-              onPress={() => navigation.navigate("ViewNotice")}
+              onPress={() =>setModalVisible(true)}              
             >
               <Image
                 style={[styles.editIcon, styles.iconLayout]}
                 resizeMode="cover"
                 source={require("../../assets/editNotice.png")}
               />
-            </Pressable>  
+            </Pressable>
             </View>
         </View>
       </View>
+
+      <UpdateModal 
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible} 
+      />
+
+      <DeleteModal bottomSheetRef = {bottomSheetRef} notice = {notice} />
     </View>
   );
 };

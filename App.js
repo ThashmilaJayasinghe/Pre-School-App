@@ -32,6 +32,7 @@ import InputNoticeModal from './src/components/notices/InputModal';
 import DeleteNoticeModal from './src/components/notices/DeleteModal';
 import Home from './src/pages/Home';
 import NoticeList from './src/pages/notices/NoticeList';
+import KidsList from './src/components/studentRoster/KidsList';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -39,7 +40,6 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-
         {/* <Stack.Screen name="InquiryForm" component={InquiryForm} /> */}
         {/* <Stack.Screen name="InputModal" component={InputModal} /> */}
         <Stack.Screen name="Home" component={Home} />
@@ -47,9 +47,9 @@ const App = () => {
         {/* <Stack.Screen name="StudnetCard" component={StudentCard} /> */}
         {/* <Stack.Screen name="StudentCardThree" component={StudentCardThree} /> */}
         {/* nnnn */}
-        {/* {/* <Stack.Screen name="StudentList" component={StudentList} /> */} 
+        {/* {/* <Stack.Screen name="StudentList" component={StudentList} /> */}
         {/* <Stack.Screen name="Home" component={ComponentOne} /> */}
-        {/* {/* <Stack.Screen name="InquiryForm" component={InquiryForm} /> */} 
+        {/* {/* <Stack.Screen name="InquiryForm" component={InquiryForm} /> */}
 
         {/* <Stack.Screen name="MyInquiryList" component={MyInquiryList} /> */}
         {/* <Stack.Screen name="StudentList" component={StudentList} /> */}
@@ -65,7 +65,7 @@ const App = () => {
         <Stack.Screen name="InputNoticeModal" component={InputNoticeModal} />
         <Stack.Screen name="UpdateNoticeModal" component={UpdateNoticeModal} />
         <Stack.Screen name="NoticeList" component={NoticeList} />
-        
+        <Stack.Screen name="KidsList" component={KidsList} />
       </Stack.Navigator>
     </NavigationContainer>
   );

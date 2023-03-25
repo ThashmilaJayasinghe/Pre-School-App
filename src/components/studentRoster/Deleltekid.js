@@ -8,6 +8,7 @@ const DeleteKid = ({bottomSheetRef, kid, onDelete}) => {
     <>
       <BottomSheet ref={bottomSheetRef} height={200}>
         <TouchableOpacity
+          onPress={() => bottomSheetRef.current.close()}
           style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}>
           <AntDesign name="closesquare" size={27} color="#F47B0B" />
         </TouchableOpacity>

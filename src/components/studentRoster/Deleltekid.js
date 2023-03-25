@@ -1,10 +1,10 @@
 import React, {useRef, useState} from 'react';
-import {View, Button, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import firestore from '@react-native-firebase/firestore';
 
-const DeleteKid = ({bottomSheetRef, kid, onDelete}) => {
+const DeleteKid = ({bottomSheetRef, kid, setCheckState}) => {
   const [id, setId] = useState(kid.id);
 
   const onDeleteKid = () => {
@@ -12,9 +12,11 @@ const DeleteKid = ({bottomSheetRef, kid, onDelete}) => {
       .collection('kids')
       .doc(id)
       .delete()
-      .then(() => {
+      .then(async () => {
         console.log('Deleted successfully');
-        bottomSheetRef.current.close();
+
+        await bottomSheetRef.current.close();
+        setCheckState(true);
       })
       .catch(err => {
         console.log('Deleted unsuccessfully');

@@ -14,7 +14,12 @@ import {Picker} from '@react-native-picker/picker';
 
 const KidsCollection = firestore().collection('kids');
 
-const SaveKid = ({isModalVisible, setModalVisible, toggleModal}) => {
+const SaveKid = ({
+  isModalVisible,
+  setModalVisible,
+  toggleModal,
+  setCheckState,
+}) => {
   const [kidId, setKidId] = useState('');
   const [name, setName] = useState('');
   const [kidClass, setKidClass] = useState('');
@@ -48,10 +53,11 @@ const SaveKid = ({isModalVisible, setModalVisible, toggleModal}) => {
       })
         .then(() => {
           console.log('New kid added!');
+          setModalVisible(false);
           setErrorMessage('');
           setErrorMessageClass('');
           setErrorMessageName('');
-          setModalVisible(false);
+          setCheckState(true);
         })
         .catch(err => {
           setErrorMessage('');
@@ -216,22 +222,6 @@ const SaveKid = ({isModalVisible, setModalVisible, toggleModal}) => {
                 Class
               </Text>
 
-              {/* <TextInput
-                onChangeText={setKidClass}
-                style={{
-                  borderWidth: 1,
-                  borderColor: '#D6D6D6',
-                  borderRadius: 10,
-                  opacity: 10,
-                  padding: 5,
-                  backgroundColor: '#e8e9eb',
-                  fontSize: 14,
-                  color: '#8d8d8f',
-                }}
-                placeholder={`Add kid's class here ...`}
-                placeholderTextColor={'#a7a7a8'}
-                underlineColorAndroid={'transparent'}
-              /> */}
               <Picker
                 selectedValue={kidClass}
                 onValueChange={(itemValue, itemIndex) => setKidClass(itemValue)}

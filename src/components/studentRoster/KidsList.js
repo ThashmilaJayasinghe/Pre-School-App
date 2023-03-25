@@ -13,11 +13,10 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import firestore from '@react-native-firebase/firestore';
 
-// const KidsCollection = firestore().collection('kids');
-
 const KidsList = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [state, setState] = useState([]);
+  const [checkState, setCheckState] = useState(false);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
@@ -27,6 +26,13 @@ const KidsList = ({navigation}) => {
   useEffect(() => {
     fetchKids();
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (checkState) {
+      fetchKidsDB();
+      setCheckState(false);
+    }
+  }, [checkState]);
 
   useEffect(() => {
     fetchKidsDB();
@@ -60,20 +66,6 @@ const KidsList = ({navigation}) => {
     } else {
       setState(state);
     }
-  };
-  const [kidId, setKidId] = useState('');
-  const [name, setName] = useState('');
-  const [kidClass, setKidClass] = useState('');
-
-  const addKid = () => {
-    const newKid = {
-      id: kidId,
-      name: name,
-      class: kidClass,
-    };
-
-    studentList.push(newKid);
-    setModalVisible(false);
   };
 
   const onDelete = () => {
@@ -174,6 +166,7 @@ const KidsList = ({navigation}) => {
               student={student}
               onDelete={onDelete}
               kids={state}
+              setCheckState={setCheckState}
             />
           ))}
         </ScrollView>
@@ -182,6 +175,8 @@ const KidsList = ({navigation}) => {
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         toggleModal={toggleModal}
+        // addKid={addKid}
+        setCheckState={setCheckState}
       />
     </>
   );

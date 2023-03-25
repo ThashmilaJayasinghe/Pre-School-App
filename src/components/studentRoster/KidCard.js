@@ -1,21 +1,26 @@
 import * as React from 'react';
 import {useState, useRef} from 'react';
-import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import {Color, Border, FontFamily, FontSize} from '../../GlobalStyles';
 import DeleteKid from './Deleltekid';
-// import {FaPen} from 'react-icons';
+import UpdateKid from './UpdateKid';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const KidCard = ({student, onDelete}) => {
+const KidCard = ({student, onDelete, kids}) => {
   const [studentId, setStudentId] = useState(student.id);
   const [studentName, setStudentName] = useState(student.name);
   const [studentClass, setStudentClass] = useState(student.class);
-
-  //   console.log(studentName);
 
   const bottomSheetRef = useRef();
 
   const openBottomSheet = () => {
     bottomSheetRef.current.open();
+  };
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
   };
 
   return (
@@ -31,7 +36,7 @@ const KidCard = ({student, onDelete}) => {
         <View style={styles.groupWrapper}>
           <View style={styles.groupChildLayout}>
             <View style={{display: 'flex', flexDirection: 'row'}}>
-              <TouchableOpacity onPress={() => alert('Edit kid')}>
+              <TouchableOpacity onPress={toggleModal}>
                 <View
                   style={{
                     position: 'absolute',
@@ -40,7 +45,13 @@ const KidCard = ({student, onDelete}) => {
                     borderRadius: 35,
                     backgroundColor: '#F0DA15',
                   }}>
-                  <Text style={{alignSelf: 'center'}}>Edit</Text>
+                  <View
+                    style={{
+                      top: 4,
+                      alignSelf: 'center',
+                    }}>
+                    <FontAwesome name="pencil" size={22} color="#F47B0B" />
+                  </View>
                 </View>
               </TouchableOpacity>
 
@@ -54,8 +65,13 @@ const KidCard = ({student, onDelete}) => {
                     borderRadius: 35,
                     backgroundColor: '#F0DA15',
                   }}>
-                  {/* <FaPen /> */}
-                  <Text style={{alignSelf: 'center'}}>Del</Text>
+                  <View
+                    style={{
+                      top: 5,
+                      alignSelf: 'center',
+                    }}>
+                    <FontAwesome5 name="trash" size={20} color="#F47B0B" />
+                  </View>
                 </View>
               </TouchableOpacity>
             </View>
@@ -77,6 +93,14 @@ const KidCard = ({student, onDelete}) => {
         bottomSheetRef={bottomSheetRef}
         kid={student}
         onDelete={onDelete}
+      />
+
+      <UpdateKid
+        isModalVisible={isModalVisible}
+        toggleUpdateModal={toggleModal}
+        setUpdateModalVisible={setModalVisible}
+        kid={student}
+        kids={kids}
       />
     </View>
   );

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "555843975914",
+    "project_id": "pre-school-management-297a9",
+    "storage_bucket": "pre-school-management-297a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555843975914:android:ebd2be76753f5353bf7593",
+        "android_client_info": {
+          "package_name": "com.preschoolmanagementsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "555843975914-ag4rm3mjj53n41qn9vv0r285neolq3s9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhvhjc0uOdZyXAL79xdOSl73bRfcCZvF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "555843975914-ag4rm3mjj53n41qn9vv0r285neolq3s9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,12 +1,14 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {StyleSheet, View, Image, Text} from 'react-native';
+import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
 import {Color, Border, FontFamily, FontSize} from '../../GlobalStyles';
+import InputModal from './InputModal';
 
 const StudentCard = ({student}) => {
   const [studentId, setStudentId] = useState(student.id);
   const [studentName, setStudentName] = useState(student.name);
   const [studentClass, setStudentClass] = useState(student.class);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={[styles.feedbackItem]}>
@@ -19,7 +21,9 @@ const StudentCard = ({student}) => {
           ]}
         />
         <View style={styles.groupWrapper}>
-          <View style={styles.groupChildLayout}>
+          <TouchableOpacity
+            style={styles.groupChildLayout}
+            onPress={() => setModalVisible(true)}>
             <Image
               style={[styles.groupChild, styles.groupChildLayout]}
               resizeMode="cover"
@@ -35,7 +39,7 @@ const StudentCard = ({student}) => {
               ]}>
               Feedback
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.course1Parent}>
           <Text
@@ -48,6 +52,14 @@ const StudentCard = ({student}) => {
         </View>
         <View style={styles.background1} />
       </View>
+      {/* display the modal */}
+      <InputModal
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        studentName={studentName}
+        studentClass = {studentClass}
+        studentId = {studentId}
+      />
     </View>
   );
 };

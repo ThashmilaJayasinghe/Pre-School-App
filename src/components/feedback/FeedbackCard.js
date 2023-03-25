@@ -1,14 +1,24 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Border, Color, FontFamily, FontSize} from '../../GlobalStyles';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import UpdateModal from './UpdateModal';
+import DeleteFeedback from './DeleteFeedback';
 
-const FeedbackCard = ({student}) => {
-  const [comment, setComment] = useState('');
-  const [studentId, setStudentId] = useState(student.id);
-  const [studentName, setStudentName] = useState(student.name);
-  const [studentClass, setStudentClass] = useState(student.class);
+const FeedbackCard = ({feedback}) => {
+  const [comment, setComment] = useState(feedback.comment);
+  const [studentId, setStudentId] = useState(feedback.id);
+  const [studentName, setStudentName] = useState(feedback.name);
+  const [studentClass, setStudentClass] = useState(feedback.class);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [feedbackId, setFeedbackId] = useState(feedback.id)
+
+  const bottomSheetRef = useRef();
+
+  const openBottomSheet = () => {
+    bottomSheetRef.current.open();
+  };
 
   return (
     <View style={[styles.feedbackItem]}>
@@ -31,7 +41,7 @@ const FeedbackCard = ({student}) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onPress={() => console.log(studentId)}>
+              onPress={() =>setModalVisible(true)}>
               <MaterialIcon name="edit" size={23} color="#F47B0B" />
             </TouchableOpacity>
             <TouchableOpacity
@@ -42,7 +52,9 @@ const FeedbackCard = ({student}) => {
                 backgroundColor: '#F0DA15',
                 alignItems: 'center',
                 justifyContent: 'center',
-              }}>
+              }}
+              onPress = {openBottomSheet}
+              >
               <MaterialIcon name="delete" size={23} color="#F47B0B" />
             </TouchableOpacity>
           </View>
@@ -58,6 +70,21 @@ const FeedbackCard = ({student}) => {
         </View>
         <View style={styles.background1} />
       </View>
+
+      {/* update modal */}
+      <UpdateModal
+        comment={comment}
+        setComment = {setComment}
+        studentName={studentName}
+        studentClass={studentClass}
+        studentId={studentId}
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        feedbackId = {feedbackId}
+      />
+
+      {/* Delete card */}
+      <DeleteFeedback bottomSheetRef = {bottomSheetRef} feedback = {feedback} />
     </View>
   );
 };

@@ -19,6 +19,7 @@ export const Color = {
   limegreen: '#5fcf1b',
   mintcream: '#f1f6ef',
   white: "#fff",
+  dimgray_100: "#616161",
 };
 /* Margins */
 export const Margin = {

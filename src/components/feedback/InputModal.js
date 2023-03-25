@@ -11,20 +11,51 @@ import Modal from 'react-native-modal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {FontFamily} from '../../GlobalStyles';
 import Textarea from 'react-native-textarea';
+import firestore from '@react-native-firebase/firestore';
 
-const InputModalThree = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
+const feedbackCollection = firestore().collection('feedbacks');
+
+const InputModal = ({
+  isModalVisible,
+  setModalVisible,
+  studentName,
+  studentClass,
+  studentId,
+}) => {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0.0);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
+  const onSubmit = async () => {
+    if (comment.length > 5) {
+      const feedbackId = 'abc123-5434jfjd';
+
+      feedbackCollection
+        .add({
+          name: studentName,
+          class: studentClass,
+          studentId: studentId,
+          feedbackId: feedbackId,
+          comment: comment,
+        })
+        .then(() => {
+          console.log('Feedback added!');
+        })
+        .catch(err => console.log('Something went wrong'));
+
+      setErrorMessage('');
+      setModalVisible(false);
+    } else {
+      setErrorMessage('Your comment is too short');
+    }
+  };
+
   return (
     <View style={{flex: 1}}>
-      <Button title="Show modal" onPress={toggleModal} />
-
       <Modal
         isVisible={isModalVisible}
         onBackdropPress={() => setModalVisible(false)}
@@ -41,7 +72,7 @@ const InputModalThree = () => {
           <ScrollView>
             <TouchableOpacity
               style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}
-              onPress={toggleModal}>
+              onPress={() => setModalVisible(!isModalVisible)}>
               <AntDesign name="closesquare" size={27} color="#F47B0B" />
             </TouchableOpacity>
 
@@ -63,15 +94,15 @@ const InputModalThree = () => {
                   }}>
                   Student Name
                 </Text>
-                <Text style={{color: '#545FC3'}}> : Lahiru</Text>
+                <Text style={{color: '#545FC3'}}> : {studentName}</Text>
               </View>
               <View style={{flexDirection: 'row', paddingTop: 5}}>
                 <Text style={{color: '#0E1979'}}>Student ID</Text>
-                <Text style={{color: '#545FC3'}}> : L00342</Text>
+                <Text style={{color: '#545FC3'}}> : {studentId}</Text>
               </View>
               <View style={{flexDirection: 'row', paddingTop: 5}}>
                 <Text style={{color: '#0E1979'}}>Student Class</Text>
-                <Text style={{color: '#545FC3'}}> : Class A</Text>
+                <Text style={{color: '#545FC3'}}> : {studentClass}</Text>
               </View>
             </View>
             <View style={{margin: 20, maxHeight: 300}}>
@@ -99,6 +130,26 @@ const InputModalThree = () => {
                 placeholderTextColor={'#a7a7a8'}
                 underlineColorAndroid={'transparent'}
               />
+
+              {errorMessage.length > 0 && (
+                <View
+                  style={{
+                    marginTop: 8,
+                    backgroundColor: '#facfcf',
+                    borderRadius: 7,
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    paddingHorizontal: 10,
+                    height: 27,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#e61212',
+                    }}>
+                    {errorMessage}
+                  </Text>
+                </View>
+              )}
             </View>
 
             <View style={{alignItems: 'center', marginBottom: 20}}>
@@ -111,7 +162,8 @@ const InputModalThree = () => {
                   height: 35,
                   justifyContent: 'center',
                   alignItems: 'center',
-                }}>
+                }}
+                onPress={onSubmit}>
                 <Text
                   style={{
                     color: '#F7FF9C',
@@ -129,4 +181,4 @@ const InputModalThree = () => {
   );
 };
 
-export default InputModalThree;
+export default InputModal;

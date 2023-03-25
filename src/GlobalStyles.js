@@ -3,6 +3,7 @@ export const FontFamily = {
   alatsiRegular: 'Alatsi_regular',
   alefRegular: 'Alef_regular',
   interRegular: 'Inter_regular',
+  arvoRegular: "Arvo_regular",
 };
 /* font sizes */
 export const FontSize = {
@@ -17,6 +18,8 @@ export const Color = {
   midnightblue_200: 'rgba(14, 25, 121, 0.62)',
   limegreen: '#5fcf1b',
   mintcream: '#f1f6ef',
+  white: "#fff",
+  dimgray_100: "#616161",
 };
 /* Margins */
 export const Margin = {
@@ -25,4 +28,6 @@ export const Margin = {
 /* border radiuses */
 export const Border = {
   br_lg: 18,
+  br_3xs: 10,
+  br_21xl: 40,
 };

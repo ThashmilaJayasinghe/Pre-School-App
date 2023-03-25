@@ -7,8 +7,10 @@ import UpdateModal from '../../components/notices/UpdateModal';
 import DeleteModal from '../../components/notices/DeleteModal';
 
 const NoticeCardTeacher = ({notice}) => {
-  const [noticetId, setNoticeId] = useState(notice.id);
+  const [noticeId, setNoticeId] = useState(notice.id);
+  const [noticeType, setNoticeType] = useState(notice.type);
   const [noticeTitle, setNoticeTitle] = useState(notice.title);
+  const [noticeBody, setNoticeBody] = useState(notice.body);
   const [noticeDate, setNoticeDate] = useState(notice.date);  
   const [isModalVisible, setModalVisible] = useState(false);
   const bottomSheetRef = useRef();
@@ -70,10 +72,17 @@ const NoticeCardTeacher = ({notice}) => {
 
       <UpdateModal 
         isModalVisible={isModalVisible}
-        setModalVisible={setModalVisible} 
+        setModalVisible={setModalVisible}
+        noticeId={noticeId}
+        noticeType={noticeType}
+        noticeTitle={noticeTitle}
+        setNoticeTitle={setNoticeTitle}
+        noticeBody={noticeBody}
+        setNoticeBody={setNoticeBody}
+        noticeDate={noticeDate}
       />
 
-      <DeleteModal bottomSheetRef = {bottomSheetRef} notice = {notice} />
+      <DeleteModal bottomSheetRef = {bottomSheetRef} noticeId = {noticeId} />
     </View>
   );
 };

@@ -2,14 +2,24 @@ import React, {useRef} from 'react';
 import {View, Button, Text, TouchableOpacity} from 'react-native';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import firestore from '@react-native-firebase/firestore';
 
-const DeleteModal = ({bottomSheetRef, notice}) => {
+const DeleteModal = ({bottomSheetRef, noticeId}) => {
 
   const onDelete = () => {
 
-    // delete notice
-
-    bottomSheetRef.current.close();
+    firestore()
+      .collection('notices')
+      .doc(noticeId)
+      .delete()
+      .then(() => {
+        console.log('Deleted successfully');
+        bottomSheetRef.current.close();
+      })
+      .catch(err => {
+        console.log('Deleted unsuccessfully');
+        bottomSheetRef.current.close();
+      });
   };
     
   return (
@@ -21,7 +31,6 @@ const DeleteModal = ({bottomSheetRef, notice}) => {
         alignItems: "flex-end",
         marginTop: 13,
         marginRight: 13
-        // backgroundColor: "#000"
       }}
     >
             

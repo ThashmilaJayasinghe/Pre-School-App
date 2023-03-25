@@ -18,18 +18,21 @@ const UpdateModal = ({
   feedbackId,
   isModalVisible,
   setModalVisible,
-  setIsFeedbackChanged
+  setIsFeedbackChanged,
 }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const onUpdate = async () => {
     if (comment.length > 5) {
+      const timestamp = firestore.Timestamp.fromDate(new Date());
+
       const newFeedback = {
         name: studentName,
         class: studentClass,
         studentId: studentId,
         feedbackId: feedbackId,
         comment: comment,
+        timestamp: timestamp,
       };
 
       await feedbackCollection
@@ -38,12 +41,12 @@ const UpdateModal = ({
         .then(() => console.log('Update successfully'))
         .catch(err => console.log('Update unsuccessfully'));
 
-      setIsFeedbackChanged(prev => !prev)
+      setIsFeedbackChanged(prev => !prev);
       setErrorMessage('');
       setModalVisible(false);
     } else {
       setErrorMessage('Your comment is too short');
-      setModalVisible(true)
+      setModalVisible(true);
     }
   };
 
@@ -62,13 +65,20 @@ const UpdateModal = ({
             borderRadius: 20,
             paddingBottom: 20,
           }}>
-          <ScrollView keyboardShouldPersistTaps="always">
-            <TouchableOpacity
-              style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}
-              onPress={() => setModalVisible(!isModalVisible)}>
-              <AntDesign name="closesquare" size={27} color="#F47B0B" />
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              marginTop: 13,
+              alignItems: 'flex-end',
+              paddingRight: 13,
+              paddingBottom: 10,
+              borderBottomColor: '#d6d6d6',
+              borderBottomWidth: 1,
+            }}
+            onPress={() => setModalVisible(!isModalVisible)}>
+            <AntDesign name="closesquare" size={27} color="#F47B0B" />
+          </TouchableOpacity>
 
+          <ScrollView keyboardShouldPersistTaps="always">
             <View style={{alignItems: 'center', marginVertical: 10}}>
               <Text style={{fontSize: 17, fontWeight: 500}}>
                 Update Feedback

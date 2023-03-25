@@ -19,7 +19,12 @@ const NoticeCardParent = ({notice}) => {
           styles.backgroundPosition,
         ]}
       >
-        <View style={[styles.background1, styles.backgroundLayout]} />
+        <View style={[styles.background1, styles.backgroundLayout]}>
+          <Image
+            style={styles.coverImage}
+            source={require("../../assets/coverImage.png")}
+          />
+        </View>  
         <Text style={[styles.notice1, styles.notice1Position]} numberOfLines={2}>
           {noticeTitle}
         </Text>
@@ -82,6 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.limegreen,
     width: 102,
     height: 83,
+    alignItems: "center"
   },
   notice1: {
     top: 28,
@@ -118,6 +124,10 @@ const styles = StyleSheet.create({
   backgroundPositionButton: {
     left: 0,
     top: 0,
+  },
+  coverImage: {
+    flex: 1,
+    resizeMode: 'contain'
   },
 });
 

@@ -10,8 +10,6 @@ const ViewNoticeLocofy = () => {
     <View style={styles.viewNoticeLocofy}>
       <View
         style={[styles.coverImageIcon, styles.januaryPosition]}
-        // resizeMode="cover"
-        // source={require("../assets/cover-image.png")}
       >
         <Image
           style={styles.coverImage}

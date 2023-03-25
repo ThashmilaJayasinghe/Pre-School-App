@@ -8,30 +8,45 @@ import {
     Pressable,
     Image,
     StyleSheet,
-  } from 'react-native';
-  import React, {useState} from 'react';
-  import Modal from 'react-native-modal';
-  import AntDesign from 'react-native-vector-icons/AntDesign';
-  import {FontFamily, Border, FontSize, Color} from '../../GlobalStyles';
-  import { SelectList } from 'react-native-dropdown-select-list'
+} from 'react-native';
+import React, {useState} from 'react';
+import Modal from 'react-native-modal';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {FontFamily, Border, FontSize, Color} from '../../GlobalStyles';
+import { SelectList } from 'react-native-dropdown-select-list'
+import firestore from '@react-native-firebase/firestore';
   
-  const data = [
-    {key:'1', value:'HOMEWORK'},
-    {key:'2', value:'FEES'},
-    {key:'3', value:'REMINDER'},
-    {key:'4', value:'OTHER'},
-  ]
+const data = [
+  {key:'1', value:'HOMEWORK'},
+  {key:'2', value:'FEES'},
+  {key:'3', value:'REMINDER'},
+  {key:'4', value:'OTHER'},
+]
+
+const noticeCollection = firestore().collection('notices');
   
-  const InputModal = ({isModalVisible, setModalVisible, toggleModal}) => {
-    // const [isModalVisible, setModalVisible] = useState(false);
+  const InputModal = ({
+    isModalVisible, 
+    setModalVisible, 
+    toggleModal
+  }) => {
+    
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [selected, setSelected] = React.useState("");
   
-    const handleUpdate = () => {
-      console.log('Title:', title);
-      console.log('Body:', body);
-      // Do something with the data (e.g. submit to server)
+    const handleInput = async () => {
+      
+      noticeCollection.add({
+        type: selected,
+        title: title,
+        body: body,
+      })
+      .then(() => {
+        console.log('Notice sent');
+      })
+      .catch(err => console.log('Something went wrong'));
+      setModalVisible(false);
     };
   
     // const toggleModal = () => {
@@ -39,9 +54,7 @@ import {
     // };
   
     return (
-      <View style={{flex: 1}}>
-        {/* <Button title="Show modal" onPress={toggleModal} /> */}
-  
+      <View style={{flex: 1}}> 
         <Modal
           isVisible={isModalVisible}
           onBackdropPress={() => setModalVisible(false)}
@@ -127,7 +140,7 @@ Aspect Ratio: 2 x 1`}</Text>
                   <TouchableOpacity
                     style={styles.submitBtn}
                     title="Update"
-                    onPress={handleUpdate}>
+                    onPress={handleInput}>
                     <Text style={styles.submitBtnTxt}>Send Notice</Text>
                   </TouchableOpacity>
                 </View>

@@ -1,90 +1,39 @@
 import * as React from "react";
-import {
-  Image,
-  StyleSheet,
-  View,
-  ImageBackground,
-  Text,
-  Pressable,
-  ScrollView,
-} from "react-native";
-import LinearGradient from "react-native-linear-gradient";
+import { Pressable, Image, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Border, FontFamily, FontSize, Color } from "../../GlobalStyles";
+import { FontSize, Color, FontFamily, Border } from "../../GlobalStyles";
 
-const ViewNotice = () => {
+const ViewNoticeLocofy = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.viewNotice}>
-      <LinearGradient
-        style={styles.coverImage}
-        locations={[0, 1]}
-        colors={["rgba(212, 43, 125, 0.72)", "rgba(223, 54, 145, 0.79)"]}
-        useAngle={true}
-        angle={121.39}
-      >
-        <ImageBackground
-          style={styles.icon}
-          resizeMode="cover"
-          source={require("../../assets/coverimage.png")}
-        />
-      </LinearGradient>
-      {/* <View
-        style={styles.coverImage}
-        locations={[0, 1]}
-        colors={["rgba(212, 43, 125, 0.72)", "rgba(223, 54, 145, 0.79)"]}
+    <View style={styles.viewNoticeLocofy}>
+      <View
+        style={[styles.coverImageIcon, styles.januaryPosition]}
+        // resizeMode="cover"
+        // source={require("../assets/cover-image.png")}
       >
         <Image
-            style={styles.coverImage}
-            source={require("../../assets/coverimage.png")}
+          style={styles.coverImage}
+          source={require("../../assets/coverImage.png")}
         />
-      </View>   */}
-      <View style={styles.groupParent}>
-        <View style={[styles.rectangleParent, styles.groupChildLayout]}>
-          <View
-            style={[
-              styles.groupChild,
-              styles.childPosition,
-              styles.groupChildLayout,
-            ]}
-          />
-          <Text
-            style={[styles.homework, styles.homeworkTypo, styles.iconsPosition]}
-          >
-            HOMEWORK
-          </Text>
-        </View>
-        <Text style={styles.january}>26 January</Text>
       </View>
-      <Text style={[styles.noticeTitle, styles.noticeLayout]}>
+      <View style={[styles.homeworkParent, styles.homeworkPosition]}>
+        <Text style={[styles.homework, styles.homeworkPosition]}>HOMEWORK</Text>
+        <Text style={[styles.january, styles.januaryPosition]}>26 January</Text>
+      </View>
+      <Text style={[styles.noticeTitle, styles.homeworkPosition]}>
         Family Tree Collage due on 30th January
       </Text>
       <Text
-        style={[
-          styles.noticeBody,
-          styles.noticeBodyPosition,
-          styles.noticeLayout,
-        ]}
+        style={[styles.noticeBody, styles.noticeBodyPosition]}
       >{`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero nisi, condimentum sed pulvinar ut, posuere eu purus. Sed viverra eros ac tempus pellentesque. Morbi at nulla sed felis convallis congue. `}</Text>
       <Pressable
         style={[styles.sendNoticeButton, styles.sendLayout]}
         onPress={() => navigation.navigate("NoticeList")}
       >
-        <View
-          style={[
-            styles.sendNoticeButtonChild,
-            styles.sendLayout,
-            styles.childPosition,
-          ]}
-        />
-        <Text
-          style={[
-            styles.backToNotices,
-            styles.noticeBodyPosition,
-            styles.homeworkTypo,
-          ]}
-        >
+        <View style={[styles.sendNoticeButtonChild, styles.sendLayout]} />
+        <Text style={[styles.backToNotices, styles.noticeBodyPosition]}>
           Back to notices
         </Text>
       </Pressable>
@@ -93,33 +42,16 @@ const ViewNotice = () => {
 };
 
 const styles = StyleSheet.create({
-  ml61: {
-    marginLeft: 61,
+  januaryPosition: {
+    position: "absolute",
+    left: 0,
   },
-  iconsPosition: {
+  homeworkPosition: {
     left: "50%",
     position: "absolute",
   },
-  groupChildLayout: {
-    height: 35,
-    width: 88,
-    position: "absolute",
-  },
-  childPosition: {
-    borderRadius: Border.br_3xs,
-    top: 0,
-    left: 0,
-  },
-  homeworkTypo: {
-    textAlign: "center",
-    fontFamily: FontFamily.alatsiRegular,
-  },
-  noticeLayout: {
-    maxWidth: "85%",
-    textAlign: "left",
-  },
   noticeBodyPosition: {
-    fontSize: FontSize.size_studentCard_name,
+    fontSize: FontSize.size_base,
     left: "50%",
     position: "absolute",
   },
@@ -128,122 +60,96 @@ const styles = StyleSheet.create({
     width: 169,
     position: "absolute",
   },
-  viewNoticeChild: {
-    top: 5,
-    left: 282,
-    width: 54,
-    height: 66,
-    position: "absolute",
-  },
-  selectedIcon: {
-    bottom: 0,
-    left: 8,
-    width: 4,
-    height: 4,
-    position: "absolute",
-  },
-  akarIconshome: {
-    width: 20,
-    height: 20,
-    overflow: "hidden",
-  },
-  icons: {
-    marginLeft: -131.5,
-    bottom: 10,
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  navigation: {
-    bottom: 15,
-    left: 56,
-    width: 263,
-    height: 30,
-    position: "absolute",
-  },
-  icon: {
-    height: "100%",
-    backgroundColor: "transparent",
-    width: "100%",
-  },
-  coverImage: {
-    top: 64,
-    width: 375,
+  coverImageIcon: {
+    top: 40,
     height: 225,
+    // minWidth: "100%",
+    // minHeight: 225,
+    // maxWidth: "100%",
+    // maxHeight: 225,
     left: 0,
-    position: "absolute",
-  },
-  groupChild: {
-    borderStyle: "solid",
-    borderColor: "#5fcf1b",
-    borderWidth: 1,
+    width: "100%",
+    backgroundColor: '#E66BA7',
+    alignItems: "center",
   },
   homework: {
-    marginLeft: -36,
-    top: 8,
-    fontSize: 14,
+    marginLeft: -45,
+    fontSize: FontSize.size_sm,
     color: Color.limegreen,
-  },
-  rectangleParent: {
-    top: 0,
-    height: 35,
-    left: 0,
+    textAlign: "center",
+    fontFamily: FontFamily.alatsiRegular,
+    top: -20,
+    borderWidth:  2,
+    borderTopRightRadius:  30,
+    borderBottomRightRadius:  30,
+    borderTopLeftRadius:  30,
+    borderBottomLeftRadius:  30,
+    padding:  5,
+    borderColor: Color.limegreen,
   },
   january: {
-    top: 37,
-    left: 4,
+    top: 20,
     fontSize: FontSize.size_xs,
-    color: "#616161",
+    color: Color.dimgray_100,
     textAlign: "left",
     fontFamily: FontFamily.alatsiRegular,
-    position: "absolute",
+    left: 0,
   },
-  groupParent: {
-    top: 312,
-    left: 12,
-    height: 52,
-    width: 88,
-    position: "absolute",
+  homeworkParent: {
+    marginLeft: -171.5,
+    top: 320,
+    width: 77,
+    height: 44,
   },
   noticeTitle: {
     marginLeft: -175.5,
-    top: 420,
-    fontSize: 18,
+    top: 400,
+    fontSize: FontSize.size_lg,
     color: Color.midnightblue_100,
+    width: "85%",
+    textAlign: "left",
     fontFamily: FontFamily.alatsiRegular,
-    maxWidth: "85%",
-    left: "50%",
-    position: "absolute",
   },
   noticeBody: {
-    marginLeft: -167.5,
-    top: 482,
+    marginLeft: -175.5,
+    top: 460,
     fontFamily: FontFamily.arvoRegular,
-    color: "#545fc3",
-    width: 343,
+    color: Color.slateblue,
+    width: "85%",
     height: 167,
+    textAlign: "left",
   },
   sendNoticeButtonChild: {
+    borderRadius: Border.br_3xs,
     backgroundColor: Color.limegreen,
+    top: 0,
+    left: 0,
   },
   backToNotices: {
     marginLeft: -78.5,
     top: 6,
     color: Color.white,
+    textAlign: "center",
     width: 157,
     height: 24,
+    fontFamily: FontFamily.alatsiRegular,
   },
   sendNoticeButton: {
     top: 685,
     left: 103,
   },
-  viewNotice: {
+  viewNoticeLocofy: {
     borderRadius: Border.br_21xl,
-    backgroundColor: "#f9ebeb",
+    backgroundColor: Color.lavenderblush,
     flex: 1,
     height: 812,
     overflow: "hidden",
     width: "100%",
   },
+  coverImage: {
+    flex: 1,
+    resizeMode: 'contain'
+  },
 });
 
-export default ViewNotice;
+export default ViewNoticeLocofy;

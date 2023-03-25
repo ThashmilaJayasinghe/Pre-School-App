@@ -1,79 +1,132 @@
 import React, {useState} from 'react';
+import {Picker} from '@react-native-picker/picker';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
+  Modal,
   StyleSheet,
 } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const InquiryForm = () => {
+const InquiryForm = ({isVisible, onClose, onSubmit}) => {
+  // const [isVisible, setIsVisible] = useState(false);
   const [studentName, setStudentName] = useState('');
-  const [studentId, setStudentId] = useState('');
+  const [studentEmail, setStudentEmail] = useState('');
   const [title, setTitle] = useState('');
-  const [feedback, setFeedback] = useState('');
+  const [inquiry, setInquiry] = useState('');
+  const [selectedClass, setSelectedClass] = useState('');
+
+  // const toggleModal = () => {
+  //   setIsVisible(!isVisible);
+  // };
 
   const handleSubmit = () => {
-    console.log('Student Name:', studentName);
-    console.log('Student ID:', studentId);
-    console.log('Title:', title);
-    console.log('Feedback:', feedback);
     // Do something with the data (e.g. submit to server)
+    onSubmit({studentName, studentEmail, title, inquiry, selectedClass});
+    setStudentName('');
+    setStudentEmail('');
+    setTitle('');
+    setInquiry('');
+    setSelectedClass('');
+
+    console.log('Student Name:', studentName);
+    console.log('Student ID:', studentEmail);
+    console.log('Title:', title);
+    console.log('Feedback:', inquiry);
+    console.log('SelectedClass:', selectedClass);
+    console.log('hi');
   };
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.formContainer}>
-        <View style={styles.inputWrapper}>
-          <Text style={styles.labelTxt}>Student Name:</Text>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="Enter student name"
-            value={studentName}
-            onChangeText={text => setStudentName(text)}
-          />
-        </View>
+    <Modal
+      visible={isVisible}
+      animation="slide"
+      onBackdropPress={onClose}
+      onRequestClose={onClose}>
+      <View style={styles.wrapper}>
+        <View style={styles.formContainer}>
+          <View style={styles.inputWrapper}>
+            <TouchableOpacity
+              style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}
+              onPress={onClose}>
+              <AntDesign name="closesquare" size={27} color="#F47B0B" />
+            </TouchableOpacity>
+            <Text style={styles.labelTxt}>Student Name:</Text>
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Enter student name"
+              value={studentName}
+              onChangeText={text => setStudentName(text)}
+            />
+          </View>
 
-        <View style={styles.inputWrapper}>
-          <Text style={styles.labelTxt}>Eamil Address:</Text>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="Enter Eamil Address"
-            value={studentId}
-            onChangeText={text => setStudentId(text)}
-          />
-        </View>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.labelTxt}>Class:</Text>
+            <Picker
+              selectedValue={selectedClass}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedClass(itemValue)
+              }
+              style={styles.inputStyle}
+              itemStyle={styles.pickerItem}
+              value={selectedClass}>
+              <Picker.Item label="Class A" value="Class A" />
+              <Picker.Item label="Class B" value="Class B" />
+              <Picker.Item label="Class C" value="Class C" />
+              <Picker.Item label="Class D" value="Class D" />
+            </Picker>
+          </View>
 
-        <View style={styles.inputWrapper}>
-          <Text style={styles.labelTxt}>Title:</Text>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder="Enter title"
-            value={title}
-            onChangeText={text => setTitle(text)}
-          />
-        </View>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.labelTxt}>Eamil Address:</Text>
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Enter Eamil Address"
+              value={studentEmail}
+              onChangeText={setStudentEmail}
+            />
+          </View>
 
-        <View style={styles.inputWrapper}>
-          <Text style={styles.labelTxt}>Feedback:</Text>
-          <TextInput
-            multiline={true}
-            numberOfLines={5}
-            style={styles.inputStyle}
-            placeholder="Enter feedback"
-            value={feedback}
-            onChangeText={text => setFeedback(text)}
-          />
-        </View>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.labelTxt}>Title:</Text>
+            <Picker
+              selectedValue={title}
+              onValueChange={(itemValue, itemIndex) => setTitle(itemValue)}
+              style={styles.inputStyle}
+              itemStyle={styles.pickerItem}
+              value={title}>
+              <Picker.Item label="Home Work" value="Home Work" />
+              <Picker.Item label="Sports" value="Sports" />
+              <Picker.Item label="Music" value="Music" />
+              <Picker.Item label="Dancing" value="Dancing" />
+              <Picker.Item label="Health" value="Health" />
+              <Picker.Item label="Others" value="Others" />
+            </Picker>
+          </View>
 
-        <TouchableOpacity
-          style={styles.submitBtn}
-          title="Submit"
-          onPress={handleSubmit}>
-          <Text style={styles.submitBtnTxt}>Submit</Text>
-        </TouchableOpacity>
+          <View style={styles.inputWrapper}>
+            <Text style={styles.labelTxt}>Inquiry:</Text>
+            <TextInput
+              multiline={true}
+              numberOfLines={5}
+              style={styles.inputStyle}
+              placeholder="Enter feedback"
+              value={inquiry}
+              onChangeText={setInquiry}
+            />
+          </View>
+
+          <TouchableOpacity
+            style={styles.submitBtn}
+            title="Submit"
+            onPress={handleSubmit}>
+            <Text style={styles.submitBtnTxt}>Submit</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </Modal>
   );
 };
 
@@ -107,6 +160,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
+  },
+  pickerItem: {
+    color: '#333',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   labelTxt: {
     fontSize: 18,

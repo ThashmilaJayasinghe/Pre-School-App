@@ -1,17 +1,16 @@
-import * as React from 'react';
-import {useState} from 'react';
-import {StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
-import {Color, Border, FontFamily, FontSize} from '../../GlobalStyles';
-import InputModal from './InputModal';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {Border, Color, FontFamily, FontSize} from '../../GlobalStyles';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-const StudentCard = ({student}) => {
-  const [studentId, setStudentId] = useState(student.id);
-  const [studentName, setStudentName] = useState(student.name);
-  const [studentClass, setStudentClass] = useState(student.class);
-  const [isModalVisible, setModalVisible] = useState(false);
+const InquiryCard = ({inquiry}) => {
+  const [inID, setInID] = useState(inquiry.inID);
+  const [title, setTitle] = useState(inquiry.title);
+  const [date, setDate] = useState(inquiry.date);
+  const [time, setTime] = useState(inquiry.time);
 
   return (
-    <View style={[styles.feedbackItem]}>
+    <View style={[styles.inquiryItem]}>
       <View style={styles.backgroundLayout}>
         <View
           style={[
@@ -21,45 +20,43 @@ const StudentCard = ({student}) => {
           ]}
         />
         <View style={styles.groupWrapper}>
-          <TouchableOpacity
-            style={styles.groupChildLayout}
-            onPress={() => setModalVisible(true)}>
-            <Image
-              style={[styles.groupChild, styles.groupChildLayout]}
-              resizeMode="cover"
-              source={{
-                uri: 'https://d1xzdqg8s8ggsr.cloudfront.net/641a11603ab896e830afb584/fd66b7e2-f303-40c3-82dc-f1f0a100c712_1679516926769965991?Expires=-62135596800&Signature=Ahhc7tvTQ4TShR8uvyEgzFL~4mjGPi9yEuSW4-CJ9s2k9Mw1-gL9v6flpLBKcf2RlqUlhA5tk8C8HoMQN8DAuPZkfxOHWhJbtecjJGlntDNntgwJZ5SeLD3T70E0B9htePbDYBEuMTampgwdu2gmtgzZfQp3cLW5P5Ft8di1bqOooVCFwURa1pRk4~JhdXZP2LhLfilpnJUgC6gwyHhRfVC~rKgERWWU-rOPlwWf1Ny4K5~3Y9kgC00zUJnwcJJWxjg-ZOsEXanGzFFGXWk6cx4g47FHUYHNDWaFyfyreadz74tiuFu~r1amNIvl5jkReYTpv0TWOrJN-nj567W7Ug__&Key-Pair-Id=K1P54FZWCHCL6J',
+          <View style={styles.groupChildLayout}>
+            <TouchableOpacity
+              style={{
+                width: 35,
+                height: 35,
+                borderRadius: 50,
+                backgroundColor: '#F0DA15',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
-            />
-            <Text
-              style={[
-                styles.feedback,
-                styles.courseFlexBox,
-                styles.course1Typo,
-              ]}>
-              Feedback
-            </Text>
-          </TouchableOpacity>
+              onPress={() => console.log(title)}>
+              <MaterialIcon name="edit" size={23} color="#F47B0B" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: 35,
+                height: 35,
+                borderRadius: 50,
+                backgroundColor: '#F0DA15',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <MaterialIcon name="delete" size={23} color="#F47B0B" />
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.course1Parent}>
           <Text
             style={[styles.course1, styles.courseFlexBox, styles.course1Typo]}>
-            {studentName}
+            {title}
           </Text>
           <Text style={[styles.courseDetails, styles.courseFlexBox]}>
-            {studentClass}
+            {date} : {time}
           </Text>
         </View>
         <View style={styles.background1} />
       </View>
-      {/* display the modal */}
-      <InputModal
-        isModalVisible={isModalVisible}
-        setModalVisible={setModalVisible}
-        studentName={studentName}
-        studentClass = {studentClass}
-        studentId = {studentId}
-      />
     </View>
   );
 };
@@ -83,8 +80,11 @@ const styles = StyleSheet.create({
     // backgroundColor: 'pink'
   },
   groupChildLayout: {
+    left: 10,
     height: 26,
-    width: 93,
+    width: 80,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   courseFlexBox: {
     textAlign: 'left',
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: Border.br_lg,
   },
-  feedbackItem: {
+  inquiryItem: {
     // flex: 1,
     // flex: 0.5,
     width: '100%',
@@ -157,4 +157,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StudentCard;
+export default InquiryCard;

@@ -11,22 +11,13 @@ import {Color} from '../../GlobalStyles';
 import SaveKid from './SaveKid';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
-const studentList = [
-  {id: '01', name: 'Kamal', class: 'Class A'},
-  {id: '02', name: 'Nimal', class: 'Class B'},
-  {id: '03', name: 'Sunimal', class: 'Class D'},
-  {id: '04', name: 'Bimal', class: 'Class A'},
-  {id: '05', name: 'John', class: 'Class E'},
-  {id: '06', name: 'Mark', class: 'Class D'},
-  {id: '07', name: 'Sunimal', class: 'Class D'},
-  {id: '08', name: 'Bimal', class: 'Class A'},
-  {id: '09', name: 'John', class: 'Class E'},
-  {id: '10', name: 'Mark', class: 'Class D'},
-];
+import firestore from '@react-native-firebase/firestore';
 
-const KidsList = () => {
+// const KidsCollection = firestore().collection('kids');
+
+const KidsList = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [state, setState] = useState(studentList);
+  const [state, setState] = useState([]);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
@@ -37,17 +28,37 @@ const KidsList = () => {
     fetchKids();
   }, [searchQuery]);
 
-  // useEffect(()=>{},[])
+  useEffect(() => {
+    fetchKidsDB();
+  }, []);
+
+  const fetchKidsDB = () => {
+    const kids = [];
+
+    firestore()
+      .collection('kids')
+      .get()
+      .then(data => {
+        data.forEach(doc => {
+          kids.push({id: doc.id, ...doc.data()});
+        });
+
+        setState(kids);
+      })
+      .catch(() => {
+        console.log('ERROR');
+      });
+  };
 
   const fetchKids = () => {
     if (searchQuery.trim()) {
-      let filteredStudentList = studentList.filter(item => {
+      let filteredStudentList = state.filter(item => {
         item.name.toLowerCase().includes(searchQuery.toLowerCase());
       });
 
       setState(filteredStudentList);
     } else {
-      setState(studentList);
+      setState(state);
     }
   };
   const [kidId, setKidId] = useState('');
@@ -156,13 +167,13 @@ const KidsList = () => {
           </TouchableOpacity>
         </View>
 
-        <ScrollView>
+        <ScrollView style={{marginBottom: 50}}>
           {state.map((student, idx) => (
             <KidCard
               key={student.id}
               student={student}
               onDelete={onDelete}
-              kids={studentList}
+              kids={state}
             />
           ))}
         </ScrollView>

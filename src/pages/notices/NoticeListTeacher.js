@@ -1,6 +1,8 @@
-import {View, Text, ScrollView, TextInput, ImageBackground} from 'react-native';
+import {View, Text, ScrollView, TextInput, ImageBackground, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
+import ActionButton from 'react-native-action-button';
 import NoticeCardTeacher from '../../components/notices/NoticeCardTeacher';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const noticeList = [
   {id: '01', title: 'Notice 1', date: '03 January'},
@@ -11,7 +13,7 @@ const noticeList = [
   {id: '06', title: 'Notice 6', date: '30 January'},
 ];
 
-const NoticeList = () => {
+const NoticeListTeacher = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
@@ -54,8 +56,24 @@ const NoticeList = () => {
           <NoticeCardTeacher key={notice.id} notice={notice} />
         ))}
       </ScrollView>
+      {/* --------------------------- */}
+      <ActionButton buttonColor="#0e1979" position="center" >
+        <ActionButton.Item buttonColor='#9b59b6' title="New Notice" onPress={() => console.log("notice sent!")}>
+          {/* <AntDesign name="closesquare" style={styles.actionButtonIcon} /> */}
+        </ActionButton.Item>
+      </ActionButton>
+      {/* --------------------------- */}
     </View>
   );
 };
 
-export default NoticeList;
+export default NoticeListTeacher;
+
+const styles = StyleSheet.create({
+  actionButtonIcon: {
+    fontSize: 30,
+    height: 22,
+    color: 'white',
+    
+  },
+});

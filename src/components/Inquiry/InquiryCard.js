@@ -6,6 +6,7 @@ import DeleteInquiry from './DeleteInquiry';
 import UpdateInquiry from './UpdateInquiry';
 
 const InquiryCard = ({inquiry, onDelete, inquiries}) => {
+  const [id, setId] = useState(inquiry.id);
   const [title, setTitle] = useState(inquiry.title);
   const [date, setDate] = useState(inquiry.date);
   const [time, setTime] = useState(inquiry.time);
@@ -72,15 +73,15 @@ const InquiryCard = ({inquiry, onDelete, inquiries}) => {
       <DeleteInquiry
         bottomSheetRef={bottomSheetRef}
         inquiry={inquiry}
-        onDelete={onDelete}
+        inquiryID={id}
       />
-      {/* <UpdateInquiry
+      <UpdateInquiry
         isModalVisible={isModalVisible}
         toggleUpdateModal={toggleModal}
         setUpdateModalVisible={setIsModalVisible}
-        inquiry={inquiry}
-        inquiries={inquiries}
-      /> */}
+        updateinquiry={inquiry}
+        inquiryID={id}
+      />
     </View>
   );
 };

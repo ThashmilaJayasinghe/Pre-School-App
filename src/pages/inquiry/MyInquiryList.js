@@ -10,82 +10,36 @@ import React, {useState, useEffect} from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import InquiryCard from '../../components/Inquiry/InquiryCard';
 import InquiryForm from './InquiryForm';
+import firestore from '@react-native-firebase/firestore';
 
-const inquiryList = [
-  {
-    inID: '01',
-    title: 'Home Work',
-    studentName: 'Kamal',
-    studentEmail: 'kamal@gamil.com',
-    inquiry: 'kkkkkkkkkk',
-    selectedClass: 'Class A',
-    date: '2023/02/03',
-    time: '14:34',
-  },
-  {
-    inID: '02',
-    title: 'Sports',
-    studentName: 'Nimal',
-    studentEmail: 'nimal@gmail.com',
-    inquiry: 'kkkkkkkkkk',
-    selectedClass: 'Class B',
-    date: '2023/02/03',
-    time: '14:34',
-  },
-  {
-    inID: '03',
-    title: 'Dancing',
-    studentName: 'Sunimal',
-    studentEmail: 'sunimal@gmail.com',
-    inquiry: 'kkkkkkkkkk',
-    selectedClass: 'Class D',
-    date: '2023/02/03',
-    time: '14:34',
-  },
-  {
-    inID: '04',
-    title: 'Music',
-    studentName: 'Bimal',
-    studentEmail: 'bimal@gmail.com',
-    inquiry: 'kkkkkkkkkk',
-    selectedClass: 'Class A',
-    date: '2023/02/03',
-    time: '14:34',
-  },
-  {
-    inID: '05',
-    title: 'Others',
-    studentName: 'John',
-    studentEmail: 'jhon@gamil.com',
-    inquiry: 'kkkkkkkkkk',
-    selectedClass: 'Class E',
-    date: '2023/02/03',
-    time: '14:34',
-  },
-  {
-    inID: '06',
-    title: 'Health',
-    studentName: 'Mark',
-    studentEmail: 'mark@gmail.com',
-    inquiry: 'kkkkkkkkkk',
-    selectedClass: 'Class D',
-    date: '2023/02/03',
-    time: '14:34',
-  },
-];
 const MyInquiryList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [state, setState] = useState(inquiryList);
+  const [state, setState] = useState([]);
 
-  // const handleInquiryFormSubmit = data => {
-  //   console.log(data);
-  //   console.log('hi');
-  //   setIsModalVisible(false);
-  // };
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
+
+  const inquiryList = () => {
+    const inquiries = [];
+
+    firestore()
+      .collection('inquiries')
+      .onSnapshot(querySnapshot => {
+        const inquiries = [];
+
+        querySnapshot.forEach(doc => {
+          inquiries.push({id: doc.id, ...doc.data()});
+        });
+
+        setState(inquiries);
+      });
+  };
+
+  useEffect(() => {
+    inquiryList();
+  }, []);
 
   useEffect(() => {
     fetchInquirys();
@@ -93,32 +47,16 @@ const MyInquiryList = () => {
 
   const fetchInquirys = () => {
     if (searchQuery.trim()) {
-      let filteredInquiryList = inquiryList.filter(item => {
+      let filteredInquiryList = state.filter(item => {
         item.title.toLowerCase().includes(searchQuery.toLowerCase());
       });
 
       setState(filteredInquiryList);
     } else {
-      setState(inquiryList);
+      setState(state);
     }
   };
-  const [studentName, setStudentName] = useState('');
-  const [studentEmail, setStudentEmail] = useState('');
-  const [title, setTitle] = useState('');
-  const [inquiry, setInquiry] = useState('');
-  const [selectedClass, setSelectedClass] = useState('');
-  const addInquiry = () => {
-    const newInqury = {
-      studentName: studentName,
-      studentEmail: studentEmail,
-      title: title,
-      inquiry: inquiry,
-      selectedClass: selectedClass,
-    };
 
-    inquiryList.push(newInqury);
-    setIsModalVisible(false);
-  };
   return (
     <View
       style={{
@@ -176,7 +114,7 @@ const MyInquiryList = () => {
         <Text style={styles.newInquryBtnTxt}>New Inquriry</Text>
       </TouchableOpacity>
       <ScrollView style={{marginBottom: 140}}>
-        {inquiryList.map((inquiry, idx) => (
+        {state.map((inquiry, idx) => (
           <InquiryCard key={inquiry.id} inquiry={inquiry} />
         ))}
       </ScrollView>

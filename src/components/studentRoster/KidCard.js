@@ -7,7 +7,7 @@ import UpdateKid from './UpdateKid';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const KidCard = ({student, onDelete, kids}) => {
+const KidCard = ({student, onDelete, kids, setCheckState}) => {
   const [studentId, setStudentId] = useState(student.id);
   const [studentName, setStudentName] = useState(student.name);
   const [studentClass, setStudentClass] = useState(student.class);
@@ -93,6 +93,7 @@ const KidCard = ({student, onDelete, kids}) => {
         bottomSheetRef={bottomSheetRef}
         kid={student}
         onDelete={onDelete}
+        setCheckState={setCheckState}
       />
 
       <UpdateKid

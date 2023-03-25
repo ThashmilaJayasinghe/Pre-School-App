@@ -8,6 +8,8 @@ import {
 import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import firestore from '@react-native-firebase/firestore';
+import {Picker} from '@react-native-picker/picker';
 
 const UpdateKid = ({
   toggleUpdateModal,
@@ -16,19 +18,57 @@ const UpdateKid = ({
   kid,
   kids,
 }) => {
-  const [kidId, setKidId] = useState(kid.id);
+  const [kidId, setKidId] = useState(kid.kidId);
   const [name, setName] = useState(kid.name);
   const [kidClass, setKidClass] = useState(kid.class);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessageName, setErrorMessageName] = useState('');
+  const [errorMessageClass, setErrorMessageClass] = useState('');
 
   const updateKid = () => {
+    let flag = true;
+    if (!kidId.trim()) {
+      setErrorMessage(`Kid's Id cannot be empty`);
+      flag = false;
+    }
+
+    if (!name.trim()) {
+      setErrorMessageName(`Kid's name cannot be empty`);
+      flag = false;
+    }
+
+    if (!kidClass.trim()) {
+      setErrorMessageClass(`Kid's class cannot be empty`);
+      flag = false;
+    }
+
     const newKid = {
-      id: kidId,
+      kidId: kidId,
       name: name,
       class: kidClass,
     };
 
+    if (flag) {
+      firestore()
+        .collection('kids')
+        .doc(kid.id || '')
+        .set(newKid, {merge: true})
+        .then(async data => {
+          console.log('update successful');
+
+          setErrorMessageClass('');
+          setErrorMessageName('');
+          setUpdateModalVisible(false);
+        })
+        .catch(error => {
+          setErrorMessageClass('');
+          setErrorMessageName('');
+          console.log('update unsuccessful');
+          setUpdateModalVisible(false);
+        });
+    }
+
     kids.push(newKid);
-    setUpdateModalVisible(false);
   };
 
   return (
@@ -119,6 +159,26 @@ const UpdateKid = ({
                 placeholderTextColor={'#a7a7a8'}
                 underlineColorAndroid={'transparent'}
               />
+
+              {errorMessageName.length > 0 && (
+                <View
+                  style={{
+                    marginTop: 8,
+                    backgroundColor: '#facfcf',
+                    borderRadius: 7,
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    paddingHorizontal: 10,
+                    height: 27,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#e61212',
+                    }}>
+                    {errorMessageName}
+                  </Text>
+                </View>
+              )}
             </View>
             <View style={{margin: 20, maxHeight: 300}}>
               <Text
@@ -133,7 +193,7 @@ const UpdateKid = ({
                 Class
               </Text>
 
-              <TextInput
+              {/* <TextInput
                 onChangeText={setKidClass}
                 value={kidClass}
                 style={{
@@ -149,7 +209,44 @@ const UpdateKid = ({
                 placeholder={`Add kid's class here ...`}
                 placeholderTextColor={'#a7a7a8'}
                 underlineColorAndroid={'transparent'}
-              />
+              /> */}
+
+              <Picker
+                selectedValue={kidClass}
+                onValueChange={(itemValue, itemIndex) => setKidClass(itemValue)}
+                style={{
+                  borderColor: '#16213E',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  padding: 10,
+                }}
+                itemStyle={{color: '#333', fontSize: 18, fontWeight: 'bold'}}
+                value={kidClass}>
+                <Picker.Item label="Class A" value="Class A" />
+                <Picker.Item label="Class B" value="Class B" />
+                <Picker.Item label="Class C" value="Class C" />
+                <Picker.Item label="Class D" value="Class D" />
+              </Picker>
+
+              {errorMessageClass.length > 0 && (
+                <View
+                  style={{
+                    marginTop: 8,
+                    backgroundColor: '#facfcf',
+                    borderRadius: 7,
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    paddingHorizontal: 10,
+                    height: 27,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#e61212',
+                    }}>
+                    {errorMessageClass}
+                  </Text>
+                </View>
+              )}
             </View>
 
             <View style={{alignItems: 'center', marginBottom: 20}}>

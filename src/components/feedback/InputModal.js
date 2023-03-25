@@ -11,9 +11,9 @@ import Modal from 'react-native-modal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {FontFamily} from '../../GlobalStyles';
 import Textarea from 'react-native-textarea';
-import {setDoc} from 'firebase/firestore';
-import {db} from '../../services/firebase';
-import {v4 as uuidv4} from 'uuid';
+import firestore from '@react-native-firebase/firestore';
+
+const feedbackCollection = firestore().collection('feedbacks');
 
 const InputModal = ({
   isModalVisible,
@@ -32,19 +32,20 @@ const InputModal = ({
 
   const onSubmit = async () => {
     if (comment.length > 5) {
-      const feedbackId = uuidv4();
-      await setDoc(doc(db, 'feedbacks', feedbackId), {
-        name: studentName,
-        studentId: studentId,
-        class: studentClass,
-        feedbackId: feedbackId,
-        comment: comment,
-        rating: rating,
-      })
-        .then(() => console.log('Successfully data added'))
-        .catch(err => {
-          console.log(err);
-        });
+      const feedbackId = 'abc123-5434jfjd';
+
+      feedbackCollection
+        .add({
+          name: studentName,
+          class: studentClass,
+          studentId: studentId,
+          feedbackId: feedbackId,
+          comment: comment,
+        })
+        .then(() => {
+          console.log('Feedback added!');
+        })
+        .catch(err => console.log('Something went wrong'));
 
       setErrorMessage('');
       setModalVisible(false);

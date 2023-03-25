@@ -30,6 +30,8 @@ import NoticeListTeacher from './src/pages/notices/NoticeListTeacher';
 import UpdateNoticeModal from './src/components/notices/UpdateModal';
 import InputNoticeModal from './src/components/notices/InputModal';
 import DeleteNoticeModal from './src/components/notices/DeleteModal';
+import Home from './src/pages/Home';
+import NoticeList from './src/pages/notices/NoticeList';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -45,9 +47,9 @@ const App = () => {
         {/* <Stack.Screen name="StudnetCard" component={StudentCard} /> */}
         {/* <Stack.Screen name="StudentCardThree" component={StudentCardThree} /> */}
         {/* nnnn */}
-        {/* {/* <Stack.Screen name="StudentList" component={StudentList} /> */} */}
+        {/* {/* <Stack.Screen name="StudentList" component={StudentList} /> */} 
         {/* <Stack.Screen name="Home" component={ComponentOne} /> */}
-        {/* {/* <Stack.Screen name="InquiryForm" component={InquiryForm} /> */} */}
+        {/* {/* <Stack.Screen name="InquiryForm" component={InquiryForm} /> */} 
 
         {/* <Stack.Screen name="MyInquiryList" component={MyInquiryList} /> */}
         {/* <Stack.Screen name="StudentList" component={StudentList} /> */}

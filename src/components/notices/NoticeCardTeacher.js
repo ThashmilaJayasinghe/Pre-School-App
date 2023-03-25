@@ -31,10 +31,10 @@ const NoticeCardTeacher = ({notice}) => {
             ]}
           >
             <View style={[styles.background1, styles.backgroundLayout]}>
-            <Image
+            {/* <Image
               style={styles.coverImage}
               source={require("../../assets/coverImage.png")}
-            />
+            /> */}
             </View>
             <Text style={[styles.notice1, styles.notice1Position]}>{noticeTitle}</Text>
             <Text

@@ -11,10 +11,10 @@ const ViewNoticeLocofy = () => {
       <View
         style={[styles.coverImageIcon, styles.januaryPosition]}
       >
-        <Image
+        {/* <Image
           style={styles.coverImage}
           source={require("../../assets/coverImage.png")}
-        />
+        /> */}
       </View>
       <View style={[styles.homeworkParent, styles.homeworkPosition]}>
         <Text style={[styles.homework, styles.homeworkPosition]}>HOMEWORK</Text>

@@ -20,10 +20,10 @@ const NoticeCardParent = ({notice}) => {
         ]}
       >
         <View style={[styles.background1, styles.backgroundLayout]}>
-          <Image
+          {/* <Image
             style={styles.coverImage}
             source={require("../../assets/coverImage.png")}
-          />
+          /> */}
         </View>  
         <Text style={[styles.notice1, styles.notice1Position]} numberOfLines={2}>
           {noticeTitle}
@@ -35,11 +35,11 @@ const NoticeCardParent = ({notice}) => {
           style={[styles.viewButton, styles.viewLayout]}
           onPress={() => navigation.navigate("ViewNotice")}
         >
-          <Image
+          {/* <Image
             style={[styles.viewLayout, styles.backgroundPositionButton]}
             resizeMode="cover"
             source={require("../../assets/ellipse-2.png")}
-          />
+          /> */}
           <Text style={styles.view}>View</Text>
         </Pressable>
       </View>

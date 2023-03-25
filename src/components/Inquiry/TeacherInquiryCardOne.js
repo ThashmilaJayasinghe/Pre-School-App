@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
   },
 
   background1: {
-    top: 15,
-    left: 15,
+    top: 17,
+    left: 17,
     right: 15,
     bottom: 15,
     backgroundColor: Color.limegreen,

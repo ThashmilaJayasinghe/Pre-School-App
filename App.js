@@ -69,7 +69,7 @@ const App = () => {
         <Stack.Screen name="InputNoticeModal" component={InputNoticeModal} />
         <Stack.Screen name="UpdateNoticeModal" component={UpdateNoticeModal} />
         <Stack.Screen name="NoticeList" component={NoticeList} />
-        <Stack.Screen name="KidsList" component={KidsList} />
+        {/* <Stack.Screen name="KidsList" component={KidsList} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

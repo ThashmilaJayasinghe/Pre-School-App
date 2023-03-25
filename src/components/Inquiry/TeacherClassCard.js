@@ -1,90 +1,62 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import {Border, Color, FontFamily, FontSize} from '../../GlobalStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import DeleteInquiry from './DeleteInquiry';
-import UpdateInquiry from './UpdateInquiry';
+import InquiryView from '../../pages/inquiry/InquiryView';
 
-const InquiryCard = ({inquiry, onDelete, inquiries}) => {
-  const [id, setId] = useState(inquiry.id);
+const TeacherClassCard = ({inquiry}) => {
+  const [id, setInID] = useState(inquiry.id);
   const [title, setTitle] = useState(inquiry.title);
   const [date, setDate] = useState(inquiry.date);
   const [time, setTime] = useState(inquiry.time);
-
-  const bottomSheetRef = useRef();
-
-  const openBottomSheet = () => {
-    bottomSheetRef.current.open();
-  };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
+
   return (
-    <View style={[styles.inquiryItem]}>
-      <View style={styles.backgroundLayout}>
-        <View
-          style={[
-            styles.background,
-            styles.backgroundLayout,
-            styles.backgroundShadowBox,
-          ]}
-        />
-        <View style={styles.groupWrapper}>
-          <View style={styles.groupChildLayout}>
-            <TouchableOpacity
-              style={{
-                width: 35,
-                height: 35,
-                borderRadius: 50,
-                backgroundColor: '#F0DA15',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={toggleModal}>
-              <MaterialIcon name="edit" size={23} color="#F47B0B" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: 35,
-                height: 35,
-                borderRadius: 50,
-                backgroundColor: '#F0DA15',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={openBottomSheet}>
-              <MaterialIcon name="delete" size={23} color="#F47B0B" />
-            </TouchableOpacity>
+    <View>
+      <TouchableOpacity onPress={toggleModal}>
+        <View style={[styles.inquiryItem]}>
+          <View style={styles.backgroundLayout}>
+            <View
+              style={[
+                styles.background,
+                styles.backgroundLayout,
+                styles.backgroundShadowBox,
+              ]}
+            />
+
+            <View style={styles.course1Parent}>
+              <Text
+                style={[
+                  styles.course1,
+                  styles.courseFlexBox,
+                  styles.course1Typo,
+                ]}>
+                {title}
+              </Text>
+              <Text style={[styles.courseDetails, styles.courseFlexBox]}>
+                {date} : {time}
+              </Text>
+            </View>
+            <View style={styles.background1} />
           </View>
         </View>
-        <View style={styles.course1Parent}>
-          <Text
-            style={[styles.course1, styles.courseFlexBox, styles.course1Typo]}>
-            {title}
-          </Text>
-          <Text style={[styles.courseDetails, styles.courseFlexBox]}>
-            {date} : {time}
-          </Text>
-        </View>
-        <View style={styles.background1} />
-      </View>
-      <DeleteInquiry
-        bottomSheetRef={bottomSheetRef}
-        inquiry={inquiry}
-        inquiryID={id}
-      />
-      <UpdateInquiry
+      </TouchableOpacity>
+      <InquiryView
         isModalVisible={isModalVisible}
-        toggleUpdateModal={toggleModal}
-        setUpdateModalVisible={setIsModalVisible}
-        updateinquiry={inquiry}
+        toggleModal={toggleModal}
+        setModalVisible={setIsModalVisible}
+        viewinquiry={inquiry}
         inquiryID={id}
       />
     </View>
   );
 };
+
+export default TeacherClassCard;
 
 const styles = StyleSheet.create({
   backgroundShadowBox: {
@@ -181,5 +153,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export default InquiryCard;

@@ -6,28 +6,57 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import InquiryCard from '../../components/Inquiry/InquiryCard';
 import InquiryForm from './InquiryForm';
+import firestore from '@react-native-firebase/firestore';
 
-const inquiryList = [
-  {inID: '01', title: 'Home Work', date: 'Kamal', time: 'Class A'},
-  {inID: '02', title: 'Sports', date: 'Nimal', time: 'Class B'},
-  {inID: '03', title: 'Dancing', date: 'Sunimal', time: 'Class D'},
-  {inID: '04', title: 'Music', date: 'Bimal', time: 'Class A'},
-  {inID: '05', title: 'Others', date: 'John', time: 'Class E'},
-  {inID: '06', title: 'Health', date: 'Mark', time: 'Class D'},
-];
 const MyInquiryList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [state, setState] = useState([]);
 
-  const handleInquiryFormSubmit = data => {
-    console.log(data);
-    console.log('hi');
-    setIsModalVisible(false);
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
   };
+
+  const inquiryList = () => {
+    const inquiries = [];
+
+    firestore()
+      .collection('inquiries')
+      .onSnapshot(querySnapshot => {
+        const inquiries = [];
+
+        querySnapshot.forEach(doc => {
+          inquiries.push({id: doc.id, ...doc.data()});
+        });
+
+        setState(inquiries);
+      });
+  };
+
+  useEffect(() => {
+    inquiryList();
+  }, []);
+
+  useEffect(() => {
+    fetchInquirys();
+  }, [searchQuery]);
+
+  const fetchInquirys = () => {
+    if (searchQuery.trim()) {
+      let filteredInquiryList = state.filter(item => {
+        item.title.toLowerCase().includes(searchQuery.toLowerCase());
+      });
+
+      setState(filteredInquiryList);
+    } else {
+      setState(state);
+    }
+  };
+
   return (
     <View
       style={{
@@ -76,22 +105,24 @@ const MyInquiryList = () => {
           color="#F47B0B"
         />
       </View>
+
       <TouchableOpacity
         style={styles.newInquryBtn}
         title="New Inquriry"
-        onPress={() => setIsModalVisible(true)}>
+        //onPress={() => setIsModalVisible(true)}
+        onPress={toggleModal}>
         <Text style={styles.newInquryBtnTxt}>New Inquriry</Text>
-        <InquiryForm
-          isVisible={isModalVisible}
-          onClose={() => setIsModalVisible(false)}
-          onSubmit={handleInquiryFormSubmit}
-        />
       </TouchableOpacity>
-      <ScrollView style={{marginBottom: 50}}>
-        {inquiryList.map((inquiry, idx) => (
+      <ScrollView style={{marginBottom: 140}}>
+        {state.map((inquiry, idx) => (
           <InquiryCard key={inquiry.id} inquiry={inquiry} />
         ))}
       </ScrollView>
+      <InquiryForm
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+        toggleModal={toggleModal}
+      />
     </View>
   );
 };

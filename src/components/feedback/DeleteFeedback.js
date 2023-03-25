@@ -3,13 +3,23 @@ import {View, Button, Text, TouchableOpacity} from 'react-native';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const DeleteFeedback = ({bottomSheetRef, feedback}) => {
-  console.log(feedback);
+// firebase
+import firestore from '@react-native-firebase/firestore';
+const feedbackCollection = firestore().collection('feedbacks');
 
-  const onDeleteConfirm = () => {
+const DeleteFeedback = ({bottomSheetRef, feedback, setIsFeedbackChanged}) => {
+  const onDeleteConfirm = async () => {
+    await feedbackCollection
+      .doc(feedback.feedbackId)
+      .delete()
+      .then(() => {
+        console.log('Delete successfully');
+      })
+      .catch(err => {
+        console.log('Delete not successfully');
+      });
 
-    // do something
-
+    setIsFeedbackChanged(prev => !prev);
     bottomSheetRef.current.close();
   };
 

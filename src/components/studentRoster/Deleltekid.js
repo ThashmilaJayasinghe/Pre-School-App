@@ -1,9 +1,28 @@
-import React, {useRef} from 'react';
-import {View, Button, Text, TouchableOpacity} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import firestore from '@react-native-firebase/firestore';
 
-const DeleteKid = ({bottomSheetRef, kid, onDelete}) => {
+const DeleteKid = ({bottomSheetRef, kid, setCheckState}) => {
+  const [id, setId] = useState(kid.id);
+
+  const onDeleteKid = () => {
+    firestore()
+      .collection('kids')
+      .doc(id)
+      .delete()
+      .then(async () => {
+        console.log('Deleted successfully');
+
+        await bottomSheetRef.current.close();
+        setCheckState(true);
+      })
+      .catch(err => {
+        console.log('Deleted unsuccessfully');
+        bottomSheetRef.current.close();
+      });
+  };
   return (
     <>
       <BottomSheet ref={bottomSheetRef} height={200}>
@@ -35,7 +54,7 @@ const DeleteKid = ({bottomSheetRef, kid, onDelete}) => {
             marginBottom: 20,
           }}>
           <TouchableOpacity
-            onPress={onDelete}
+            onPress={onDeleteKid}
             style={{
               flex: 0,
               width: 110,

@@ -9,11 +9,66 @@ import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import KidProfile from './KidProfile';
+import firestore from '@react-native-firebase/firestore';
+import {Picker} from '@react-native-picker/picker';
 
-const SaveKid = ({isModalVisible, setModalVisible, toggleModal}) => {
+const KidsCollection = firestore().collection('kids');
+
+const SaveKid = ({
+  isModalVisible,
+  setModalVisible,
+  toggleModal,
+  setCheckState,
+}) => {
   const [kidId, setKidId] = useState('');
   const [name, setName] = useState('');
   const [kidClass, setKidClass] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessageName, setErrorMessageName] = useState('');
+  const [errorMessageClass, setErrorMessageClass] = useState('');
+
+  const onSubmit = async () => {
+    let flag = true;
+
+    if (!kidId.trim()) {
+      setErrorMessage(`Kid's Id cannot be empty`);
+      flag = false;
+    }
+
+    if (!name.trim()) {
+      setErrorMessageName(`Kid's name cannot be empty`);
+      flag = false;
+    }
+
+    if (!kidClass.trim()) {
+      setErrorMessageClass(`Kid's class cannot be empty`);
+      flag = false;
+    }
+
+    if (flag) {
+      KidsCollection.add({
+        kidId: kidId,
+        name: name,
+        class: kidClass,
+      })
+        .then(() => {
+          console.log('New kid added!');
+          setModalVisible(false);
+          setErrorMessage('');
+          setErrorMessageClass('');
+          setErrorMessageName('');
+          setCheckState(true);
+        })
+        .catch(err => {
+          setErrorMessage('');
+          setErrorMessageClass('');
+          setErrorMessageName('');
+          setModalVisible(false);
+
+          console.log('Something went wrong');
+        });
+    }
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -81,6 +136,26 @@ const SaveKid = ({isModalVisible, setModalVisible, toggleModal}) => {
                 placeholderTextColor={'#a7a7a8'}
                 underlineColorAndroid={'transparent'}
               />
+
+              {errorMessage.length > 0 && (
+                <View
+                  style={{
+                    marginTop: 8,
+                    backgroundColor: '#facfcf',
+                    borderRadius: 7,
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    paddingHorizontal: 10,
+                    height: 27,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#e61212',
+                    }}>
+                    {errorMessage}
+                  </Text>
+                </View>
+              )}
             </View>
 
             <View style={{margin: 20, maxHeight: 300}}>
@@ -112,7 +187,28 @@ const SaveKid = ({isModalVisible, setModalVisible, toggleModal}) => {
                 placeholderTextColor={'#a7a7a8'}
                 underlineColorAndroid={'transparent'}
               />
+
+              {errorMessageName.length > 0 && (
+                <View
+                  style={{
+                    marginTop: 8,
+                    backgroundColor: '#facfcf',
+                    borderRadius: 7,
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    paddingHorizontal: 10,
+                    height: 27,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#e61212',
+                    }}>
+                    {errorMessageName}
+                  </Text>
+                </View>
+              )}
             </View>
+
             <View style={{margin: 20, maxHeight: 300}}>
               <Text
                 style={{
@@ -126,27 +222,47 @@ const SaveKid = ({isModalVisible, setModalVisible, toggleModal}) => {
                 Class
               </Text>
 
-              <TextInput
-                onChangeText={setKidClass}
+              <Picker
+                selectedValue={kidClass}
+                onValueChange={(itemValue, itemIndex) => setKidClass(itemValue)}
                 style={{
+                  borderColor: '#16213E',
                   borderWidth: 1,
-                  borderColor: '#D6D6D6',
                   borderRadius: 10,
-                  opacity: 10,
-                  padding: 5,
-                  backgroundColor: '#e8e9eb',
-                  fontSize: 14,
-                  color: '#8d8d8f',
+                  padding: 10,
                 }}
-                placeholder={`Add kid's class here ...`}
-                placeholderTextColor={'#a7a7a8'}
-                underlineColorAndroid={'transparent'}
-              />
+                itemStyle={{color: '#333', fontSize: 18, fontWeight: 'bold'}}
+                value={kidClass}>
+                <Picker.Item label="Class A" value="Class A" />
+                <Picker.Item label="Class B" value="Class B" />
+                <Picker.Item label="Class C" value="Class C" />
+                <Picker.Item label="Class D" value="Class D" />
+              </Picker>
+
+              {errorMessageClass.length > 0 && (
+                <View
+                  style={{
+                    marginTop: 8,
+                    backgroundColor: '#facfcf',
+                    borderRadius: 7,
+                    justifyContent: 'center',
+                    alignItems: 'flex-start',
+                    paddingHorizontal: 10,
+                    height: 27,
+                  }}>
+                  <Text
+                    style={{
+                      color: '#e61212',
+                    }}>
+                    {errorMessageClass}
+                  </Text>
+                </View>
+              )}
             </View>
 
             <View style={{alignItems: 'center', marginBottom: 20}}>
               <TouchableOpacity
-                // onPress={addKid}
+                onPress={onSubmit}
                 style={{
                   flex: 0,
                   width: 110,

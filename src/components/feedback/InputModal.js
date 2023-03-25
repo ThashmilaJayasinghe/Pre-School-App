@@ -12,6 +12,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {FontFamily} from '../../GlobalStyles';
 import Textarea from 'react-native-textarea';
 import firestore from '@react-native-firebase/firestore';
+import uuid from 'react-native-uuid';
 
 const feedbackCollection = firestore().collection('feedbacks');
 
@@ -32,10 +33,10 @@ const InputModal = ({
 
   const onSubmit = async () => {
     if (comment.length > 5) {
-      const feedbackId = 'abc123-5434jfjd';
+      const feedbackId = uuid.v4();
 
-      feedbackCollection
-        .add({
+      feedbackCollection.doc(feedbackId)
+        .set({
           name: studentName,
           class: studentClass,
           studentId: studentId,

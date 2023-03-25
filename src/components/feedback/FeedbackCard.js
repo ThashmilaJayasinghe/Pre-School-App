@@ -6,13 +6,13 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import UpdateModal from './UpdateModal';
 import DeleteFeedback from './DeleteFeedback';
 
-const FeedbackCard = ({feedback}) => {
+const FeedbackCard = ({feedback, setIsFeedbackChanged}) => {
   const [comment, setComment] = useState(feedback.comment);
-  const [studentId, setStudentId] = useState(feedback.id);
+  const [studentId, setStudentId] = useState(feedback.studentId);
   const [studentName, setStudentName] = useState(feedback.name);
   const [studentClass, setStudentClass] = useState(feedback.class);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [feedbackId, setFeedbackId] = useState(feedback.id)
+  const [feedbackId, setFeedbackId] = useState(feedback.feedbackId)
 
   const bottomSheetRef = useRef();
 
@@ -81,10 +81,11 @@ const FeedbackCard = ({feedback}) => {
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         feedbackId = {feedbackId}
+        setIsFeedbackChanged = {setIsFeedbackChanged}
       />
 
       {/* Delete card */}
-      <DeleteFeedback bottomSheetRef = {bottomSheetRef} feedback = {feedback} />
+      <DeleteFeedback bottomSheetRef = {bottomSheetRef} feedback = {feedback} setIsFeedbackChanged = {setIsFeedbackChanged} />
     </View>
   );
 };

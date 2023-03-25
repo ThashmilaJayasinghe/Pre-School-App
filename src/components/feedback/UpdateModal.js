@@ -5,6 +5,10 @@ import Modal from 'react-native-modal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {FontFamily} from '../../GlobalStyles';
 
+// firebase
+import firestore from '@react-native-firebase/firestore';
+const feedbackCollection = firestore().collection('feedbacks');
+
 const UpdateModal = ({
   comment,
   setComment,
@@ -14,15 +18,32 @@ const UpdateModal = ({
   feedbackId,
   isModalVisible,
   setModalVisible,
+  setIsFeedbackChanged
 }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
-  const onUpdate = () => {
+  const onUpdate = async () => {
     if (comment.length > 5) {
+      const newFeedback = {
+        name: studentName,
+        class: studentClass,
+        studentId: studentId,
+        feedbackId: feedbackId,
+        comment: comment,
+      };
+
+      await feedbackCollection
+        .doc(feedbackId)
+        .set(newFeedback, {merge: true})
+        .then(() => console.log('Update successfully'))
+        .catch(err => console.log('Update unsuccessfully'));
+
+      setIsFeedbackChanged(prev => !prev)
       setErrorMessage('');
       setModalVisible(false);
     } else {
       setErrorMessage('Your comment is too short');
+      setModalVisible(true)
     }
   };
 

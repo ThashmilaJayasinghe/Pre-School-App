@@ -9,37 +9,69 @@ import {
 import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Picker} from '@react-native-picker/picker';
+import firestore from '@react-native-firebase/firestore';
 
 const UpdateInquiry = ({
   toggleUpdateModal,
   setUpdateModalVisible,
   isModalVisible,
-  inquiryOne,
-  inquiries,
+  updateinquiry,
+  inquiryID,
 }) => {
-  const [studentName, setStudentName] = useState(inquiryOne.studentName);
-  const [studentEmail, setStudentEmail] = useState(inquiryOne.studentEmail);
-  const [title, setTitle] = useState(inquiryOne.title);
-  const [inquiry, setInquiry] = useState(inquiryOne.inquiry);
-  const [selectedClass, setSelectedClass] = useState(inquiryOne.selectedClass);
+  const [studentName, setStudentName] = useState(updateinquiry.studentName);
+  const [studentEmail, setStudentEmail] = useState(updateinquiry.studentEmail);
+  const [title, setTitle] = useState(updateinquiry.title);
+  const [inquiry, setInquiry] = useState(updateinquiry.inquiry);
+  const [selectedClass, setSelectedClass] = useState(
+    updateinquiry.selectedClass,
+  );
 
   const updateInquiry = () => {
+    const currentDate = new Date();
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    const dateString = currentDate.toLocaleDateString('en-US', options);
+    const timeOptions = {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    };
+    const timeString = currentDate.toLocaleTimeString('en-US', timeOptions);
     const updateInquiry = {
+      inquiryID: inquiryID,
       studentName: studentName,
       studentEmail: studentEmail,
       title: title,
       inquiry: inquiry,
       selectedClass: selectedClass,
+      date: dateString,
+      time: timeString,
     };
+    firestore()
+      .collection('inquiries')
+      .doc(inquiryID || '')
+      .set(updateInquiry, {merge: true})
+      .then(async data => {
+        console.log('update successful');
+        setUpdateModalVisible(false);
+      })
+      .catch(error => {
+        console.log('update unsuccessful');
+        setUpdateModalVisible(false);
+      });
 
-    inquiries.push(updateInquiry);
+    //updateInquiry.push(updateInquiry);
     setUpdateModalVisible(false);
   };
 
   return (
     <Modal
       visible={isModalVisible}
-      animation="slide"
       onBackdropPress={() => setUpdateModalVisible(false)}
       onRequestClose={() => setUpdateModalVisible(false)}>
       <View style={styles.wrapper}>

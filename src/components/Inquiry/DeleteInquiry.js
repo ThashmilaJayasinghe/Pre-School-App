@@ -2,8 +2,23 @@ import {View, Button, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import firestore from '@react-native-firebase/firestore';
 
-const DeleteInquiry = ({bottomSheetRef, inquiry, onDelete}) => {
+const DeleteInquiry = ({bottomSheetRef, inquiry, inquiryID}) => {
+  const onDeleteInquiry = () => {
+    firestore()
+      .collection('inquiries')
+      .doc(inquiryID)
+      .delete()
+      .then(() => {
+        console.log('Deleted successfully');
+        bottomSheetRef.current.close();
+      })
+      .catch(err => {
+        console.log('Deleted unsuccessfully');
+        bottomSheetRef.current.close();
+      });
+  };
   return (
     <>
       <BottomSheet ref={bottomSheetRef} height={200}>
@@ -35,7 +50,7 @@ const DeleteInquiry = ({bottomSheetRef, inquiry, onDelete}) => {
             marginBottom: 20,
           }}>
           <TouchableOpacity
-            onPress={onDelete}
+            onPress={onDeleteInquiry}
             style={{
               flex: 0,
               width: 110,

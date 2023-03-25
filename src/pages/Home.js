@@ -11,8 +11,8 @@ const Home = () => {
       {/* scroll view used because of the BottomNavbar visibility */}
       {/* these are just only for testing */}
       <ScrollView>
-        <StudentList />
-        {/* <FeedbackList /> */}
+        {/* <StudentList /> */}
+        <FeedbackList />
       </ScrollView>
 
       <BottomNavbar />

@@ -22,6 +22,7 @@ import ViewNotice from './src/pages/notices/ViewNotice';
 import NoticeListTeacher from './src/pages/notices/NoticeListTeacher';
 import UpdateNoticeModal from './src/components/notices/UpdateModal';
 import InputNoticeModal from './src/components/notices/InputModal';
+import DeleteNoticeModal from './src/components/notices/DeleteModal';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -39,6 +40,7 @@ const App = () => {
         {/* <Stack.Screen name="StudentList" component={StudentList} /> */}
         {/* <Stack.Screen name="Home" component={Home} /> */}
         {/* <Stack.Screen name="Home" component={FeedbackList} /> */}
+        <Stack.Screen name="DeleteNoticeModal" component={DeleteNoticeModal} />
         <Stack.Screen name="InputNoticeModal" component={InputNoticeModal} />
         <Stack.Screen name="UpdateNoticeModal" component={UpdateNoticeModal} />
         <Stack.Screen name="NoticeListTeacher" component={NoticeListTeacher} />

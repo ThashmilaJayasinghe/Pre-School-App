@@ -2,42 +2,57 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {Border, Color, FontFamily, FontSize} from '../../GlobalStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import InquiryView from '../../pages/inquiry/InquiryView';
 
 const TeacherClassCard = ({inquiry}) => {
-  const [inID, setInID] = useState(inquiry.inID);
+  const [id, setInID] = useState(inquiry.id);
   const [title, setTitle] = useState(inquiry.title);
   const [date, setDate] = useState(inquiry.date);
   const [time, setTime] = useState(inquiry.time);
 
-  return (
-    <TouchableOpacity onPress={() => console.log(title)}>
-      <View style={[styles.inquiryItem]}>
-        <View style={styles.backgroundLayout}>
-          <View
-            style={[
-              styles.background,
-              styles.backgroundLayout,
-              styles.backgroundShadowBox,
-            ]}
-          />
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
 
-          <View style={styles.course1Parent}>
-            <Text
+  return (
+    <View>
+      <TouchableOpacity onPress={toggleModal}>
+        <View style={[styles.inquiryItem]}>
+          <View style={styles.backgroundLayout}>
+            <View
               style={[
-                styles.course1,
-                styles.courseFlexBox,
-                styles.course1Typo,
-              ]}>
-              {title}
-            </Text>
-            <Text style={[styles.courseDetails, styles.courseFlexBox]}>
-              {date} : {time}
-            </Text>
+                styles.background,
+                styles.backgroundLayout,
+                styles.backgroundShadowBox,
+              ]}
+            />
+
+            <View style={styles.course1Parent}>
+              <Text
+                style={[
+                  styles.course1,
+                  styles.courseFlexBox,
+                  styles.course1Typo,
+                ]}>
+                {title}
+              </Text>
+              <Text style={[styles.courseDetails, styles.courseFlexBox]}>
+                {date} : {time}
+              </Text>
+            </View>
+            <View style={styles.background1} />
           </View>
-          <View style={styles.background1} />
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+      <InquiryView
+        isModalVisible={isModalVisible}
+        toggleModal={toggleModal}
+        setModalVisible={setIsModalVisible}
+        viewinquiry={inquiry}
+        inquiryID={id}
+      />
+    </View>
   );
 };
 

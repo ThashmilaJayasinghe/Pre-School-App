@@ -6,52 +6,69 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import TeacherClassCard from '../../components/Inquiry/TeacherClassCard';
+import firestore from '@react-native-firebase/firestore';
+import {useRoute} from '@react-navigation/native';
 
-const classA = [
-  {inID: '01', title: 'Home Work', date: 'Kamal', time: 'Class A'},
-  {inID: '02', title: 'Sports', date: 'Nimal', time: 'Class B'},
-  {inID: '03', title: 'Dancing', date: 'Sunimal', time: 'Class D'},
-  {inID: '04', title: 'Music', date: 'Bimal', time: 'Class A'},
-  {inID: '05', title: 'Others', date: 'John', time: 'Class E'},
-  {inID: '06', title: 'Health', date: 'Mark', time: 'Class D'},
-];
-
-const HomeWork = classA.filter(HW => {
-  if (HW.title === 'Home Work') {
-    return HW;
-  }
-});
-const Sports = classA.filter(sports => {
-  if (sports.title === 'Sports') {
-    return sports;
-  }
-});
-const Dancing = classA.filter(dancing => {
-  if (dancing.title === 'Dancing') {
-    return dancing;
-  }
-});
-const Music = classA.filter(music => {
-  if (music.title === 'Music') {
-    return music;
-  }
-});
-const Health = classA.filter(health => {
-  if (health.title === 'Health') {
-    return health;
-  }
-});
-const Others = classA.filter(others => {
-  if (others.title === 'Others') {
-    return others;
-  }
-});
 const TeacherClass = () => {
+  const route = useRoute();
+  const {Cname} = route.params;
   const [searchQuery, setSearchQuery] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [state, setState] = useState([]);
+  // Cname = 'Class D';
+  const inquiryList = () => {
+    const inquiries = [];
+
+    firestore()
+      .collection('inquiries')
+      .where('class', '==', Cname)
+      .onSnapshot(querySnapshot => {
+        const inquiries = [];
+
+        querySnapshot.forEach(doc => {
+          inquiries.push({id: doc.id, ...doc.data()});
+        });
+
+        setState(inquiries);
+      });
+  };
+
+  useEffect(() => {
+    inquiryList();
+  }, []);
+  const HomeWork = state.filter(HW => {
+    if (HW.title === 'Home Work') {
+      return HW;
+    }
+  });
+  const Sports = state.filter(sports => {
+    if (sports.title === 'Sports') {
+      return sports;
+    }
+  });
+  const Dancing = state.filter(dancing => {
+    if (dancing.title === 'Dancing') {
+      return dancing;
+    }
+  });
+  const Music = state.filter(music => {
+    if (music.title === 'Music') {
+      return music;
+    }
+  });
+  const Health = state.filter(health => {
+    if (health.title === 'Health') {
+      return health;
+    }
+  });
+  const Others = state.filter(others => {
+    if (others.title === 'Others') {
+      return others;
+    }
+  });
   return (
     <View>
       <View

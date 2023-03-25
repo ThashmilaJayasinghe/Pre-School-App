@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const InquiryForm = ({isVisible, onClose, onSubmit}) => {
+const InquiryForm = ({isModalVisible, setModalVisible, toggleModal}) => {
   // const [isVisible, setIsVisible] = useState(false);
   const [studentName, setStudentName] = useState('');
   const [studentEmail, setStudentEmail] = useState('');
@@ -24,7 +24,7 @@ const InquiryForm = ({isVisible, onClose, onSubmit}) => {
 
   const handleSubmit = () => {
     // Do something with the data (e.g. submit to server)
-    onSubmit({studentName, studentEmail, title, inquiry, selectedClass});
+    // onSubmit({studentName, studentEmail, title, inquiry, selectedClass});
     setStudentName('');
     setStudentEmail('');
     setTitle('');
@@ -37,20 +37,21 @@ const InquiryForm = ({isVisible, onClose, onSubmit}) => {
     console.log('Feedback:', inquiry);
     console.log('SelectedClass:', selectedClass);
     console.log('hi');
+    toggleModal();
   };
 
   return (
     <Modal
-      visible={isVisible}
+      visible={isModalVisible}
       animation="slide"
-      onBackdropPress={onClose}
-      onRequestClose={onClose}>
+      onBackdropPress={() => setModalVisible(false)}
+      onRequestClose={() => setModalVisible(false)}>
       <View style={styles.wrapper}>
         <View style={styles.formContainer}>
           <View style={styles.inputWrapper}>
             <TouchableOpacity
               style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}
-              onPress={onClose}>
+              onPress={toggleModal}>
               <AntDesign name="closesquare" size={27} color="#F47B0B" />
             </TouchableOpacity>
             <Text style={styles.labelTxt}>Student Name:</Text>
@@ -58,7 +59,7 @@ const InquiryForm = ({isVisible, onClose, onSubmit}) => {
               style={styles.inputStyle}
               placeholder="Enter student name"
               value={studentName}
-              onChangeText={text => setStudentName(text)}
+              onChangeText={setStudentName}
             />
           </View>
 

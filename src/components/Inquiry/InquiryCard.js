@@ -1,14 +1,25 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {Border, Color, FontFamily, FontSize} from '../../GlobalStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import DeleteInquiry from './DeleteInquiry';
+import UpdateInquiry from './UpdateInquiry';
 
-const InquiryCard = ({inquiry}) => {
-  const [inID, setInID] = useState(inquiry.inID);
+const InquiryCard = ({inquiry, onDelete, inquiries}) => {
   const [title, setTitle] = useState(inquiry.title);
   const [date, setDate] = useState(inquiry.date);
   const [time, setTime] = useState(inquiry.time);
 
+  const bottomSheetRef = useRef();
+
+  const openBottomSheet = () => {
+    bottomSheetRef.current.open();
+  };
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
   return (
     <View style={[styles.inquiryItem]}>
       <View style={styles.backgroundLayout}>
@@ -30,7 +41,7 @@ const InquiryCard = ({inquiry}) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onPress={() => console.log(title)}>
+              onPress={toggleModal}>
               <MaterialIcon name="edit" size={23} color="#F47B0B" />
             </TouchableOpacity>
             <TouchableOpacity
@@ -41,7 +52,8 @@ const InquiryCard = ({inquiry}) => {
                 backgroundColor: '#F0DA15',
                 alignItems: 'center',
                 justifyContent: 'center',
-              }}>
+              }}
+              onPress={openBottomSheet}>
               <MaterialIcon name="delete" size={23} color="#F47B0B" />
             </TouchableOpacity>
           </View>
@@ -57,6 +69,18 @@ const InquiryCard = ({inquiry}) => {
         </View>
         <View style={styles.background1} />
       </View>
+      <DeleteInquiry
+        bottomSheetRef={bottomSheetRef}
+        inquiry={inquiry}
+        onDelete={onDelete}
+      />
+      {/* <UpdateInquiry
+        isModalVisible={isModalVisible}
+        toggleUpdateModal={toggleModal}
+        setUpdateModalVisible={setIsModalVisible}
+        inquiry={inquiry}
+        inquiries={inquiries}
+      /> */}
     </View>
   );
 };

@@ -22,8 +22,8 @@ import {
     {key:'4', value:'OTHER'},
   ]
   
-  const InputModal = () => {
-    const [isModalVisible, setModalVisible] = useState(false);
+  const InputModal = ({isModalVisible, setModalVisible, toggleModal}) => {
+    // const [isModalVisible, setModalVisible] = useState(false);
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [selected, setSelected] = React.useState("");
@@ -34,13 +34,13 @@ import {
       // Do something with the data (e.g. submit to server)
     };
   
-    const toggleModal = () => {
-      setModalVisible(!isModalVisible);
-    };
+    // const toggleModal = () => {
+    //   setModalVisible(!isModalVisible);
+    // };
   
     return (
       <View style={{flex: 1}}>
-        <Button title="Show modal" onPress={toggleModal} />
+        {/* <Button title="Show modal" onPress={toggleModal} /> */}
   
         <Modal
           isVisible={isModalVisible}

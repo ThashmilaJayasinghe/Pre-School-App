@@ -1,8 +1,10 @@
-import {View, Text, ScrollView, TextInput, ImageBackground, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, TextInput, ImageBackground, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import ActionButton from 'react-native-action-button';
 import NoticeCardTeacher from '../../components/notices/NoticeCardTeacher';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Color} from '../../GlobalStyles';
+import InputModal from '../../components/notices/InputModal';
 
 const noticeList = [
   {id: '01', title: 'Notice 1', date: '03 January'},
@@ -15,6 +17,13 @@ const noticeList = [
 
 const NoticeListTeacher = () => {
   const [searchQuery, setSearchQuery] = useState('');
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+
+  };
 
   return (
     <View
@@ -51,18 +60,43 @@ const NoticeListTeacher = () => {
           }}
         />
       </View>
+
+      <TouchableOpacity
+            style={{
+              width: '30%',
+              backgroundColor: Color.limegreen,
+              borderRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: 10,
+            }}
+            onPress={toggleModal}>
+            <Text
+              style={{
+                fontFamily: 'Alatsi',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                fontSize: 16,
+                lineHeight: 20,
+                color: '#FFFFFF',
+              }}>
+              New Notice
+            </Text>
+          </TouchableOpacity>
+
+
       <ScrollView>
         {noticeList.map((notice, idx) => (
           <NoticeCardTeacher key={notice.id} notice={notice} />
         ))}
       </ScrollView>
-      {/* --------------------------- */}
-      <ActionButton buttonColor="#0e1979" position="center" >
-        <ActionButton.Item buttonColor='#9b59b6' title="New Notice" onPress={() => console.log("notice sent!")}>
-          {/* <AntDesign name="closesquare" style={styles.actionButtonIcon} /> */}
-        </ActionButton.Item>
-      </ActionButton>
-      {/* --------------------------- */}
+
+      <InputModal 
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        toggleModal={toggleModal} 
+      />   
+      
     </View>
   );
 };

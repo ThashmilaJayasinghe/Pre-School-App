@@ -59,7 +59,7 @@ const KidsList = ({navigation}) => {
   const fetchKids = () => {
     if (searchQuery.trim()) {
       let filteredStudentList = state.filter(item => {
-        item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        return item.name.toLowerCase().includes(searchQuery.toLowerCase());
       });
 
       setState(filteredStudentList);

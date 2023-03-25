@@ -5,7 +5,7 @@ import {Color, Border, FontFamily, FontSize} from '../../GlobalStyles';
 import InputModal from './InputModal';
 
 const StudentCard = ({student}) => {
-  const [studentId, setStudentId] = useState(student.id);
+  const [studentId, setStudentId] = useState(student.kidId);
   const [studentName, setStudentName] = useState(student.name);
   const [studentClass, setStudentClass] = useState(student.class);
   const [isModalVisible, setModalVisible] = useState(false);

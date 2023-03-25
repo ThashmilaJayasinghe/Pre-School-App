@@ -11,23 +11,24 @@ import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {FontFamily} from '../../GlobalStyles';
-import Textarea from 'react-native-textarea';
+import { SelectList } from 'react-native-dropdown-select-list'
+
+const data = [
+  {key:'1', value:'HOMEWORK'},
+  {key:'2', value:'FEES'},
+  {key:'3', value:'REMINDER'},
+  {key:'4', value:'OTHER'},
+]
 
 const UpdateModal = () => {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [comment, setComment] = useState('');
-  const [rating, setRating] = useState(0.0);
-
-  const [studentName, setStudentName] = useState('');
-  const [studentId, setStudentId] = useState('');
   const [title, setTitle] = useState('');
-  const [feedback, setFeedback] = useState('');
+  const [body, setBody] = useState('');
+  const [selected, setSelected] = React.useState("");
 
-  const handleSubmit = () => {
-    console.log('Student Name:', studentName);
-    console.log('Student ID:', studentId);
+  const handleUpdate = () => {
     console.log('Title:', title);
-    console.log('Feedback:', feedback);
+    console.log('Body:', body);
     // Do something with the data (e.g. submit to server)
   };
 
@@ -59,21 +60,19 @@ const UpdateModal = () => {
               <AntDesign name="closesquare" size={27} color="#F47B0B" />
             </TouchableOpacity>
 
-            <View style={{alignItems: 'center', marginVertical: 10}}>
+            <View style={{alignItems: 'center', marginTop: 5}}>
               <Text style={{fontSize: 17, fontWeight: 500}}>Update Notice</Text>
-            </View>
-
-            {/* ------------------ */}
+            </View>     
 
             <View style={styles.wrapper}>
               <View style={styles.formContainer}>
                 <View style={styles.inputWrapper}>
-                  <Text style={styles.labelTxt}>Student Name:</Text>
-                  <TextInput
+                  <Text style={styles.labelTxt}>Type:</Text>            
+                  <SelectList 
                     style={styles.inputStyle}
-                    placeholder="Enter student name"
-                    value={studentName}
-                    onChangeText={text => setStudentName(text)}
+                    setSelected={(val) => setSelected(val)} 
+                    data={data} 
+                    save="value"
                   />
                 </View>
 
@@ -88,31 +87,25 @@ const UpdateModal = () => {
                 </View>
 
                 <View style={styles.inputWrapper}>
-                  <Text style={styles.labelTxt}>Feedback:</Text>
+                  <Text style={styles.labelTxt}>Notice Body:</Text>
                   <TextInput
                     multiline={true}
                     numberOfLines={5}
                     style={styles.inputStyle}
-                    placeholder="Enter feedback"
-                    value={feedback}
-                    onChangeText={text => setFeedback(text)}
+                    placeholder="Enter notice details"
+                    value={body}
+                    onChangeText={text => setBody(text)}
                   />
                 </View>
 
                 <TouchableOpacity
                   style={styles.submitBtn}
-                  title="Submit"
-                  onPress={handleSubmit}>
+                  title="Update"
+                  onPress={handleUpdate}>
                   <Text style={styles.submitBtnTxt}>Update</Text>
                 </TouchableOpacity>
               </View>
-            </View>
-
-
-
-            {/* ------------------ */}
-
-            
+            </View>           
           </ScrollView>
         </View>
       </Modal>

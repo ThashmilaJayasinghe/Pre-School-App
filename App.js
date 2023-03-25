@@ -10,7 +10,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // import StudentList from './src/components/feedback/StudentList';
 // import InquiryForm from './src/pages/inquiry/InquiryForm';
 // import MyInquiryList from './src/pages/inquiry/MyInquiryList';
-//import MyInquiryList from './src/pages/inquiry/MyInquiryList';
+import MyInquiryList from './src/pages/inquiry/MyInquiryList';
 
 // import StudentList from './src/pages/feedback/StudentList';
 // import Background from './src/assets/Background';
@@ -19,7 +19,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import InputModal from './src/components/feedback/InputModal';
 import FeedbackList from './src/pages/feedback/FeedbackList';
 
+import TeacherClassCard from './src/components/Inquiry/TeacherClassCard';
 import TeacherFirstInquiryPage from './src/pages/inquiry/TeacherFirstInquiryPage';
+import TeacherClass from './src/pages/inquiry/TeacherClass';
+import UpdateInquiry from './src/components/Inquiry/UpdateInquiry';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -36,14 +39,13 @@ const App = () => {
 
         {/* <Stack.Screen name="InquiryForm" component={InquiryForm} /> */}
 
-        {/* <Stack.Screen name="MyInquiryList" component={MyInquiryList} /> */}
+        {/* <Stack.Screen name="UpdateInquiry" component={UpdateInquiry} /> */}
+        <Stack.Screen name="MyInquiryList" component={MyInquiryList} />
         {/* <Stack.Screen name="StudentList" component={StudentList} /> */}
         {/* <Stack.Screen name="Home" component={Home} /> */}
         {/* <Stack.Screen name="Home" component={FeedbackList} /> */}
-        <Stack.Screen
-          name="TeacherFirstInquiryPage"
-          component={TeacherFirstInquiryPage}
-        />
+        {/* <Stack.Screen name="TeacherClassCard" component={TeacherClassCard} />
+        <Stack.Screen name="TeacherClass" component={TeacherClass} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

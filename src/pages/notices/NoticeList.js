@@ -1,6 +1,6 @@
 import {View, Text, ScrollView, TextInput, ImageBackground} from 'react-native';
 import React, {useState} from 'react';
-import NoticeCardTeacher from './NoticeCardTeacher';
+import NoticeCardParent from '../../components/notices/NoticeCardParent';
 
 const noticeList = [
   {id: '01', title: 'Notice 1', date: '03 January'},
@@ -51,7 +51,7 @@ const NoticeList = () => {
       </View>
       <ScrollView>
         {noticeList.map((notice, idx) => (
-          <NoticeCardTeacher key={notice.id} notice={notice} />
+          <NoticeCardParent key={notice.id} notice={notice} />
         ))}
       </ScrollView>
     </View>

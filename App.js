@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import ComponentOne from './components/ComponentOne';
 
-import StudentCardTwo from './src/components/feedback/StudentCardTwo';
+// import StudentCardTwo from './src/components/feedback/StudentCardTwo';
 // import StudentCardThree from './src/components/feedback/StudentCard';
 // import StudentList from './src/components/feedback/StudentList';
 import InquiryForm from './src/pages/inquiry/InquiryForm';
@@ -17,9 +17,10 @@ import Home from './src/pages/Home';
 import InputModal from './src/components/feedback/InputModal';
 import FeedbackList from './src/pages/feedback/FeedbackList';
 
-import NoticeList from './src/components/notices/NoticeList';
-import ViewNotice from './src/components/notices/ViewNotice';
-import NoticeListTeacher from './src/components/notices/NoticeListTeacher';
+import NoticeList from './src/pages/notices/NoticeList';
+import ViewNotice from './src/pages/notices/ViewNotice';
+import NoticeListTeacher from './src/pages/notices/NoticeListTeacher';
+import UpdateNoticeModal from './src/components/notices/UpdateModal';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -32,11 +33,12 @@ const App = () => {
         {/* <Stack.Screen name="StudentCardThree" component={StudentCardThree} /> */}
         {/* <Stack.Screen name="StudentList" component={StudentList} /> */}
         {/* <Stack.Screen name="Home" component={ComponentOne} /> */}
-        <Stack.Screen name="InquiryForm" component={InquiryForm} />
+        {/* <Stack.Screen name="InquiryForm" component={InquiryForm} /> */}
 
         {/* <Stack.Screen name="StudentList" component={StudentList} /> */}
-        <Stack.Screen name="Home" component={Home} />
+        {/* <Stack.Screen name="Home" component={Home} /> */}
         {/* <Stack.Screen name="Home" component={FeedbackList} /> */}
+        <Stack.Screen name="UpdateNoticeModal" component={UpdateNoticeModal} />
         <Stack.Screen name="NoticeListTeacher" component={NoticeListTeacher} />
         <Stack.Screen name="NoticeList" component={NoticeList} />
         <Stack.Screen name="ViewNotice" component={ViewNotice} />

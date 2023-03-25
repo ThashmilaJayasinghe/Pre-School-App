@@ -1,89 +1,26 @@
-import * as React from "react";
-import {
-  Image,
-  StyleSheet,
-  ImageBackground,
-  View,
-  Pressable,
-  Text,
-} from "react-native";
-import LinearGradient from "react-native-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
-
-import NoticeListTeacher from './notices/NoticeListTeacher';
+import {View, Text, ScrollView} from 'react-native';
+import React from 'react';
+import BottomNavbar from '../components/navbar/BottomNavbar';
+import StudentList from './feedback/StudentList';
+import FeedbackList from './feedback/FeedbackList';
 
 const Home = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.home}>
-      <Image
-        style={styles.homeChild}
-        resizeMode="cover"
-        source={require("../assets/group-11.png")}
-      />
-      <Image
-        style={styles.homeItem}
-        resizeMode="cover"
-        source={require("../assets/group-22.png")}
-      />
-      <Image
-        style={styles.homeInner}
-        resizeMode="cover"
-        source={require("../assets/ellipse-4.png")}
-      />
-      <LinearGradient
-        style={styles.background}
-        locations={[0, 1]}
-        colors={["rgba(212, 43, 125, 0.72)", "rgba(223, 54, 145, 0.79)"]}
-        useAngle={true}
-        angle={121.39}
-      >
-        <ImageBackground
-          style={styles.icon}
-          resizeMode="cover"
-          source={require("../assets/background.png")}
-        />
-      </LinearGradient>
-      <View style={styles.frameView} />
-      <Pressable
-        style={[
-          styles.studentsButton,
-          styles.buttonLayout,
-          styles.buttonPosition1,
-        ]}
-        onPress={() => navigation.navigate("NoticeListTeacher")}
-      >
-        <View style={[styles.background1, styles.buttonLayout]} />
-        <Text style={[styles.students, styles.noticesTypo]}>Students</Text>
-      </Pressable>
-      <Pressable
-        style={[styles.inquiriesButton, styles.buttonPosition]}
-        onPress={() => navigation.navigate("NoticeListTeacher")}
-      >
-        <View style={[styles.background1, styles.buttonLayout]} />
-        <Text style={[styles.students, styles.noticesTypo]}>Inquiries</Text>
-      </Pressable>
-      <Pressable
-        style={[
-          styles.noticesButton,
-          styles.buttonLayout,
-          styles.buttonPosition1,
-        ]}
-        onPress={() => navigation.navigate("NoticeListTeacher")}
-      >
-        <View style={[styles.background1, styles.buttonLayout]} />
-        <Text style={[styles.notices, styles.noticesTypo]}>Notices</Text>
-      </Pressable>
-      <Pressable
-        style={[styles.feedbackButton, styles.buttonPosition]}
-        onPress={() => navigation.navigate("NoticeListTeacher")}
-      >
-        <View style={[styles.background1, styles.buttonLayout]} />
-        <Text style={[styles.feedback, styles.noticesTypo]}>Feedback</Text>
-      </Pressable>
-    </View>
+    <>
+      {/* <View style = {{height: '100%', backgroundColor: 'red'}}> */}
+      {/* scroll view used because of the BottomNavbar visibility */}
+      {/* these are just only for testing */}
+      <ScrollView>
+        <StudentList />
+        {/* <FeedbackList /> */}
+      </ScrollView>
+
+      <BottomNavbar />
+
+      {/* </View> */}
+    </>
   );
 };
 

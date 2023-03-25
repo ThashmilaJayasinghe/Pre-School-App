@@ -1,18 +1,39 @@
 import {View, Text, ScrollView, TextInput, ImageBackground} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import NoticeCardParent from '../../components/notices/NoticeCardParent';
+import firestore from '@react-native-firebase/firestore';
 
-const noticeList = [
-  {id: '01', title: 'Notice 1', date: '03 January'},
-  {id: '02', title: 'Notice 2', date: '09 January'},
-  {id: '03', title: 'Notice 3', date: '14 January'},
-  {id: '04', title: 'Notice 4', date: '23 January'},
-  {id: '05', title: 'Notice 5', date: '26 January'},
-  {id: '06', title: 'Notice 6', date: '30 January'},
-];
+// const noticeList1 = [
+//   {id: '01', title: 'Notice 1', date: '03 January'},
+//   {id: '02', title: 'Notice 2', date: '09 January'},
+//   {id: '03', title: 'Notice 3', date: '14 January'},
+//   {id: '04', title: 'Notice 4', date: '23 January'},
+//   {id: '05', title: 'Notice 5', date: '26 January'},
+//   {id: '06', title: 'Notice 6', date: '30 January'},
+// ];
 
 const NoticeList = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [noticeList, setNoticeList] = useState([]);
+
+  useEffect(() => {
+    const items = [];
+    const subscriber = firestore()
+      .collection('notices')
+      .get()
+      .then(querySnapshot => {
+        console.log('Total notices: ', querySnapshot.size);
+
+        querySnapshot.forEach(documentSnapshot => {
+          items.push(documentSnapshot.data());
+        });
+
+        setNoticeList(items);
+      });
+
+    // Stop listening for updates when no longer required
+    return () => subscriber();
+  }, []);
 
   return (
     <View

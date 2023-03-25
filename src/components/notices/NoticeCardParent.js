@@ -5,9 +5,12 @@ import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontFamily, FontSize } from "../../GlobalStyles";
 
 const NoticeCardParent = ({notice}) => {
-  const [noticetId, setNoticeId] = useState(notice.id);
+  const [noticeId, setNoticeId] = useState(notice.id);
+  const [noticeType, setNoticeType] = useState(notice.type);
   const [noticeTitle, setNoticeTitle] = useState(notice.title);
-  const [noticeDate, setNoticeDate] = useState(notice.date);  
+  const [noticeDate, setNoticeDate] = useState(notice.date);
+  const [noticeBody, setNoticeBody] = useState(notice.body);
+
   const navigation = useNavigation();
 
   return (
@@ -33,7 +36,13 @@ const NoticeCardParent = ({notice}) => {
         </Text>
         <Pressable
           style={[styles.viewButton, styles.viewLayout]}
-          onPress={() => navigation.navigate("ViewNotice")}
+          onPress={() => navigation.navigate("ViewNotice", {
+            noticeId,
+            noticeType,
+            noticeTitle, 
+            noticeDate,
+            noticeBody,
+          })}
         >
           {/* <Image
             style={[styles.viewLayout, styles.backgroundPositionButton]}

@@ -3,8 +3,15 @@ import { Pressable, Image, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, Color, FontFamily, Border } from "../../GlobalStyles";
 
-const ViewNoticeLocofy = () => {
+const ViewNoticeLocofy = ({route}) => {
   const navigation = useNavigation();
+  const { 
+    noticeId,
+    noticeType,
+    noticeTitle, 
+    noticeDate,
+    noticeBody, 
+  } = route.params;
 
   return (
     <View style={styles.viewNoticeLocofy}>
@@ -17,15 +24,15 @@ const ViewNoticeLocofy = () => {
         /> */}
       </View>
       <View style={[styles.homeworkParent, styles.homeworkPosition]}>
-        <Text style={[styles.homework, styles.homeworkPosition]}>HOMEWORK</Text>
-        <Text style={[styles.january, styles.januaryPosition]}>26 January</Text>
+        <Text style={[styles.homework, styles.homeworkPosition]}>{noticeType}</Text>
+        <Text style={[styles.january, styles.januaryPosition]}>{noticeDate}</Text>
       </View>
       <Text style={[styles.noticeTitle, styles.homeworkPosition]}>
-        Family Tree Collage due on 30th January
+        {noticeTitle}
       </Text>
       <Text
         style={[styles.noticeBody, styles.noticeBodyPosition]}
-      >{`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero nisi, condimentum sed pulvinar ut, posuere eu purus. Sed viverra eros ac tempus pellentesque. Morbi at nulla sed felis convallis congue. `}</Text>
+      >{noticeBody}</Text>
       <Pressable
         style={[styles.sendNoticeButton, styles.sendLayout]}
         onPress={() => navigation.navigate("NoticeList")}

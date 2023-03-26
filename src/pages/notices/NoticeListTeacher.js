@@ -4,6 +4,7 @@ import ActionButton from 'react-native-action-button';
 import NoticeCardTeacher from '../../components/notices/NoticeCardTeacher';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Color} from '../../GlobalStyles';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import InputModal from '../../components/notices/InputModal';
 import firestore from '@react-native-firebase/firestore';
 
@@ -29,7 +30,7 @@ const NoticeListTeacher = () => {
 
   useEffect(() => {
     const items = [];
-    const subscriber = firestore()
+    firestore()
       .collection('notices')
       .get()
       .then(querySnapshot => {
@@ -43,7 +44,7 @@ const NoticeListTeacher = () => {
       });
 
     // Stop listening for updates when no longer required
-    return () => subscriber();
+   
   }, []);
 
   return (
@@ -52,10 +53,10 @@ const NoticeListTeacher = () => {
         backgroundColor: '#FBF8EB',
       }}>
       {/* search bar */}
-
       <View
         style={{
           alignItems: 'center',
+          marginVertical: 10,
         }}>
         <TextInput
           onChangeText={setSearchQuery}
@@ -72,18 +73,34 @@ const NoticeListTeacher = () => {
             // height: 10,
             shadowRadius: 6,
             borderRadius: 6,
-            elevation: 6,
+            elevation: 0,
             shadowOpacity: 1,
-            height: 50,
+            height: 40,
             width: '90%',
-            paddingVertical: 10,
-            paddingHorizontal: 20,
+            paddingLeft: 10,
+            paddingRight: 40,
+            paddingHorizontal: 10,
+            color: '#626262',
           }}
+          placeholder="Search ..."
+        />
+        <FeatherIcon
+          name="search"
+          size={20}
+          style={{
+            top: 10,
+            right: 30,
+            position: 'absolute',
+          }}
+          color="#F47B0B"
         />
       </View>
 
+
       <TouchableOpacity
             style={{
+              marginLeft: '35%',
+              marginBottom: 20,
               width: '30%',
               backgroundColor: Color.limegreen,
               borderRadius: 10,
@@ -106,7 +123,7 @@ const NoticeListTeacher = () => {
           </TouchableOpacity>
 
 
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
         {noticeList.map((notice, idx) => (
           <NoticeCardTeacher key={notice.id} notice={notice} />
         ))}
@@ -130,5 +147,9 @@ const styles = StyleSheet.create({
     height: 22,
     color: 'white',
     
+  },
+  contentContainer: {
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

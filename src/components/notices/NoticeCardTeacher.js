@@ -1,8 +1,9 @@
 import * as React from "react";
 import {useState, useRef} from 'react';
-import { View, StyleSheet, Text, Pressable, Image } from "react-native";
+import { View, StyleSheet, Text, Pressable, Image, TouchableOpacity } from "react-native";
 import { Border, Color, FontSize, FontFamily } from "../../GlobalStyles";
 import { useNavigation } from "@react-navigation/native";
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import UpdateModal from '../../components/notices/UpdateModal';
 import DeleteModal from '../../components/notices/DeleteModal';
 
@@ -22,54 +23,57 @@ const NoticeCardTeacher = ({notice}) => {
 
   
   return (
-    <View style={styles.noticeCardTeacher}>
-      <View style={[styles.groupParent, styles.backgroundLayout1]}>
-        <View style={[styles.groupParent, styles.backgroundLayout1]}>
-          <View
-            style={[
-              styles.background,
-              styles.backgroundLayout,
-              styles.backgroundLayout2,
-            ]}
-          >
-            <View style={[styles.background1, styles.backgroundLayout]}>
-            {/* <Image
-              style={styles.coverImage}
-              source={require("../../assets/coverImage.png")}
-            /> */}
-            </View>
-            <Text style={[styles.notice1, styles.notice1Position]}>{noticeTitle}</Text>
-            <Text
-                style={[styles.january, styles.notice1Position]}
-                numberOfLines={1}
-            >
-                {noticeDate}
-            </Text>
-          </View>  
-          <View style={styles.buttons}>
-            <Pressable        
+    <View style={[styles.noticeItem]}>
+      <View style={styles.backgroundLayout}>
+        <View
+          style={[
+            styles.background,
+            styles.backgroundLayout,
+            styles.backgroundShadowBox,
+          ]}
+        />
+        <View style={styles.groupWrapper}>
+          <View style={styles.groupChildLayout}>
+            <TouchableOpacity
+              style={{
+                width: 35,
+                height: 35,
+                borderRadius: 50,
+                backgroundColor: '#F0DA15',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onPress={() =>setModalVisible(true)}>
+              <MaterialIcon name="edit" size={23} color="#F47B0B" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: 35,
+                height: 35,
+                borderRadius: 50,
+                backgroundColor: '#F0DA15',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
               onPress = {openBottomSheet}
-            >
-              <Image
-                style={[styles.deleteIcon, styles.iconLayout]}
-                resizeMode="cover"
-                source={require("../../assets/deleteNotice.png")}
-              />
-            </Pressable>   
-            <Pressable
-              onPress={() =>setModalVisible(true)}              
-            >
-              <Image
-                style={[styles.editIcon, styles.iconLayout]}
-                resizeMode="cover"
-                source={require("../../assets/editNotice.png")}
-              />
-            </Pressable>
-            </View>
+              >
+              <MaterialIcon name="delete" size={23} color="#F47B0B" />
+            </TouchableOpacity>
+          </View>
         </View>
+        <View style={styles.course1Parent}>
+          <Text
+            style={[styles.course1, styles.courseFlexBox, styles.course1Typo]}>
+            {noticeTitle}
+          </Text>
+          <Text style={[styles.courseDetails, styles.courseFlexBox]}>
+            {noticeDate}
+          </Text>
+        </View>
+        <View style={styles.background1} />
       </View>
 
-      <UpdateModal 
+      <UpdateModal
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         noticeId={noticeId}
@@ -81,98 +85,101 @@ const NoticeCardTeacher = ({notice}) => {
         noticeDate={noticeDate}
       />
 
-      <DeleteModal bottomSheetRef = {bottomSheetRef} noticeId = {noticeId} />
+<DeleteModal bottomSheetRef = {bottomSheetRef} noticeId = {noticeId} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  backgroundLayout1: {
-    width: 329,
-    top: 0,
-    left: 0,
-    height: 112,
-  },
-  backgroundLayout2: {
-    width: 329,
-    top: 20,
-    // left: 0;
-    flex: 1,
-    height: 112,
-  },
-  backgroundLayout: {
-    borderRadius: Border.br_lg,
-    position: "absolute",
-  },
-  notice1Position: {
-    textAlign: "left",
-    left: "50%",
-    marginLeft: -24.5,
-    position: "absolute",
-  },
-  iconLayout: {
-    width: 35,
-    height: 35,
-    top: 0,
-    position: "absolute",
-  },
-  background: {
-    backgroundColor: Color.mintcream,
-    shadowColor: "rgba(0, 0, 0, 0.15)",
+  backgroundShadowBox: {
+    shadowOpacity: 1,
+    elevation: 6,
+    shadowRadius: 4,
     shadowOffset: {
       width: 1,
       height: 2,
     },
-    shadowRadius: 4,
-    elevation: 4,
-    shadowOpacity: 1,
+    shadowColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: Color.mintcream,
+    borderRadius: Border.br_lg,
+  },
+  backgroundLayout: {
+    height: 112,
+    width: 329,
+    // backgroundColor: 'pink'
+  },
+  groupChildLayout: {
+    left: 10,
+    height: 26,
+    width: 80,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  courseFlexBox: {
+    textAlign: 'left',
+    position: 'absolute',
+  },
+  course1Typo: {
+    fontFamily: FontFamily.alatsiRegular,
+    textAlign: 'left',
+  },
+  background: {
+    left: 0,
+    top: 0,
+    position: 'absolute',
+  },
+  groupChild: {
+    left: 0,
+    top: 0,
+    position: 'absolute',
+  },
+  notice: {
+    top: 4,
+    left: 20,
+    fontSize: FontSize.size_smi,
+    color: '#eb7100',
+  },
+  groupWrapper: {
+    top: 70,
+    left: 224,
+    height: 35,
+    justifyContent: 'space-between',
+    position: 'absolute',
+    alignItems: 'center',
+  },
+  course1: {
+    // left: 4,
+    fontSize: FontSize.size_studentCard_name,
+    color: Color.midnightblue_100,
+    top: 0,
+  },
+  courseDetails: {
+    top: 34,
+    fontSize: FontSize.size_smi,
+    fontFamily: FontFamily.alefRegular,
+    color: Color.midnightblue_200,
+    left: 0,
+  },
+  course1Parent: {
+    top: 21,
+    left: 153,
+    width: '50%',
+    height: '40%',
+    position: 'absolute',
   },
   background1: {
     top: 15,
-    left: 16,
+    left: 18,
     backgroundColor: Color.limegreen,
     width: 102,
     height: 83,
-    alignItems: "center",
+    position: 'absolute',
+    borderRadius: Border.br_lg,
   },
-  notice1: {
-    top: 28,
-    fontSize: FontSize.size_smi,
-    fontFamily: FontFamily.alatsiRegular,
-    color: Color.midnightblue_100,
-  },
-  january: {
-    top: 46,
-    fontSize: FontSize.size_5xs,
-    fontFamily: FontFamily.alefRegular,
-    color: Color.midnightblue_200,
-  },
-  groupParent: {
-    position: "absolute",
-    top: 0,
-  },
-  deleteIcon: {
-    left: 46,
-  },
-  editIcon: {
-    left: 0,
-    width: 35,
-  },
-  buttons: {
-    top: 70,
-    left: 237,
-    width: 81,
-    height: 35,
-    position: "absolute",
-  },
-  noticeCardTeacher: {
-    flex: 1,
-    width: "100%",
-    height: 112,
-  },
-  coverImage: {
-    flex: 1,
-    resizeMode: 'contain'
+  noticeItem: {
+    width: '100%',
+    height: 126,
+    alignItems: 'center',
   },
 });
 

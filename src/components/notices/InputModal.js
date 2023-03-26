@@ -69,7 +69,7 @@ const noticeCollection = firestore().collection('notices');
               flex: 0,
               backgroundColor: 'white',
               width: '90%',
-              height: '95%',
+              height: '85%',
               borderRadius: 20,
               paddingBottom: 20,
             }}>
@@ -120,18 +120,13 @@ const noticeCollection = firestore().collection('notices');
 
                   {/* ---------------------- */}
 
-                  <View style={styles.groupParent}>
+                  {/* <View style={styles.groupParent}>
                     <Pressable style={styles.groupChildPosition}>
                         <View style={[styles.groupChild, styles.groupChildPosition]} />
                         <View style={[styles.uploadCoverImageParent, styles.uploadPosition]}>
                         <Text style={[styles.uploadCoverImage, styles.pngJpegJpgPositionUpload]}>
                             Upload cover image
-                        </Text>
-                        {/* <Image
-                            style={[styles.uploadIcon, styles.uploadPosition]}
-                            resizeMode="cover"
-                            source={require("../../assets/upload.png")}
-                        /> */}
+                        </Text>                  
                         <AntDesign name="upload" style={[styles.uploadIcon, styles.uploadPosition]} size={27} color="#5fcf1b" />
                         </View>
                     </Pressable>
@@ -139,7 +134,7 @@ const noticeCollection = firestore().collection('notices');
                         style={[styles.pngJpegJpg, styles.pngJpegJpgPosition]}
                     >{`png, jpeg, jpg - Max size: 1 MB
 Aspect Ratio: 2 x 1`}</Text>
-                    </View>
+                    </View> */}
 
                   {/* ---------------------- */}
   

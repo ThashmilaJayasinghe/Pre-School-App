@@ -33,25 +33,30 @@ const noticeCollection = firestore().collection('notices');
     
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [selected, setSelected] = React.useState("");
-  
+    const [selected, setSelected] = React.useState('');
+      
     const handleInput = async () => {
+
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+      const day = new Date().getDate();
+      const month = monthNames[new Date().getMonth()];
+      const dateInWords = day + " " + month;
       
       noticeCollection.add({
         type: selected,
         title: title,
         body: body,
+        date: dateInWords,
       })
       .then(() => {
         console.log('Notice sent');
+        setTitle('');
+        setBody('');
       })
       .catch(err => console.log('Something went wrong'));
       setModalVisible(false);
     };
-  
-    // const toggleModal = () => {
-    //   setModalVisible(!isModalVisible);
-    // };
   
     return (
       <View style={{flex: 1}}> 
@@ -122,11 +127,12 @@ const noticeCollection = firestore().collection('notices');
                         <Text style={[styles.uploadCoverImage, styles.pngJpegJpgPositionUpload]}>
                             Upload cover image
                         </Text>
-                        <Image
+                        {/* <Image
                             style={[styles.uploadIcon, styles.uploadPosition]}
                             resizeMode="cover"
                             source={require("../../assets/upload.png")}
-                        />
+                        /> */}
+                        <AntDesign name="upload" style={[styles.uploadIcon, styles.uploadPosition]} size={27} color="#5fcf1b" />
                         </View>
                     </Pressable>
                     <Text

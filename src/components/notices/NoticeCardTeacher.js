@@ -47,8 +47,7 @@ const NoticeCardTeacher = ({notice}) => {
             </Text>
           </View>  
           <View style={styles.buttons}>
-            <Pressable
-              // onPress={() => navigation.navigate("ViewNotice")}
+            <Pressable        
               onPress = {openBottomSheet}
             >
               <Image

@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     height: 36,
     width: 169,
     position: "absolute",
+    
   },
   coverImageIcon: {
     top: 40,
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   backToNotices: {
-    marginLeft: -78.5,
+    marginLeft: '-36.5%',
     top: 6,
     color: Color.white,
     textAlign: "center",
@@ -140,8 +141,9 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.alatsiRegular,
   },
   sendNoticeButton: {
-    top: 685,
-    left: 103,
+    marginLeft: '30%',
+    top: 550,
+    // left: 103,
   },
   viewNoticeLocofy: {
     borderRadius: Border.br_21xl,

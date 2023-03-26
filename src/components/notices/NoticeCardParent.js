@@ -49,6 +49,13 @@ const NoticeCardParent = ({notice}) => {
             resizeMode="cover"
             source={require("../../assets/ellipse-2.png")}
           /> */}
+          <Image
+            style={[styles.viewLayout, styles.backgroundPositionButton]}
+            resizeMode="cover"
+            source={{
+              uri: 'https://d1xzdqg8s8ggsr.cloudfront.net/641a11603ab896e830afb584/fd66b7e2-f303-40c3-82dc-f1f0a100c712_1679516926769965991?Expires=-62135596800&Signature=Ahhc7tvTQ4TShR8uvyEgzFL~4mjGPi9yEuSW4-CJ9s2k9Mw1-gL9v6flpLBKcf2RlqUlhA5tk8C8HoMQN8DAuPZkfxOHWhJbtecjJGlntDNntgwJZ5SeLD3T70E0B9htePbDYBEuMTampgwdu2gmtgzZfQp3cLW5P5Ft8di1bqOooVCFwURa1pRk4~JhdXZP2LhLfilpnJUgC6gwyHhRfVC~rKgERWWU-rOPlwWf1Ny4K5~3Y9kgC00zUJnwcJJWxjg-ZOsEXanGzFFGXWk6cx4g47FHUYHNDWaFyfyreadz74tiuFu~r1amNIvl5jkReYTpv0TWOrJN-nj567W7Ug__&Key-Pair-Id=K1P54FZWCHCL6J',
+            }}
+          />
           <Text style={styles.view}>View</Text>
         </Pressable>
       </View>

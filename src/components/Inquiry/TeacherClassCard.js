@@ -1,8 +1,11 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import {Border, Color, FontFamily, FontSize} from '../../GlobalStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import InquiryView from '../../pages/inquiry/InquiryView';
+
+const inqUri =
+  'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/KenuriImages%2Finquiry.png?alt=media&token=4b168080-4d09-4787-bc53-2aff9880379c';
 
 const TeacherClassCard = ({inquiry}) => {
   const [id, setInID] = useState(inquiry.id);
@@ -41,7 +44,15 @@ const TeacherClassCard = ({inquiry}) => {
                 {date} : {time}
               </Text>
             </View>
-            <View style={styles.background1} />
+            <View style={styles.background1}>
+              {inqUri && (
+                <Image
+                  style={{flex: 1}}
+                  resizeMode="center"
+                  source={{uri: inqUri}}
+                />
+              )}
+            </View>
           </View>
         </View>
       </TouchableOpacity>

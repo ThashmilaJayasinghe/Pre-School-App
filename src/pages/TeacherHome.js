@@ -31,32 +31,36 @@ const TeacherHome = () => {
         <ScrollView>
           {/* <StudentList /> */}
           {/* <FeedbackList /> */}
-          <View style={styles.homeCover}>
-            <Image style={styles.bannerImage} source={{uri: bannerImg}} />
+          <View style={{alignItems: 'center'}}>
+            <View style={styles.homeCover}>
+              <Image style={styles.bannerImage} source={{uri: bannerImg}} />
+            </View>
           </View>
-          <View style={styles.row}>
-            <TouchableOpacity
-              style={styles.buttonHome}
-              onPress={() => navigation.navigate('FeedbackList')}>
-              <Text style={styles.buttonText}>Feedback</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonHome}
-              onPress={() => navigation.navigate('NoticeList')}>
-              <Text style={styles.buttonText}>Notices</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.row}>
-            <TouchableOpacity
-              style={styles.buttonHome}
-              onPress={() => navigation.navigate('TeacherFirstInquiryPage')}>
-              <Text style={styles.buttonText}>Inquiries</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonHome}
-              onPress={() => navigation.navigate('KidsList')}>
-              <Text style={styles.buttonText}>Students</Text>
-            </TouchableOpacity>
+          <View>
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.buttonHome}
+                onPress={() => navigation.navigate('FeedbackList')}>
+                <Text style={styles.buttonText}>Feedback</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonHome}
+                onPress={() => navigation.navigate('NoticeListTeacher')}>
+                <Text style={styles.buttonText}>Notices</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.row}>
+              <TouchableOpacity
+                style={styles.buttonHome}
+                onPress={() => navigation.navigate('TeacherFirstInquiryPage')}>
+                <Text style={styles.buttonText}>Inquiries</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.buttonHome}
+                onPress={() => navigation.navigate('KidsList')}>
+                <Text style={styles.buttonText}>Students</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </ImageBackground>
@@ -86,12 +90,13 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_21xl,
     top: 20,
     height: 225,
-    width: '100%',
+    width: '95%',
     backgroundColor: '#E66BA7',
     alignItems: 'center',
   },
   row: {
     justifyContent: 'space-around',
+    marginHorizontal: 20,
     flexDirection: 'row',
     flexWrap: 'wrap',
     top: 30,
@@ -104,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
-    marginBottom: 20,
+    marginBottom: 30,
   },
   buttonText: {
     color: Color.white,
@@ -113,6 +118,8 @@ const styles = StyleSheet.create({
   },
   bannerImage: {
     flex: 1,
+    height: '100%',
+    width: '100%',
     resizeMode: 'contain',
   },
 });

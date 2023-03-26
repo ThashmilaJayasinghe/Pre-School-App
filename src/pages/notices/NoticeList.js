@@ -18,11 +18,15 @@ import BottomNavbar from '../../components/navbar/BottomNavbar';
 const NoticeList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [noticeList, setNoticeList] = useState([]);
+  const [unsearchedNoticeList, setUnsearchedNoticeList] = useState([]);
+  const [listChanged, setListChanged] = useState(false)
 
   useEffect(() => {
-
     filterNotices();
+  }, [searchQuery]);
 
+  useEffect(() => {
+   
     const items = [];
     firestore()
       .collection('notices')
@@ -35,18 +39,23 @@ const NoticeList = () => {
         });
 
         setNoticeList(items);
+        setUnsearchedNoticeList(items);
       });
-  }, [searchQuery]);
+  }, [listChanged]);
 
   const filterNotices = () => {
     if (searchQuery.trim()) {
-      let filteredNoticeList = NoticeList.filter(item => {
-        item.name.toLowerCase().includes(searchQuery.toLowerCase());
+      let filteredNoticeList = noticeList.filter(item => {
+        item.title.toLowerCase().includes(searchQuery.toLowerCase());
       });
 
       setNoticeList(filteredNoticeList);
-    } 
+    } else {
+      setNoticeList(unsearchedNoticeList);
+    }
   };
+
+  // console.log(noticeList);
 
   return (
     <View
@@ -99,7 +108,7 @@ const NoticeList = () => {
 
       <ScrollView style={{marginBottom: 50}}>
         {noticeList.map((notice, idx) => (
-          <NoticeCardParent key={notice.id} notice={notice} />
+          <NoticeCardParent key={notice.id} notice={notice} listChanged = {listChanged} setListChanged = {setListChanged} />
         ))}
       </ScrollView>
 

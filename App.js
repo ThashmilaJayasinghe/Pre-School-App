@@ -32,8 +32,10 @@ import NoticeListTeacher from './src/pages/notices/NoticeListTeacher';
 import UpdateNoticeModal from './src/components/notices/UpdateModal';
 import InputNoticeModal from './src/components/notices/InputModal';
 import DeleteNoticeModal from './src/components/notices/DeleteModal';
-import Home from './src/pages/Home';
+// import Home from './src/pages/Home';
 import NoticeList from './src/pages/notices/NoticeList';
+import TeacherHome from './src/pages/TeacherHome';
+import KidsList from './src/components/studentRoster/KidsList';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -51,14 +53,12 @@ const App = () => {
         {/* {/* <Stack.Screen name="StudentList" component={StudentList} /> */}
         {/* <Stack.Screen name="Home" component={ComponentOne} /> */}
         {/* {/* <Stack.Screen name="InquiryForm" component={InquiryForm} /> */}
-
         {/* <Stack.Screen name="MyInquiryList" component={MyInquiryList} /> */}
         <Stack.Screen name="Home" component={Home} />
-
         <Stack.Screen
           name="TeacherFirstInquiryPage"
           component={TeacherFirstInquiryPage}
-        /> */}
+        />
 
         {/* <Stack.Screen name="StudentList" component={StudentList} /> */}
         {/* <Stack.Screen name="Home" component={Home} /> */}
@@ -71,7 +71,10 @@ const App = () => {
         <Stack.Screen name="InputNoticeModal" component={InputNoticeModal} />
         <Stack.Screen name="UpdateNoticeModal" component={UpdateNoticeModal} />
         <Stack.Screen name="NoticeList" component={NoticeList} />
-        {/* <Stack.Screen name="KidsList" component={KidsList} /> */}
+        <Stack.Screen name="TeacherHome" component={TeacherHome} />
+
+        <Stack.Screen name="FeedbackList" component={FeedbackList} />
+        <Stack.Screen name="KidsList" component={KidsList} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -15,6 +15,8 @@ const NoticeCardParent = ({notice}) => {
 
   const navigation = useNavigation();
 
+  // console.log(notice);
+
   return (
     <View style={[styles.noticeItem]}>
       <View style={styles.backgroundLayout}>
@@ -164,6 +166,8 @@ const styles = StyleSheet.create({
   },
   coverImage: {
     flex: 1,
+    height: '100%',
+    width: '100%',
     resizeMode: 'contain'
   },
 });

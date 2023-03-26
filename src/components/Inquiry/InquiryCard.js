@@ -1,9 +1,11 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React, {useState, useRef} from 'react';
 import {Border, Color, FontFamily, FontSize} from '../../GlobalStyles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import DeleteInquiry from './DeleteInquiry';
 import UpdateInquiry from './UpdateInquiry';
+
+const inq2Uri = 'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/KenuriImages%2F104-1049657_pbl-investigation-laboratory-investigate-cartoon-hd-png-download-removebg-preview.png?alt=media&token=53e6f570-6ff1-41a4-a45b-6ea5152b8fc7'
 
 const InquiryCard = ({inquiry, onDelete, inquiries}) => {
   const [id, setId] = useState(inquiry.id);
@@ -68,7 +70,11 @@ const InquiryCard = ({inquiry, onDelete, inquiries}) => {
             {date} : {time}
           </Text>
         </View>
-        <View style={styles.background1} />
+        {/* <View style={styles.background1} /> */}
+        <View style={styles.background1}>
+          {inq2Uri && <Image size style = {{flex: 1}} resizeMode = 'center' source={{uri: inq2Uri}} />}
+        </View>
+
       </View>
       <DeleteInquiry
         bottomSheetRef={bottomSheetRef}

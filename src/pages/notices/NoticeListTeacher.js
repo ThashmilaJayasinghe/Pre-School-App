@@ -37,13 +37,11 @@ const NoticeListTeacher = () => {
         console.log('Total notices: ', querySnapshot.size);
 
         querySnapshot.forEach(documentSnapshot => {
-          items.push(documentSnapshot.data());
+          items.push({id: documentSnapshot.id, ...documentSnapshot.data()});
         });
 
         setNoticeList(items);
       });
-
-    // Stop listening for updates when no longer required
    
   }, []);
 

@@ -3,8 +3,11 @@ import {View, Button, Text, TouchableOpacity} from 'react-native';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from "@react-navigation/native";
 
 const DeleteModal = ({bottomSheetRef, noticeId}) => {
+
+  const navigation = useNavigation();
 
   const onDelete = () => {
 
@@ -13,8 +16,11 @@ const DeleteModal = ({bottomSheetRef, noticeId}) => {
       .doc(noticeId)
       .delete()
       .then(() => {
-        console.log('Deleted successfully');
+        console.log('Notice deleted');
+        console.log(noticeId);
         bottomSheetRef.current.close();
+        navigation.navigate("NoticeListTeacher");
+
       })
       .catch(err => {
         console.log('Deleted unsuccessfully');
@@ -65,6 +71,7 @@ const DeleteModal = ({bottomSheetRef, noticeId}) => {
             onPress={onDelete}
             style={{
               flex: 0,
+              marginRight: '33%',
               width: 110,
               borderRadius: 5,
               backgroundColor: '#F21F1F',

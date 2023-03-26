@@ -10,7 +10,8 @@ export const FontSize = {
   size_xs: 12,
   size_5xs: 8,
   size_smi: 13,
-  size_studentCard_name: 16
+  size_studentCard_name: 16,
+  size_xl: 20,
 };
 /* Colors */
 export const Color = {

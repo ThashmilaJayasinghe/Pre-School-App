@@ -17,7 +17,7 @@ import MyInquiryList from './src/pages/inquiry/MyInquiryList';
 
 // import StudentList from './src/pages/feedback/StudentList';
 // import Background from './src/assets/Background';
-// import Home from './src/pages/Home';
+import Home from './src/pages/Home';
 
 import InputModal from './src/components/feedback/InputModal';
 import FeedbackList from './src/pages/feedback/FeedbackList';
@@ -58,7 +58,7 @@ const App = () => {
         <Stack.Screen
           name="TeacherFirstInquiryPage"
           component={TeacherFirstInquiryPage}
-        />
+        /> */}
 
         {/* <Stack.Screen name="StudentList" component={StudentList} /> */}
         {/* <Stack.Screen name="Home" component={Home} /> */}

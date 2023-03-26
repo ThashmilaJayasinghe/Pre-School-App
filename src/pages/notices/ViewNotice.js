@@ -3,6 +3,9 @@ import { Pressable, Image, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, Color, FontFamily, Border } from "../../GlobalStyles";
 
+const coverImg = 'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/notice.png?alt=media&token=b3ae51cc-4db7-46bc-ad14-1159cbe05153'
+
+
 const ViewNoticeLocofy = ({route}) => {
   const navigation = useNavigation();
   const { 
@@ -18,10 +21,11 @@ const ViewNoticeLocofy = ({route}) => {
       <View
         style={[styles.coverImageIcon, styles.januaryPosition]}
       >
-        {/* <Image
+        <Image
           style={styles.coverImage}
-          source={require("../../assets/coverImage.png")}
-        /> */}
+          // source={require("../../assets/coverImage.png")}
+          source={{uri: coverImg}}
+        />
       </View>
       <View style={[styles.homeworkParent, styles.homeworkPosition]}>
         <Text style={[styles.homework, styles.homeworkPosition]}>{noticeType}</Text>

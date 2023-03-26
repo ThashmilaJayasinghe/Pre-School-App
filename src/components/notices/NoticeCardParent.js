@@ -4,6 +4,8 @@ import { View, StyleSheet, Text, Image, Pressable, Button, TouchableOpacity } fr
 import { useNavigation } from "@react-navigation/native";
 import { Border, Color, FontFamily, FontSize } from "../../GlobalStyles";
 
+const coverImg = 'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/notice.png?alt=media&token=b3ae51cc-4db7-46bc-ad14-1159cbe05153'
+
 const NoticeCardParent = ({notice}) => {
   const [noticeId, setNoticeId] = useState(notice.id);
   const [noticeType, setNoticeType] = useState(notice.type);
@@ -59,7 +61,13 @@ const NoticeCardParent = ({notice}) => {
             {noticeDate}
           </Text>
         </View>
-        <View style={styles.background1} />
+        <View style={styles.background1}>
+          <Image
+            style={styles.coverImage}
+            // source={require("../../assets/notice.png")}
+            source={{uri: coverImg}}
+          />
+        </View>
       </View>
     </View>
   );
@@ -147,11 +155,16 @@ const styles = StyleSheet.create({
     height: 83,
     position: 'absolute',
     borderRadius: Border.br_lg,
+    alignItems: 'center',
   },
   noticeItem: {
     width: '100%',
     height: 126,
     alignItems: 'center',
+  },
+  coverImage: {
+    flex: 1,
+    resizeMode: 'contain'
   },
 });
 

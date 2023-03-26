@@ -12,6 +12,7 @@ import Modal from 'react-native-modal';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {FontFamily} from '../../GlobalStyles';
 import { SelectList } from 'react-native-dropdown-select-list'
+import firestore from '@react-native-firebase/firestore';
 
 const data = [
   {key:'1', value:'HOMEWORK'},
@@ -20,22 +21,41 @@ const data = [
   {key:'4', value:'OTHER'},
 ]
 
-const UpdateModal = ({isModalVisible, setModalVisible}) => {
-  // const [isModalVisible, setModalVisible] = useState(false);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [selected, setSelected] = React.useState("");
-
+const UpdateModal = ({
+  isModalVisible, 
+  setModalVisible, 
+  noticeId, 
+  noticeType, 
+  noticeTitle, 
+  setNoticeTitle,
+  noticeBody,
+  setNoticeBody,
+  noticeDate,
+}) => {
+  
   const handleUpdate = () => {
-    // Do something with the data (e.g. submit to server)
-    setModalVisible(false);
+    
+    const updatedNotice = {
+      type: noticeType,
+      title: noticeTitle,
+      body: noticeBody,
+      date: noticeDate,
+    };
+
+    firestore()
+      .collection('notices')
+      .doc(noticeId || '')
+      .set(updatedNotice, {merge: true})
+      .then(async data => {
+        console.log('update successful');
+        setModalVisible(false);
+      })
+      .catch(error => {
+        console.log('update unsuccessful');
+        setModalVisible(false);
+      });    
   };
 
-  // const toggleModal = () => {
-  //   setModalVisible(!isModalVisible);
-  //   // setModalVisible(false);
-  //   // toggleModal();
-  // };
 
   return (
     <View style={{flex: 0}}>
@@ -50,7 +70,7 @@ const UpdateModal = ({isModalVisible, setModalVisible}) => {
             flex: 0,
             backgroundColor: 'white',
             width: '90%',
-            height: '80%',
+            height: '70%',
             borderRadius: 20,
             paddingBottom: 20,
           }}>
@@ -67,23 +87,24 @@ const UpdateModal = ({isModalVisible, setModalVisible}) => {
 
             <View style={styles.wrapper}>
               <View style={styles.formContainer}>
-                <View style={styles.inputWrapper}>
+                {/* <View style={styles.inputWrapper}>
                   <Text style={styles.labelTxt}>Type:</Text>            
                   <SelectList 
                     style={styles.inputStyle}
-                    setSelected={(val) => setSelected(val)} 
+                    setSelected={(val) => setSelected(val)}   
+                    defaultValue={noticeType}
                     data={data} 
                     save="value"
                   />
-                </View>
+                </View> */}
 
                 <View style={styles.inputWrapper}>
                   <Text style={styles.labelTxt}>Title:</Text>
                   <TextInput
                     style={styles.inputStyle}
                     placeholder="Enter title"
-                    value={title}
-                    onChangeText={text => setTitle(text)}
+                    value={noticeTitle}
+                    onChangeText={text => setNoticeTitle(text)}
                   />
                 </View>
 
@@ -94,8 +115,8 @@ const UpdateModal = ({isModalVisible, setModalVisible}) => {
                     numberOfLines={5}
                     style={styles.inputStyle}
                     placeholder="Enter notice details"
-                    value={body}
-                    onChangeText={text => setBody(text)}
+                    value={noticeBody}
+                    onChangeText={text => setNoticeBody(text)}
                   />
                 </View>
 

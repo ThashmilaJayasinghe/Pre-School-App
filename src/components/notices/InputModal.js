@@ -8,40 +8,58 @@ import {
     Pressable,
     Image,
     StyleSheet,
-  } from 'react-native';
-  import React, {useState} from 'react';
-  import Modal from 'react-native-modal';
-  import AntDesign from 'react-native-vector-icons/AntDesign';
-  import {FontFamily, Border, FontSize, Color} from '../../GlobalStyles';
-  import { SelectList } from 'react-native-dropdown-select-list'
+} from 'react-native';
+import React, {useState} from 'react';
+import Modal from 'react-native-modal';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {FontFamily, Border, FontSize, Color} from '../../GlobalStyles';
+import { SelectList } from 'react-native-dropdown-select-list'
+import firestore from '@react-native-firebase/firestore';
   
-  const data = [
-    {key:'1', value:'HOMEWORK'},
-    {key:'2', value:'FEES'},
-    {key:'3', value:'REMINDER'},
-    {key:'4', value:'OTHER'},
-  ]
+const data = [
+  {key:'1', value:'HOMEWORK'},
+  {key:'2', value:'FEES'},
+  {key:'3', value:'REMINDER'},
+  {key:'4', value:'OTHER'},
+]
+
+const noticeCollection = firestore().collection('notices');
   
-  const InputModal = ({isModalVisible, setModalVisible, toggleModal}) => {
-    // const [isModalVisible, setModalVisible] = useState(false);
+  const InputModal = ({
+    isModalVisible, 
+    setModalVisible, 
+    toggleModal
+  }) => {
+    
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-    const [selected, setSelected] = React.useState("");
-  
-    const handleUpdate = () => {
-      console.log('Title:', title);
-      console.log('Body:', body);
-      // Do something with the data (e.g. submit to server)
+    const [selected, setSelected] = React.useState('');
+      
+    const handleInput = async () => {
+
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+      const day = new Date().getDate();
+      const month = monthNames[new Date().getMonth()];
+      const dateInWords = day + " " + month;
+      
+      noticeCollection.add({
+        type: selected,
+        title: title,
+        body: body,
+        date: dateInWords,
+      })
+      .then(() => {
+        console.log('Notice sent');
+        setTitle('');
+        setBody('');
+      })
+      .catch(err => console.log('Something went wrong'));
+      setModalVisible(false);
     };
   
-    // const toggleModal = () => {
-    //   setModalVisible(!isModalVisible);
-    // };
-  
     return (
-      <View style={{flex: 1}}>
-        {/* <Button title="Show modal" onPress={toggleModal} /> */}
-  
+      <View style={{flex: 1}}> 
         <Modal
           isVisible={isModalVisible}
           onBackdropPress={() => setModalVisible(false)}
@@ -51,7 +69,7 @@ import {
               flex: 0,
               backgroundColor: 'white',
               width: '90%',
-              height: '95%',
+              height: '85%',
               borderRadius: 20,
               paddingBottom: 20,
             }}>
@@ -102,32 +120,28 @@ import {
 
                   {/* ---------------------- */}
 
-                  <View style={styles.groupParent}>
+                  {/* <View style={styles.groupParent}>
                     <Pressable style={styles.groupChildPosition}>
                         <View style={[styles.groupChild, styles.groupChildPosition]} />
                         <View style={[styles.uploadCoverImageParent, styles.uploadPosition]}>
                         <Text style={[styles.uploadCoverImage, styles.pngJpegJpgPositionUpload]}>
                             Upload cover image
-                        </Text>
-                        <Image
-                            style={[styles.uploadIcon, styles.uploadPosition]}
-                            resizeMode="cover"
-                            source={require("../../assets/upload.png")}
-                        />
+                        </Text>                  
+                        <AntDesign name="upload" style={[styles.uploadIcon, styles.uploadPosition]} size={27} color="#5fcf1b" />
                         </View>
                     </Pressable>
                     <Text
                         style={[styles.pngJpegJpg, styles.pngJpegJpgPosition]}
                     >{`png, jpeg, jpg - Max size: 1 MB
 Aspect Ratio: 2 x 1`}</Text>
-                    </View>
+                    </View> */}
 
                   {/* ---------------------- */}
   
                   <TouchableOpacity
                     style={styles.submitBtn}
                     title="Update"
-                    onPress={handleUpdate}>
+                    onPress={handleInput}>
                     <Text style={styles.submitBtnTxt}>Send Notice</Text>
                   </TouchableOpacity>
                 </View>

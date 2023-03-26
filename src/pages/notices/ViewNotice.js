@@ -3,29 +3,40 @@ import { Pressable, Image, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, Color, FontFamily, Border } from "../../GlobalStyles";
 
-const ViewNoticeLocofy = () => {
+const coverImg = 'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/notice.png?alt=media&token=b3ae51cc-4db7-46bc-ad14-1159cbe05153'
+
+
+const ViewNoticeLocofy = ({route}) => {
   const navigation = useNavigation();
+  const { 
+    noticeId,
+    noticeType,
+    noticeTitle, 
+    noticeDate,
+    noticeBody, 
+  } = route.params;
 
   return (
     <View style={styles.viewNoticeLocofy}>
       <View
         style={[styles.coverImageIcon, styles.januaryPosition]}
       >
-        {/* <Image
+        <Image
           style={styles.coverImage}
-          source={require("../../assets/coverImage.png")}
-        /> */}
+          // source={require("../../assets/coverImage.png")}
+          source={{uri: coverImg}}
+        />
       </View>
       <View style={[styles.homeworkParent, styles.homeworkPosition]}>
-        <Text style={[styles.homework, styles.homeworkPosition]}>HOMEWORK</Text>
-        <Text style={[styles.january, styles.januaryPosition]}>26 January</Text>
+        <Text style={[styles.homework, styles.homeworkPosition]}>{noticeType}</Text>
+        <Text style={[styles.january, styles.januaryPosition]}>{noticeDate}</Text>
       </View>
       <Text style={[styles.noticeTitle, styles.homeworkPosition]}>
-        Family Tree Collage due on 30th January
+        {noticeTitle}
       </Text>
       <Text
         style={[styles.noticeBody, styles.noticeBodyPosition]}
-      >{`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce libero nisi, condimentum sed pulvinar ut, posuere eu purus. Sed viverra eros ac tempus pellentesque. Morbi at nulla sed felis convallis congue. `}</Text>
+      >{noticeBody}</Text>
       <Pressable
         style={[styles.sendNoticeButton, styles.sendLayout]}
         onPress={() => navigation.navigate("NoticeList")}
@@ -57,6 +68,7 @@ const styles = StyleSheet.create({
     height: 36,
     width: 169,
     position: "absolute",
+    
   },
   coverImageIcon: {
     top: 40,
@@ -124,7 +136,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   backToNotices: {
-    marginLeft: -78.5,
+    marginLeft: '-36.5%',
     top: 6,
     color: Color.white,
     textAlign: "center",
@@ -133,8 +145,9 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.alatsiRegular,
   },
   sendNoticeButton: {
-    top: 685,
-    left: 103,
+    marginLeft: '30%',
+    top: 550,
+    // left: 103,
   },
   viewNoticeLocofy: {
     borderRadius: Border.br_21xl,

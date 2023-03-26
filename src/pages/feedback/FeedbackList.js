@@ -93,13 +93,14 @@ const FeedbackList = () => {
   return (
     <View
       style={{
-        backgroundColor: '#FBF8EB',
+        // backgroundColor: '#FBF8EB',
       }}>
       {/* search bar */}
       <View
         style={{
           alignItems: 'center',
           marginVertical: 10,
+          zIndex: 100
         }}>
         <TextInput
           onChangeText={setSearchQuery}

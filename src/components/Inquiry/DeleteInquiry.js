@@ -1,45 +1,27 @@
-import React, {useRef} from 'react';
 import {View, Button, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import firestore from '@react-native-firebase/firestore';
-import { useNavigation } from "@react-navigation/native";
 
-const DeleteModal = ({bottomSheetRef, noticeId}) => {
-
-  const navigation = useNavigation();
-
-  const onDelete = () => {
-
+const DeleteInquiry = ({bottomSheetRef, inquiry, inquiryID}) => {
+  const onDeleteInquiry = () => {
     firestore()
-      .collection('notices')
-      .doc(noticeId)
+      .collection('inquiries')
+      .doc(inquiryID)
       .delete()
       .then(() => {
-        console.log('Notice deleted');
-        console.log(noticeId);
+        console.log('Deleted successfully');
         bottomSheetRef.current.close();
-        navigation.navigate("NoticeListTeacher");
-
       })
       .catch(err => {
         console.log('Deleted unsuccessfully');
         bottomSheetRef.current.close();
       });
   };
-    
   return (
-    <BottomSheet ref={bottomSheetRef} height={200}>
-    <View
-      style={{
-        // flex: 1,
-        // justifyContent: "center",
-        alignItems: "flex-end",
-        marginTop: 13,
-        marginRight: 13
-      }}
-    >
-            
+    <>
+      <BottomSheet ref={bottomSheetRef} height={200}>
         <TouchableOpacity
           onPress={() => bottomSheetRef.current.close()}
           style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}>
@@ -54,7 +36,7 @@ const DeleteModal = ({bottomSheetRef, noticeId}) => {
               lineHeight: 26,
               color: '#0E1979',
             }}>
-            Are you sure you want to delete notice?
+            Are you sure you want to delete {inquiry.title} inquiry?
           </Text>
         </View>
 
@@ -68,17 +50,15 @@ const DeleteModal = ({bottomSheetRef, noticeId}) => {
             marginBottom: 20,
           }}>
           <TouchableOpacity
-            onPress={onDelete}
+            onPress={onDeleteInquiry}
             style={{
               flex: 0,
-              marginRight: '33%',
               width: 110,
               borderRadius: 5,
               backgroundColor: '#F21F1F',
               height: 35,
               justifyContent: 'center',
               alignItems: 'center',
-          
             }}>
             <Text
               style={{
@@ -90,10 +70,9 @@ const DeleteModal = ({bottomSheetRef, noticeId}) => {
             </Text>
           </TouchableOpacity>
         </View>
-      
-    </View>  
-    </BottomSheet>
+      </BottomSheet>
+    </>
   );
 };
 
-export default DeleteModal;
+export default DeleteInquiry;

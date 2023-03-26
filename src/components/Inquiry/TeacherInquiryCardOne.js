@@ -1,10 +1,10 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {Border, Color, FontFamily, FontSize} from '../../GlobalStyles';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {blue400} from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
+import {useNavigation} from '@react-navigation/native';
 
 const TeacherInquiryCardOne = ({Cname}) => {
+  const navigation = useNavigation();
   return (
     <View style={[styles.inquiryTrcItem]}>
       <View style={styles.backgroundLayout}>
@@ -15,10 +15,15 @@ const TeacherInquiryCardOne = ({Cname}) => {
             styles.backgroundShadowBox,
           ]}
         />
-        <View style={styles.background1} />
-        <View>
-          <Text style={styles.courseDetails}>{Cname}</Text>
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('TeacherClass', {Cname: Cname});
+          }}>
+          <View style={styles.background1} />
+          <View>
+            <Text style={styles.courseDetails}>{Cname}</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -66,8 +71,8 @@ const styles = StyleSheet.create({
   },
 
   background1: {
-    top: 15,
-    left: 15,
+    top: 17,
+    left: 17,
     right: 15,
     bottom: 15,
     backgroundColor: Color.limegreen,

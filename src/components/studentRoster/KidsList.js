@@ -17,6 +17,7 @@ const KidsList = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [state, setState] = useState([]);
   const [checkState, setCheckState] = useState(false);
+  const [initialState, setInitialState] = useState([]);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
@@ -50,6 +51,7 @@ const KidsList = ({navigation}) => {
         });
 
         setState(kids);
+        setInitialState(kids);
       })
       .catch(() => {
         console.log('ERROR');
@@ -64,7 +66,7 @@ const KidsList = ({navigation}) => {
 
       setState(filteredStudentList);
     } else {
-      setState(state);
+      setState(initialState);
     }
   };
 

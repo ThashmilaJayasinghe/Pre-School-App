@@ -53,6 +53,8 @@ const App = () => {
         {/* {/* <Stack.Screen name="InquiryForm" component={InquiryForm} /> */}
 
         {/* <Stack.Screen name="MyInquiryList" component={MyInquiryList} /> */}
+        <Stack.Screen name="Home" component={Home} />
+
         <Stack.Screen
           name="TeacherFirstInquiryPage"
           component={TeacherFirstInquiryPage}

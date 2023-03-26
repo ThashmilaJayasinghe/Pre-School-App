@@ -100,6 +100,7 @@ const FeedbackList = () => {
         style={{
           alignItems: 'center',
           marginVertical: 10,
+          zIndex: 100
         }}>
         <TextInput
           onChangeText={setSearchQuery}

@@ -4,20 +4,21 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 import React from 'react';
 import BottomNavbar from '../components/navbar/BottomNavbar';
 import StudentList from './feedback/StudentList';
 import FeedbackList from './feedback/FeedbackList';
 import TeacherHome from './TeacherHome';
-import { FontSize, Color, FontFamily, Border } from "../GlobalStyles";
+import {FontSize, Color, FontFamily, Border} from '../GlobalStyles';
+import {useNavigation} from '@react-navigation/native';
 
 const backgroundUrl =
   'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/background.png?alt=media&token=a9650c2e-8b8c-46f8-9bd5-e7419fc6e77d';
 
 const Home = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   return (
     <>
@@ -64,7 +65,11 @@ const Home = () => {
               justifyContent: 'center',
               marginHorizontal: 10,
             }}>
-            <Text style={{fontSize: 18}}>Teacher</Text>
+            <Text
+              style={{fontSize: 18}}
+              onPress={() => navigation.navigate('TeacherHome')}>
+              Teacher
+            </Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -76,31 +81,29 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
- 
   home: {
     borderRadius: Border.br_21xl,
     backgroundColor: Color.floralwhite,
     flex: 1,
     height: 812,
-    overflow: "hidden",
-    width: "100%",
+    overflow: 'hidden',
+    width: '100%',
   },
   background: {
     // flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     // alignItems: "center",
-    height: "100%",
+    height: '100%',
     // overflow: "hidden",
-    width: "100%",
+    width: '100%',
   },
   homeCover: {
     borderRadius: Border.br_21xl,
     top: 20,
     height: 225,
-    width: "100%",
+    width: '100%',
     backgroundColor: '#E66BA7',
-    alignItems: "center",
-
+    alignItems: 'center',
   },
   row: {
     justifyContent: 'space-around',
@@ -125,9 +128,8 @@ const styles = StyleSheet.create({
   },
   bannerImage: {
     flex: 1,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
-
 });
 
 export default Home;

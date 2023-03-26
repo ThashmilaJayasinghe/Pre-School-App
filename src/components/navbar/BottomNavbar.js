@@ -21,6 +21,15 @@ const BottomNavbar = () => {
         backgroundColor: Color.mintcream,
         marginHorizontal: 2,
         justifyContent: 'center',
+        opacity: 0.5,
+
+        shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
 
       }}>
       <View
@@ -35,7 +44,8 @@ const BottomNavbar = () => {
             style={{
               fontSize: 26,
               fontWeight: '100',
-              color: '#C9C5C4'
+              // color: '#C9C5C4'
+              color: '#595959'
             }}
           />
         </TouchableOpacity>
@@ -45,7 +55,7 @@ const BottomNavbar = () => {
             style={{
               fontSize: 29,
               fontWeight: '700',
-              color: '#C9C5C4'
+              color: '#595959'
             }}
           />
         </TouchableOpacity>
@@ -54,7 +64,7 @@ const BottomNavbar = () => {
             name="user"
             style={{
               fontSize: 27,
-              color: '#C9C5C4'
+              color: '#595959'
             }}
           />
         </TouchableOpacity>

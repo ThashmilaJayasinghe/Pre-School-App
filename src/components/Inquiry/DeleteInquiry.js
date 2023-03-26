@@ -1,22 +1,18 @@
-import React, {useRef, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Button, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import firestore from '@react-native-firebase/firestore';
 
-const DeleteKid = ({bottomSheetRef, kid, setCheckState}) => {
-  const [id, setId] = useState(kid.id);
-
-  const onDeleteKid = () => {
+const DeleteInquiry = ({bottomSheetRef, inquiry, inquiryID}) => {
+  const onDeleteInquiry = () => {
     firestore()
-      .collection('kids')
-      .doc(id)
+      .collection('inquiries')
+      .doc(inquiryID)
       .delete()
-      .then(async () => {
+      .then(() => {
         console.log('Deleted successfully');
-
-        await bottomSheetRef.current.close();
-        setCheckState(true);
+        bottomSheetRef.current.close();
       })
       .catch(err => {
         console.log('Deleted unsuccessfully');
@@ -40,7 +36,7 @@ const DeleteKid = ({bottomSheetRef, kid, setCheckState}) => {
               lineHeight: 26,
               color: '#0E1979',
             }}>
-            Are you sure you want to delete {kid.name} ?
+            Are you sure you want to delete {inquiry.title} inquiry?
           </Text>
         </View>
 
@@ -54,7 +50,7 @@ const DeleteKid = ({bottomSheetRef, kid, setCheckState}) => {
             marginBottom: 20,
           }}>
           <TouchableOpacity
-            onPress={onDeleteKid}
+            onPress={onDeleteInquiry}
             style={{
               flex: 0,
               width: 110,
@@ -79,4 +75,4 @@ const DeleteKid = ({bottomSheetRef, kid, setCheckState}) => {
   );
 };
 
-export default DeleteKid;
+export default DeleteInquiry;

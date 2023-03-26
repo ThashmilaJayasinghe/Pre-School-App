@@ -6,13 +6,14 @@ import {
   ImageBackground,
   StyleSheet,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import StudentCard from '../../components/feedback/StudentCard';
 import Background from '../../assets/Background';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import BottomNavbar from '../../components/navbar/BottomNavbar';
+import firestore from '@react-native-firebase/firestore';
 
-const studentList = [
+const studentListArray = [
   {id: '01', name: 'Kamal', class: 'Class A'},
   {id: '02', name: 'Nimal', class: 'Class B'},
   {id: '03', name: 'Sunimal', class: 'Class D'},
@@ -21,8 +22,35 @@ const studentList = [
   {id: '06', name: 'Mark', class: 'Class D'},
 ];
 
+const kidsCollection = firestore().collection('kids');
+
 const StudentList = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [studentList, setStudentList] = useState(studentListArray);
+
+  useEffect(() => {
+    async function getStudentData() {
+      const subscriber = firestore();
+      await kidsCollection.get().then(querySnapshot => {
+        setStudentList(querySnapshot);
+        const kids = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+          kids.push({
+            id: documentSnapshot.kidId,
+            ...documentSnapshot.data(),
+          });
+        });
+
+        setStudentList(kids);
+      });
+
+      return () => subscriber();
+    }
+    getStudentData();
+  }, []);
+
+  console.log(studentList);
 
   return (
     <View
@@ -73,13 +101,30 @@ const StudentList = () => {
         />
       </View>
 
-      <ScrollView style={{marginBottom: 50}}>
-        {studentList.map((student, idx) => (
-          <StudentCard key={student.id} student={student} />
-        ))}
-      </ScrollView>
+      {studentList.length > 0 && (
+        <ScrollView style={{marginBottom: 50}}>
+          {studentList.map((student, idx) => (
+            <StudentCard key={student.kidId} student={student} />
+          ))}
+        </ScrollView>
+      )}
 
-      {/* <BottomNavbar/> */}
+      <View style={{flex: 1}}>
+        {studentList.length == 0 && (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+            }}>
+            <AntDesign name="warning" size={60} />
+            <Text style={{fontSize: 18, fontWeight: 500}}>Oops!</Text>
+            <Text style={{fontSize: 15}}>
+              It seems like you don't have any kids
+            </Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 };

@@ -12,6 +12,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {FontFamily} from '../../GlobalStyles';
 import Textarea from 'react-native-textarea';
 import firestore from '@react-native-firebase/firestore';
+import uuid from 'react-native-uuid';
 
 const feedbackCollection = firestore().collection('feedbacks');
 
@@ -32,15 +33,18 @@ const InputModal = ({
 
   const onSubmit = async () => {
     if (comment.length > 5) {
-      const feedbackId = 'abc123-5434jfjd';
+      const feedbackId = uuid.v4();
+      const timestamp = firestore.Timestamp.fromDate(new Date());
 
       feedbackCollection
-        .add({
+        .doc(feedbackId)
+        .set({
           name: studentName,
           class: studentClass,
           studentId: studentId,
           feedbackId: feedbackId,
           comment: comment,
+          timestamp: timestamp,
         })
         .then(() => {
           console.log('Feedback added!');
@@ -69,13 +73,21 @@ const InputModal = ({
             borderRadius: 20,
             paddingBottom: 20,
           }}>
-          <ScrollView>
-            <TouchableOpacity
-              style={{marginTop: 13, marginRight: 13, alignItems: 'flex-end'}}
-              onPress={() => setModalVisible(!isModalVisible)}>
-              <AntDesign name="closesquare" size={27} color="#F47B0B" />
-            </TouchableOpacity>
+          {/* <ScrollView> */}
+          <TouchableOpacity
+            style={{
+              marginTop: 13,
+              paddingRight: 13,
+              paddingBottom: 10,
+              borderBottomColor: '#d6d6d6',
+              borderBottomWidth: 1,
+              alignItems: 'flex-end',
+            }}
+            onPress={() => setModalVisible(!isModalVisible)}>
+            <AntDesign name="closesquare" size={27} color="#F47B0B" />
+          </TouchableOpacity>
 
+          <ScrollView>
             <View style={{alignItems: 'center', marginVertical: 10}}>
               <Text style={{fontSize: 17, fontWeight: 500}}>Add Feedback</Text>
             </View>
@@ -105,6 +117,8 @@ const InputModal = ({
                 <Text style={{color: '#545FC3'}}> : {studentClass}</Text>
               </View>
             </View>
+
+            {/* <ScrollView> */}
             <View style={{margin: 20, maxHeight: 300}}>
               <Text style={{marginBottom: 10}}>Comment</Text>
 
@@ -174,6 +188,7 @@ const InputModal = ({
                 </Text>
               </TouchableOpacity>
             </View>
+            {/* </ScrollView> */}
           </ScrollView>
         </View>
       </Modal>

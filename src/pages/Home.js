@@ -1,10 +1,11 @@
-import {StyleSheet, View, Text, ScrollView, TouchableOpacity, ImageBackground, Image} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity, ImageBackground, Image} from 'react-native';
 import React from 'react';
 import BottomNavbar from '../components/navbar/BottomNavbar';
 import StudentList from './feedback/StudentList';
 import FeedbackList from './feedback/FeedbackList';
 import { FontSize, Color, FontFamily, Border } from "../GlobalStyles";
 import { useNavigation } from "@react-navigation/native";
+
 
 const backgroundUrl = 'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/background.png?alt=media&token=a9650c2e-8b8c-46f8-9bd5-e7419fc6e77d'
 const bannerImg = 'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/happy_child.png?alt=media&token=d93369ac-dfc8-49b8-a7dc-3c000a1b4d03'

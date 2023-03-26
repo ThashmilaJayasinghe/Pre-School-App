@@ -2,6 +2,8 @@ import {View, Text, TextInput, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import FeedbackCard from '../../components/feedback/FeedbackCard';
+import firestore from '@react-native-firebase/firestore';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const studentList = [
   {id: '01', name: 'Kamal', class: 'Class A'},
@@ -41,30 +43,57 @@ const feedbackListArray = [
   {id: '06', name: 'Mark', class: 'Class D', comment: 'Mark is a good student'},
 ];
 
+const feedbackCollection = firestore().collection('feedbacks');
+
 const FeedbackList = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [feedbackList, setFeedbackList] = useState(feedbackListArray)
+  const [feedbackList, setFeedbackList] = useState([]);
+  const [initialFeedbackList, setInitialFeedbackList] = useState([]);
+  const [isFeedbackChanged, setIsFeedbackChanged] = useState(false);
 
   useEffect(() => {
     filterFeedbacks();
   }, [searchQuery]);
 
+  useEffect(() => {
+    async function getData() {
+      const subscriber = firestore();
+      await feedbackCollection.get().then(querySnapshot => {
+        setFeedbackList(querySnapshot);
+        const feedbacks = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+          feedbacks.push({
+            id: documentSnapshot.feedbackId,
+            ...documentSnapshot.data(),
+          });
+        });
+
+        setFeedbackList(feedbacks);
+        setInitialFeedbackList(feedbacks);
+      });
+
+      return () => subscriber();
+    }
+    getData();
+  }, [isFeedbackChanged]);
+
   const filterFeedbacks = () => {
     if (searchQuery.trim()) {
-      let filteredFeedbackList = feedbackList.filter(item => {
-        item.name.toLowerCase().includes(searchQuery.toLowerCase());
-      });
+      let filteredFeedbackList = feedbackList.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      );
 
       setFeedbackList(filteredFeedbackList);
     } else {
-      setFeedbackList(feedbackListArray);
+      setFeedbackList(initialFeedbackList);
     }
   };
 
   return (
     <View
       style={{
-        backgroundColor: '#FBF8EB',
+        // backgroundColor: '#FBF8EB',
       }}>
       {/* search bar */}
       <View
@@ -111,10 +140,35 @@ const FeedbackList = () => {
       </View>
 
       <ScrollView style={{marginBottom: 50}}>
-        {feedbackList.map((feedback, idx) => (
-          <FeedbackCard key={feedback.id} feedback={feedback} />
-        ))}
+        {feedbackList.length > 0 && (
+          <>
+            {feedbackList.map((feedback, idx) => (
+              <FeedbackCard
+                key={feedback.feedbackId}
+                feedback={feedback}
+                setIsFeedbackChanged={setIsFeedbackChanged}
+              />
+            ))}
+          </>
+        )}
       </ScrollView>
+
+      <View style={{flex: 1}}>
+        {feedbackList.length == 0 && (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+            }}>
+            <AntDesign name="warning" size={60} />
+            <Text style={{fontSize: 18, fontWeight: 500}}>Oops!</Text>
+            <Text style={{fontSize: 15}}>
+              It seems like you don't have any feedback
+            </Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 };

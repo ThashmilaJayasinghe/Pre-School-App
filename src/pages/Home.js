@@ -9,6 +9,7 @@ import React from 'react';
 import BottomNavbar from '../components/navbar/BottomNavbar';
 import StudentList from './feedback/StudentList';
 import FeedbackList from './feedback/FeedbackList';
+import TeacherHome from './TeacherHome';
 
 const backgroundUrl =
   'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/background.png?alt=media&token=a9650c2e-8b8c-46f8-9bd5-e7419fc6e77d';
@@ -64,6 +65,8 @@ const Home = () => {
         </View>
       </ImageBackground>
       <BottomNavbar />
+
+      {/* <TeacherHome/> */}
     </>
   );
 };

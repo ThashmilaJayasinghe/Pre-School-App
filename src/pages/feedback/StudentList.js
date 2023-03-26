@@ -110,7 +110,7 @@ const StudentList = () => {
       )}
 
       <View style={{flex: 1}}>
-        {feedbackList.length == 0 && (
+        {studentList.length == 0 && (
           <View
             style={{
               justifyContent: 'center',

@@ -93,7 +93,7 @@ const FeedbackList = () => {
   return (
     <View
       style={{
-        backgroundColor: '#FBF8EB',
+        // backgroundColor: '#FBF8EB',
       }}>
       {/* search bar */}
       <View

@@ -12,7 +12,7 @@ const FeedbackCard = ({feedback, setIsFeedbackChanged}) => {
   const [studentName, setStudentName] = useState(feedback.name);
   const [studentClass, setStudentClass] = useState(feedback.class);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [feedbackId, setFeedbackId] = useState(feedback.feedbackId)
+  const [feedbackId, setFeedbackId] = useState(feedback.feedbackId);
 
   const bottomSheetRef = useRef();
 
@@ -41,7 +41,7 @@ const FeedbackCard = ({feedback, setIsFeedbackChanged}) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onPress={() =>setModalVisible(true)}>
+              onPress={() => setModalVisible(true)}>
               <MaterialIcon name="edit" size={23} color="#F47B0B" />
             </TouchableOpacity>
             <TouchableOpacity
@@ -53,8 +53,7 @@ const FeedbackCard = ({feedback, setIsFeedbackChanged}) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onPress = {openBottomSheet}
-              >
+              onPress={openBottomSheet}>
               <MaterialIcon name="delete" size={23} color="#F47B0B" />
             </TouchableOpacity>
           </View>
@@ -68,24 +67,30 @@ const FeedbackCard = ({feedback, setIsFeedbackChanged}) => {
             {studentClass}
           </Text>
         </View>
-        <View style={styles.background1} />
+        <View style={styles.background1}>
+          {feedback.avatarUri && <Image size style = {{flex: 1}} resizeMode = 'center' source={{uri: feedback.avatarUri}} />}
+        </View>
       </View>
 
       {/* update modal */}
       <UpdateModal
         comment={comment}
-        setComment = {setComment}
+        setComment={setComment}
         studentName={studentName}
         studentClass={studentClass}
         studentId={studentId}
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
-        feedbackId = {feedbackId}
-        setIsFeedbackChanged = {setIsFeedbackChanged}
+        feedbackId={feedbackId}
+        setIsFeedbackChanged={setIsFeedbackChanged}
       />
 
       {/* Delete card */}
-      <DeleteFeedback bottomSheetRef = {bottomSheetRef} feedback = {feedback} setIsFeedbackChanged = {setIsFeedbackChanged} />
+      <DeleteFeedback
+        bottomSheetRef={bottomSheetRef}
+        feedback={feedback}
+        setIsFeedbackChanged={setIsFeedbackChanged}
+      />
     </View>
   );
 };

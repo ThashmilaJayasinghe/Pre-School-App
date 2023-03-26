@@ -1,70 +1,76 @@
-import {StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity, ImageBackground, Image} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  ImageBackground,
+  TouchableOpacity,
+  StyleSheet
+} from 'react-native';
 import React from 'react';
 import BottomNavbar from '../components/navbar/BottomNavbar';
 import StudentList from './feedback/StudentList';
 import FeedbackList from './feedback/FeedbackList';
+import TeacherHome from './TeacherHome';
 import { FontSize, Color, FontFamily, Border } from "../GlobalStyles";
-import { useNavigation } from "@react-navigation/native";
 
-
-const backgroundUrl = 'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/background.png?alt=media&token=a9650c2e-8b8c-46f8-9bd5-e7419fc6e77d'
-const bannerImg = 'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/happy_child.png?alt=media&token=d93369ac-dfc8-49b8-a7dc-3c000a1b4d03'
+const backgroundUrl =
+  'https://firebasestorage.googleapis.com/v0/b/pre-school-management-297a9.appspot.com/o/background.png?alt=media&token=a9650c2e-8b8c-46f8-9bd5-e7419fc6e77d';
 
 const Home = () => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   return (
     <>
-      {/* <View style = {{height: '100%', backgroundColor: 'red'}}> */}
       {/* scroll view used because of the BottomNavbar visibility */}
-      {/* these are just only for testing */}
-      <ImageBackground style={styles.background} source={{uri: backgroundUrl}} resizeMode="cover" >
+
+      {/* <ImageBackground source={{uri: backgroundUrl}} resizeMode="cover">
         <ScrollView>
-            {/* <StudentList /> */}
-            {/* <FeedbackList /> */}
-            <View style={styles.homeCover}>
-              <Image
-                style={styles.bannerImage}
-                source={{uri: bannerImg}}
-              />
-            </View>
-            <View style={styles.row}>
-                <TouchableOpacity
-                    style={styles.buttonHome}
-                    onPress={() => navigation.navigate("NoticeList")}>
-                    <Text style={styles.buttonText}>
-                        Feedback
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                style={styles.buttonHome}
-                    onPress={() => navigation.navigate("NoticeList")}>
-                    <Text style={styles.buttonText}>
-                        Notices
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.row}>
-                <TouchableOpacity
-                    style={styles.buttonHome}
-                    onPress={() => navigation.navigate("NoticeList")}>
-                    <Text style={styles.buttonText}>
-                        Inquiries
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.buttonHome}
-                    onPress={() => navigation.navigate("NoticeList")}>
-                    <Text style={styles.buttonText}>
-                        Students
-                    </Text>
-                </TouchableOpacity>
-            </View>
+          <StudentList />
+          <FeedbackList />
         </ScrollView>
+      </ImageBackground> */}
+      {/* <BottomNavbar /> */}
+
+      <ImageBackground
+        style={{flex: 1}}
+        source={{uri: backgroundUrl}}
+        resizeMode="cover">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#5FCF1B',
+              height: 100,
+              width: 100,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginHorizontal: 10,
+            }}>
+            <Text style={{fontSize: 18}}>Parent</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#5FCF1B',
+              height: 100,
+              width: 100,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginHorizontal: 10,
+            }}>
+            <Text style={{fontSize: 18}}>Teacher</Text>
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
       <BottomNavbar />
 
-      {/* </View> */}
+      {/* <TeacherHome/> */}
     </>
   );
 };

@@ -50,7 +50,11 @@ const StudentCard = ({student}) => {
             {studentClass}
           </Text>
         </View>
-        <View style={styles.background1} />
+        {/* <View style={styles.background1} /> */}
+        <View style={styles.background1}>
+          {student.avatarUri && <Image size style = {{flex: 1}} resizeMode = 'center' source={{uri: student.avatarUri}} />}
+        </View>
+
       </View>
       {/* display the modal */}
       <InputModal
